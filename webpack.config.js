@@ -2,22 +2,22 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
   context: path.join(__dirname, './client'),
-  entry: [ 
-    "webpack-hot-middleware/client",
-    "./index.js"
+  entry: [
+    'webpack-hot-middleware/client',
+    './index.js'
   ],
   output: {
-    path: path.resolve(__dirname, "./public/dist"),
-    filename: "bundle.js",
+    path: path.resolve(__dirname, './public/dist'),
+    filename: 'bundle.js',
     publicPath: '/'
   },
   plugins: [
     //new webpack.optimize.OccurrenceOrderPlugin(),
-  	new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin()
     //new webpack.NoErrorsPlugin()
-  ], 
+  ],
   module: {
     loaders: [
       {
@@ -26,11 +26,11 @@ module.exports = {
         loader: 'react-hot',
       },
       {
-        loader: 'babel', 
+        loader: 'babel',
         query: {
-           presets: ['react', 'es2015', 'react-hmre']
+          presets: ['react', 'es2015', 'react-hmre']
         }
       }
     ],
   }
-}
+};
