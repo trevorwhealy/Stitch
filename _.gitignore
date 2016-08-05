@@ -1,4 +1,6 @@
 ### node etc ###
+node_modules
+dist/bundle.js
 
 # Logs
 logs
