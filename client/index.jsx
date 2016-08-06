@@ -4,13 +4,12 @@ import { render } from 'react-dom';
 class App extends React.Component {
   constructor() {
     super();
-    console.log('hi');
   }
 
   render() {
     return (
       <div>
-        hello
+        hello whats up dude
       </div>
 
     );
