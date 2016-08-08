@@ -1,19 +1,18 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { Router, Route, browserHistory } from 'react-router';
+import App from './components/App.jsx';
+import appReducer from './reducers/index.js';
 
-class App extends React.Component {
-  constructor() {
-    super();
-  }
+let store = createStore(appReducer);
 
-  render() {
-    return (
-      <div>
-        hello whats up dude
-      </div>
-
-    );
-  }
-}
-
-render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={App} />
+    </Router>
+  </Provider>,
+  document.getElementById('app')
+);
