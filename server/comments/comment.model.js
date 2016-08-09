@@ -6,7 +6,7 @@ const Note = require('../notes/note.model');
 
 const Comment = sequelize.define('comment', {
   text: Sequelize.BLOB,
-  line_number: Sequelize.INTEGER,
+  lineNumber: Sequelize.INTEGER,
   userId: Sequelize.INTEGER,
   noteId: Sequelize.INTEGER,
 });
