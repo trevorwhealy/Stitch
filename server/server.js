@@ -1,18 +1,14 @@
 // server
 const express = require('express');
+const config = require('./config/config');
 
 const app = express();
 
-const config = require('./config/config');
-
-// middleware
+require('./config/sequelize');
+require('./config/passport');
 require('./config/express')(app, config);
+require('./config/routes')(app, config);
 
-// routes
-require('./config/routes')(app);
-
-app.listen(config.port, () => {
-  console.log('Listening on port ' + config.port);
-});
+app.listen(config.port, () => console.log(`Listening on port ${config.port}`));
 
 module.exports = app;
