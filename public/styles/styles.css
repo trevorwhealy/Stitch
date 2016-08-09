@@ -1,0 +1,21 @@
+body {
+  font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', sans-serif;
+  color: #4A4A4A;
+}
+
+.user {
+  border: 2px solid yellow;
+  margin: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.user .name {
+  font-size: 1.3em;
+  margin-left: 30px;
+}
+
+.user .alert {
+  justify-content: flex-end;
+}
