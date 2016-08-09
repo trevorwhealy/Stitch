@@ -1,3 +1,5 @@
+'use strict';
+
 const jwt = require('jwt-simple');
 const config = require('../config/config');
 const encryption = require('../utils/encryption');
