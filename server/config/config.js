@@ -5,17 +5,17 @@ const rootPath = path.join(__dirname, '../../');
 
 const config = {
   development: {
-    rootPath: rootPath,
+    rootPath,
     port: process.env.PORT || 3000,
     logLevel: process.env.LOG_LEVEL || 'dev',
-    secret: process.env.APP_SECRET || 'trev is cool'
+    secret: process.env.APP_SECRET || 'trev is cool',
   },
   production: {
-    rootPath: rootPath,
+    rootPath,
     port: process.env.PORT || 80,
     logLevel: process.env.LOG_LEVEL || 'tiny',
-    secret: process.env.APP_SECRET || 'trev is super kinda cool'
-  }
+    secret: process.env.APP_SECRET || 'trev is super kinda cool',
+  },
 };
 
 module.exports = config[env];
