@@ -6,12 +6,27 @@ const encryption = require('../utils/encryption');
 const User = require('../users/user.model');
 
 module.exports = {
+  checkToken,
   login,
   oauthSuccess,
   signup,
 };
 
 /***** PUBLIC *****/
+
+function checkToken(req, res) {
+  const token = req.body.token;
+  if (!token) { return res.status(401).send({ message: 'Invalid token' }); }
+  const payload = jwt.decode(token, config.secret);
+  const username = payload.username || null;
+  const googleId = payload.googleId || null;
+  return User.findOne({ where: { username, googleId } })
+    .then(user => {
+      if (!user) { throw new Error('Invalid token'); }
+      res.sendStatus(200);
+    })
+    .catch(err => res.status(401).send({ message: err.message }));
+}
 
 function login(req, res) {
   let currentUser;
