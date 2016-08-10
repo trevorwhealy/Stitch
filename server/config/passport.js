@@ -10,14 +10,11 @@ passport.use(new JwtStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeader(),
   secretOrKey: config.secret,
 }, (jwtPayload, done) => {
-  User.findOne({
-    where: {
-      username: jwtPayload.username,
-      googleId: jwtPayload.googleId,
-    },
-  })
-  .then(user => done(null, user))
-  .catch(done);
+  const username = jwtPayload.username || null;
+  const googleId = jwtPayload.googleId || null;
+  User.findOne({ where: { username, googleId } })
+    .then(user => done(null, user))
+    .catch(done);
 }));
 
 passport.use(new GoogleStrategy(config.googleAuth, (accessToken, refreshToken, profile, done) => {
