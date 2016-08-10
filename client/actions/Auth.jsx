@@ -68,6 +68,7 @@ export function signUp(userCredentials) {
         dispatch(authFailure(data.message));
       } else if (data.token) {
         const token = data.token;
+        console.log('tokenizing fam')
         localStorage.setItem('jwtToken', token);
         dispatch(authSuccess(token));
       }

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import AuthReducer from './AuthReducer.jsx';
 
 const appReducer = combineReducers({
-  AuthReducer,
+  users: AuthReducer,
 });
 
 export default appReducer;
