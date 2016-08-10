@@ -12,15 +12,15 @@ const userInfo = {
   password: '',
 };
 
-let signIn = (e) => {
+let signUp = (e) => {
   userInfo[e.target.placeholder] = e.target.value;
 };
 
-const LoginForm = ({ onClick }) => (
+const SignUpForm = ({ onClick }) => (
   <Grid>
     <Row>
       <Col xs={7} sm={5} md={4} className="authComponent">
-        <h1 className="welcome">Sign In</h1>
+        <h1 className="welcome">Sign Up</h1>
       </Col>
     </Row>
     <Form horizontal>
@@ -28,7 +28,7 @@ const LoginForm = ({ onClick }) => (
         <Col xs={7} sm={5} md={4} className="authComponent">
           <FormControl
             className="username" type="text" placeholder="username"
-            onChange={signIn}
+            onChange={signUp}
           />
         </Col>
       </FormGroup>
@@ -37,7 +37,7 @@ const LoginForm = ({ onClick }) => (
         <Col xs={7} sm={5} md={4} className="authComponent">
           <FormControl
             className="password" type="password" placeholder="password"
-            onChange={signIn}
+            onChange={signUp}
           />
         </Col>
       </FormGroup>
@@ -55,5 +55,4 @@ const LoginForm = ({ onClick }) => (
   </Grid>
 );
 
-
-export default LoginForm;
+export default SignUpForm;

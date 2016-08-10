@@ -8,19 +8,19 @@ const initialState = {
   statusMessage: '',
 };
 
-const SIGNIN_INITIALIZE = 'SIGNIN_INITIALIZE';
-const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
-const SIGNIN_FAILURE = 'SIGNIN_FAILURE';
+const AUTH_INITIALIZE = 'AUTH_INITIALIZE';
+const AUTH_SUCCESS = 'AUTH_SUCCESS';
+const AUTH_FAILURE = 'AUTH_FAILURE';
 const LOGOUT_USER = 'LOGOUT_USER';
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SIGNIN_INITIALIZE:
+    case AUTH_INITIALIZE:
       return Object.assign({}, state, {
         isAuthenticating: true,
         statusMessage: 'authenticating',
       });
-    case SIGNIN_SUCCESS:
+    case AUTH_SUCCESS:
       return Object.assign({}, state, {
         isAuthenticating: false,
         isAuthenticated: true,
@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
         username: jwtDecode(action.token).username,
         statusMessage: 'You have been successfully logged in.',
       });
-    case SIGNIN_FAILURE:
+    case AUTH_FAILURE:
       return Object.assign({}, state, {
         isAuthenticating: false,
         isAuthenticated: false,
@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         token: null,
         username: null,
-        statusMessage: action.message,
+        statusMessage: 'Successfully logged out',
       });
     default: return state;
   }

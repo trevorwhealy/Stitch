@@ -1,28 +1,34 @@
-import setAuthToken from '../utils/setAuthToken.jsx';
 
-export function signInInit() {
+export function authInit() {
   return {
-    type: 'SIGNIN_INITIALIZE',
+    type: 'AUTH_INITIALIZE',
   };
 }
 
-export function signInSuccess(token) {
+export function authSuccess(token) {
   return {
-    type: 'SIGNIN_SUCCESS',
+    type: 'AUTH_SUCCESS',
     token,
   };
 }
 
-export function signInFailure(message) {
+export function authFailure(message) {
   return {
-    type: 'SIGNIN_FAILURE',
+    type: 'AUTH_FAILURE',
     message,
+  };
+}
+
+export function logout() {
+  localStorage.removeItem('token');
+  return {
+    type: 'LOGOUT_USER',
   };
 }
 
 export function login(userCredentials) {
   return (dispatch) => {
-    dispatch(signInInit());
+    dispatch(authInit());
     return fetch('auth/login', {
       method: 'POST',
       body: JSON.stringify(userCredentials),
@@ -32,12 +38,38 @@ export function login(userCredentials) {
     })
     .then(res => res.json())
     .then(data => {
-      if (data.statusMessage) {
-        dispatch(signInFailure(data.statusMessage));
+      if (data.message) {
+        dispatch(authFailure(data.message));
       } else if (data.token) {
         const token = data.token;
         localStorage.setItem('jwtToken', token);
-        dispatch(signInSuccess(token));
+        dispatch(authSuccess(token));
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+}
+
+export function signUp(userCredentials) {
+  return (dispatch) => {
+    dispatch(authInit());
+    return fetch('auth/signup', {
+      method: 'POST',
+      body: JSON.stringify(userCredentials),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.message) {
+        dispatch(authFailure(data.message));
+      } else if (data.token) {
+        const token = data.token;
+        localStorage.setItem('jwtToken', token);
+        dispatch(authSuccess(token));
       }
     })
     .catch(err => {
