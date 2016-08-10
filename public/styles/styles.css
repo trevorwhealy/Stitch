@@ -5,13 +5,15 @@ body {
 
 .side-nav {
   padding: 32px;
+  display: flex;
+  flex-direction: column;
 }
 
 .user {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .user .name {
@@ -52,8 +54,10 @@ body {
 }
 
 .folderNames {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .folder {
@@ -68,18 +72,15 @@ body {
 }
 
 .search {
-  border: 2px solid red;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  //align-items: flex-end;
-  align-items: center;
-
-
+  margin-bottom: 10px;
 }
 
 .search .query {
   background-color: #D8D8D8;
+  height: 10px;
+  width: 85%;
+  border-radius: 15px;
+  padding: 10px 15px 10px 20px;
 }
 
 /* Necessary for the input placeholder styling */

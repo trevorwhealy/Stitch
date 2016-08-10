@@ -3,7 +3,7 @@ import UserChip from './UserChip.jsx';
 
 const userName = 'AJ Yang';
 
-const folders = ['chemistry', 'biology', 'java', 'c#', 'python'];
+const folders = ['chemistry', 'biology', 'java', 'c#', 'python', 'a', 'b', 'c', 'd', 'e', 'chemistry', 'biology', 'java', 'c#', 'python', 'a', 'b', 'c', 'd'];
 
 
 const Navbar = () => (
@@ -15,6 +15,11 @@ const Navbar = () => (
         <img className="circle" src='/assets/images/sunnyv.jpg' width="35" height="35"/>
         <div className="name">{'Sunny V'}</div>
         <i className="material-icons alert">power_settings_new</i>
+      </div>
+
+      {/* Search is the search bar at the bottom of the page */}
+      <div className="search">
+        <input className="query" type="text" placeholder="Search notes by Name or Tag"/>
       </div>
 
       {/*  createFolder includes title and create button */}
@@ -33,12 +38,6 @@ const Navbar = () => (
             </div>
           );
         })}
-      </div>
-
-      {/* Search is the search bar at the bottom of the page */}
-      <div className="search">
-        <div className="title"> SEARCH </div>
-        <input className="query" type="text" placeholder="Find notes by Name or Tags"/>
       </div>
 
     </ul>
