@@ -20,7 +20,7 @@ export function authFailure(message) {
 }
 
 export function logout() {
-  localStorage.removeItem('token');
+  localStorage.removeItem('jwtToken');
   return {
     type: 'LOGOUT_USER',
   };
@@ -38,16 +38,13 @@ export function login(userCredentials) {
     })
     .then(res => res.json())
     .then(data => {
-      if (data.message) {
-        dispatch(authFailure(data.message));
-      } else if (data.token) {
-        const token = data.token;
-        localStorage.setItem('jwtToken', token);
-        dispatch(authSuccess(token));
-      }
+      if (!data.token) { throw new Error('no token'); }
+      const token = data.token;
+      localStorage.setItem('jwtToken', token);
+      dispatch(authSuccess(token));
     })
     .catch(err => {
-      console.log(err);
+      dispatch(authFailure(err));
     });
   };
 }
@@ -64,17 +61,13 @@ export function signUp(userCredentials) {
     })
     .then(res => res.json())
     .then(data => {
-      if (data.message) {
-        dispatch(authFailure(data.message));
-      } else if (data.token) {
-        const token = data.token;
-        console.log('tokenizing fam')
-        localStorage.setItem('jwtToken', token);
-        dispatch(authSuccess(token));
-      }
+      if (!data.token) { throw new Error('no token'); }
+      const token = data.token;
+      localStorage.setItem('jwtToken', token);
+      dispatch(authSuccess(token));
     })
     .catch(err => {
-      console.log(err);
+      dispatch(authFailure(err));
     });
   };
 }
