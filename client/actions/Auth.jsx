@@ -1,35 +1,47 @@
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import setAuthToken from '../utils/setAuthToken.jsx';
 
-const SET_CURRENT_USER = 'SET_CURRENT_USER';
-
-export function setCurrentUser(user) {
+export function signInInit() {
   return {
-    type: SET_CURRENT_USER,
-    user,
+    type: 'SIGNIN_INITIALIZE',
   };
 }
 
-// export function logout() {
-//   return dispatch => {
-//     localStorage.removeItem('jwtToken');
-//     setAuthorizationToken(false);
-//     dispatch(setCurrentUser({}));
-//   }
-// }
+export function signInSuccess(token) {
+  return {
+    type: 'SIGNIN_SUCCESS',
+    token,
+  };
+}
 
-export function login(data) {
+export function signInFailure(message) {
+  return {
+    type: 'SIGNIN_FAILURE',
+    message,
+  };
+}
+
+export default function login(userCredentials) {
   return (dispatch) => {
-    console.log('hello');
-    return axios.post('/auth/login', data).then(res => {
-      console.log('the res',res);
-      const token = res.data.token;
-      localStorage.setItem('jwtToken', token);
-      setAuthToken(token);
-      dispatch(setCurrentUser(jwtDecode(token)));
+    dispatch(signInInit());
+    return fetch('auth/login', {
+      method: 'POST',
+      body: JSON.stringify(userCredentials),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-    .error(err => {
+    .then(res => res.json())
+    .then(data => {
+      if (data.statusMessage) {
+        dispatch(signInFailure(data.statusMessage));
+      } else if (data.token) {
+        const token = data.token;
+        localStorage.setItem('jwtToken', token);
+        setAuthToken(token);
+        dispatch(signInSuccess(token));
+      }
+    })
+    .catch(err => {
       console.log(err);
     });
   };

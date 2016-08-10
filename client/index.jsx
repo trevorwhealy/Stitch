@@ -18,10 +18,10 @@ import setAuthToken from './utils/setAuthToken.jsx';
 const middleware = [thunk, promiseMiddleware, logger()];
 let store = createStore(appReducer, applyMiddleware(...middleware));
 
-if (localStorage.jwtToken) {
-  setAuthToken(localStorage.jwtToken);
-  store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
-}
+// if (localStorage.jwtToken) {
+//   setAuthToken(localStorage.jwtToken);
+//   store.dispatch(setCurrentUser(jwtDecode(localStorage.jwtToken)));
+// }
 
 ReactDOM.render(
   <Provider store={store}>
