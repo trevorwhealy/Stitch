@@ -3,19 +3,101 @@ body {
   color: #4A4A4A;
 }
 
+.side-nav {
+  padding: 32px;
+}
+
 .user {
-  border: 2px solid yellow;
-  margin: 10px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 50px;
 }
 
 .user .name {
-  font-size: 1.3em;
+  font-size: 1.5em;
   margin-left: 30px;
+  flex: 1;
 }
 
-.user .alert {
-  justify-content: flex-end;
+.user .alert:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.createFolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.createFolder .title {
+  font-size: 18px;
+}
+
+.createFolder .add {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  background-color: #D8D8D8;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.createFolder .add:hover {
+  cursor: pointer;
+  background-color: #9C9999;
+}
+
+.folderNames {
+  display: flex;
+  flex-direction: column;
+}
+
+.folder {
+  font-size: 20px;
+  margin-bottom: 25px;
+  padding-left: 40px;
+}
+
+.folder:hover {
+  cursor: pointer;
+  border-left: 3px solid gray;
+}
+
+.search {
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  //align-items: flex-end;
+  align-items: center;
+
+
+}
+
+.search .query {
+  background-color: #D8D8D8;
+}
+
+/* Necessary for the input placeholder styling */
+/* Credit to: https://css-tricks.com/almanac/selectors/p/placeholder/ */
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #ABABAB;
+  font-size: 14px;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #ABABAB;
+  font-size: 14px;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #ABABAB;
+  font-size: 14px;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: #ABABAB;
+  font-size: 14px;
 }
