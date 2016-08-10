@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
         isAuthenticating: false,
         isAuthenticated: true,
         token: action.token,
-        userName: jwtDecode(action.token).userName,
+        username: jwtDecode(action.token).username,
         statusMessage: 'You have been successfully logged in.',
       });
     case SIGNIN_FAILURE:
@@ -33,14 +33,14 @@ export default (state = initialState, action) => {
         isAuthenticating: false,
         isAuthenticated: false,
         token: null,
-        userName: null,
+        username: null,
         statusMessage: action.message,
       });
     case LOGOUT_USER:
       return Object.assign({}, state, {
         isAuthenticated: false,
         token: null,
-        userName: null,
+        username: null,
         statusMessage: action.message,
       });
     default: return state;

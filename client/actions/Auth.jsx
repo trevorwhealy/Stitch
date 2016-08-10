@@ -20,7 +20,7 @@ export function signInFailure(message) {
   };
 }
 
-export default function login(userCredentials) {
+export function login(userCredentials) {
   return (dispatch) => {
     dispatch(signInInit());
     return fetch('auth/login', {
@@ -37,7 +37,6 @@ export default function login(userCredentials) {
       } else if (data.token) {
         const token = data.token;
         localStorage.setItem('jwtToken', token);
-        setAuthToken(token);
         dispatch(signInSuccess(token));
       }
     })
