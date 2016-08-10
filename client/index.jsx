@@ -1,19 +1,22 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 
-class App extends React.Component {
-  constructor() {
-    super();
-  }
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import promiseMiddleware from 'redux-promise';
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
-  render() {
-    return (
-      <div>
-        hello whats up dude
-      </div>
+import routes from './routes/routes.jsx';
+import appReducer from './reducers/index.js';
 
-    );
-  }
-}
 
-render(<App />, document.getElementById('app'));
+const middleware = [thunk, promiseMiddleware, logger()];
+let store = createStore(appReducer, applyMiddleware(...middleware));
+
+ReactDOM.render(
+  <Provider store={store}>
+    {routes}
+  </Provider>,
+  document.getElementById('app')
+);

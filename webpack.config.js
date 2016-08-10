@@ -6,17 +6,15 @@ module.exports = {
   context: path.join(__dirname, './client'),
   entry: [
     'webpack-hot-middleware/client',
-    './index.jsx'
+    './index.jsx',
   ],
   output: {
     path: path.resolve(__dirname, './public/dist'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
-    //new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin()
-    //new webpack.NoErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
   module: {
     loaders: [
@@ -28,9 +26,9 @@ module.exports = {
       {
         loader: 'babel',
         query: {
-          presets: ['react', 'es2015', 'react-hmre']
-        }
-      }
+          presets: ['react', 'es2015', 'react-hmre'],
+        },
+      },
     ],
-  }
+  },
 };
