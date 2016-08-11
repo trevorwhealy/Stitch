@@ -90,7 +90,7 @@ body {
   height: 10px;
   width: 85%;
   border-radius: 15px;
-  padding: 10px 15px 10px 35px;
+  padding: 10px 0px 10px 35px;
 }
 
 .search .query:focus {
