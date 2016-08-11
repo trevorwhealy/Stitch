@@ -20,6 +20,9 @@ export default class App extends React.Component {
     return (
       <div>
         <Sidebar />
+        <a href="#" data-activates="slide-out" className="button-collapse">
+          <i className="material-icons">menu</i>
+        </a>
         <h1>Homepages</h1>
         <ul>
           <li><Link to="/login">Login</Link></li>
