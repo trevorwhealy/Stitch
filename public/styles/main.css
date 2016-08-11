@@ -1,0 +1,49 @@
+.MainContainer {
+  border: 2px solid orange;
+
+  height: 800px;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+}
+
+
+/** Recent block **/
+
+.recent {
+  border: 2px solid red;
+  width: 100%;
+}
+
+.recent .notes {
+  display: flex;
+  justify-content: space-around;
+}
+
+.recent .notes .note {
+  border: 2px solid yellow;
+  width: 50px;
+  height: 50px;
+}
+
+
+/** Folder block **/
+
+.folderContainer {
+  border: 2px solid blue;
+}
+
+.folderContainer .folderHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.folderContainer .folders {
+  display: flex;
+  flex-direction: column;
+}
+
+.folderContainer .folders .folder {
+  border: 2px solid orange;
+  height: 50px;
+}
