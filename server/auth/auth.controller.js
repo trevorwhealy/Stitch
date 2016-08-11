@@ -54,7 +54,6 @@ function oauthSuccess(req, res) {
 }
 
 function signup(req, res) {
-  console.log('im in signup');
   User.create(req.body)
     .then(user => {
       const token = jwt.encode({ username: user.username }, config.secret);
