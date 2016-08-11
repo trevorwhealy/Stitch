@@ -6,13 +6,22 @@ import SignUp from '../containers/SignUp.jsx';
 import Home from '../components/Home.jsx';
 import Main from '../components/Main.jsx';
 
+const requireAuth = (nextState, replace) => {
+  const token = localStorage.getItem('jwtToken');
+  if (!token) {
+    replace({
+      pathname: '/login',
+    });
+  }
+};
+
 module.exports = (
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={App} >
       <Route path="login" component={Login} />
       <Route path="signup" component={SignUp} />
-      <Route path="home" component={Home} />
       <Route path="main" component={Main} />
+      <Route path="home" component={Home} onEnter={requireAuth} />
     </Route>
   </Router>
 );

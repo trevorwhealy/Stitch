@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
-
 import Sidebar from '../components/Sidebar.jsx';
 
 export default class App extends React.Component {
@@ -12,7 +10,7 @@ export default class App extends React.Component {
     $('.button-collapse').sideNav({
       menuWidth: 300,
       edge: 'left',
-      closeOnClick: true
+      closeOnClick: true,
     });
   }
 
