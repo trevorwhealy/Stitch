@@ -46,6 +46,11 @@ const Sidebar = () => (
         })}
       </div>
     </ul>
+
+    {/* Actual button that will be clicked to open the sideNav */}
+    <a href="#" data-activates="slide-out" className="button-collapse">
+      <i className="material-icons">menu</i>
+    </a>
   </div>
 );
 
