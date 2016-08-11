@@ -1,3 +1,8 @@
+/**,
+*:before,
+*:after {
+}*/
+
 body {
   font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', sans-serif;
   color: #4A4A4A;
@@ -87,10 +92,10 @@ body {
 
 .search .query {
   background-color: #D8D8D8;
-  height: 10px;
-  width: 85%;
+  height: 30px;
   border-radius: 15px;
-  padding: 10px 8px 10px 35px;
+  padding: 10px 15px 10px 35px;
+  box-sizing: border-box !important;
 }
 
 .search .query:focus {
