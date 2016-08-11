@@ -90,7 +90,7 @@ body {
   height: 10px;
   width: 85%;
   border-radius: 15px;
-  padding: 10px 0px 10px 35px;
+  padding: 10px 8px 10px 35px;
 }
 
 .search .query:focus {
@@ -129,6 +129,6 @@ body {
 
 .left-inner-addon i {
   position: absolute;
-  padding: 5px 5px 0px 5px;
+  padding: 5px 0px 0px 5px;
   pointer-events: none;
 }
