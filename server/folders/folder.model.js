@@ -5,8 +5,8 @@ const User = require('../users/user.model');
 const Share = require('../shares/share.model');
 
 const Folder = sequelize.define('folder', {
-  name: Sequelize.STRING,
-  userId: Sequelize.INTEGER,
+  name: { type: Sequelize.STRING, required: true },
+  userId: { type: Sequelize.INTEGER, required: true },
 });
 
 Folder.belongsTo(User);

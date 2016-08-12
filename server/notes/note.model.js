@@ -6,10 +6,10 @@ const Folder = require('../folders/folder.model');
 const Share = require('../shares/share.model');
 
 const Note = sequelize.define('note', {
-  name: Sequelize.STRING,
-  content: Sequelize.BLOB,
-  userId: Sequelize.INTEGER,
-  folderId: Sequelize.INTEGER,
+  name: { type: Sequelize.STRING, defaultValue: 'Untitled' },
+  content: Sequelize.JSON,
+  userId: { type: Sequelize.INTEGER, required: true },
+  folderId: { type: Sequelize.INTEGER, required: true },
 });
 
 Note.belongsTo(User);
