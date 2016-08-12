@@ -54,7 +54,6 @@ function oauthSuccess(req, res) {
 }
 
 function signup(req, res) {
-  console.log('im in signup');
   User.create(req.body)
     .then(user => {
       const token = jwt.encode({ username: user.username }, config.secret);
@@ -66,5 +65,5 @@ function signup(req, res) {
 /***** PRIVATE *****/
 
 function getUserInfo(user) {
-  return { fullName: user.fullName, photo: user.photo };
+  return { id: user.id, fullName: user.fullName, photo: user.photo };
 }

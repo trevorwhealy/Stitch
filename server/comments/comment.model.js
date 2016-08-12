@@ -14,6 +14,4 @@ const Comment = sequelize.define('comment', {
 Comment.belongsTo(User);
 Comment.belongsTo(Note);
 
-Comment.sync();
-
 module.exports = Comment;

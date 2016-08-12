@@ -3,6 +3,7 @@ const sequelize = require('../config/sequelize');
 
 const User = require('../users/user.model');
 const Folder = require('../folders/folder.model');
+const Share = require('../shares/share.model');
 
 const Note = sequelize.define('note', {
   name: Sequelize.STRING,
@@ -13,7 +14,6 @@ const Note = sequelize.define('note', {
 
 Note.belongsTo(User);
 Note.belongsTo(Folder);
-
-Note.sync();
+Note.hasMany(Share);
 
 module.exports = Note;

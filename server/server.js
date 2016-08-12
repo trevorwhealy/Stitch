@@ -4,6 +4,7 @@ const config = require('./config/config');
 
 const app = express();
 
+require('./config/logger');
 require('./config/sequelize');
 require('./config/passport');
 require('./config/express')(app, config);
