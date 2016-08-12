@@ -8,6 +8,7 @@ FolderRouter.route('/')
   .post(FolderCtrl.post);
 
 FolderRouter.route('/:id')
+  .get(FolderCtrl.getOne)
   .put(FolderCtrl.put)
   .delete(FolderCtrl.deleteOne);
 
