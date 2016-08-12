@@ -32,20 +32,20 @@ function getAll(req, res) {
 }
 
 function post(req, res) {
-  const name = req.body.noteId;
-  const userId = req.user.lineNumber;
-  Folder.findAll({
-    where: {
-      $and: { name, userId },
-    },
+  const noteId = req.body.noteId;
+  const userId = req.body.userId;
+  const lineNumber = req.user.lineNumber;
+  const text = req.user.text;
+
+  Comment.create({
+    noteId,
+    userId,
+    lineNumber,
+    text,
   })
-  .then(folders => {
-    if (folders.length > 0) { throw new Error('Duplicate folder name'); }
-    return Folder.create({ name, userId });
-  })
-  .then(newFolder => res.status(201).send(newFolder))
+  .then(newComment => res.status(201).send(newComment))
   .catch(err => {
-    logger.debug('Error creating folder ', err);
+    logger.debug('Error creating comment ', err);
     res.status(400).send({ message: err.message });
   });
 }
