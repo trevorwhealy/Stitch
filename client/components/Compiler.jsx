@@ -24,6 +24,9 @@ class Compiler extends React.Component {
 
     // If no code typed, or no language selected, do not compile
     if (code.length < 1 || lang.length < 1) {
+      this.setState({
+        answer: '',
+      });
       return;
     }
 
