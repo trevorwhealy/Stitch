@@ -1,13 +1,21 @@
 import React from 'react';
+import { Editor, EditorState } from 'draft-js';
 
-const Home = () => (
-  <div className="container">
-{/* this is the container for the entire page */}
-    <div className="recent-notes">
-      <div className="title"> Recent Notes </div>
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: EditorState.createEmpty(),
+    };
+    this.onChange = (editorState) => this.setState({ editorState });
+  }
+  render() {
+    <div className="homeContainer"> 
 
-    </div>
-  </div>
-);
+    </div> 
+  }
+}
 
 export default Home;
+    // const { editorState } = this.state;
+    // return <Editor editorState={editorState} onChange={this.onChange} />;
