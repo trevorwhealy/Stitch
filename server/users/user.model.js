@@ -18,6 +18,4 @@ User.beforeCreate((user) => {
     });
 });
 
-User.sync();
-
 module.exports = User;

@@ -13,6 +13,4 @@ const Permission = sequelize.define('permission', {
 Permission.belongsTo(User);
 Permission.belongsTo(Note);
 
-Permission.sync();
-
 module.exports = Permission;

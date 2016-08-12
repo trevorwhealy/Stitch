@@ -14,6 +14,4 @@ const Alert = sequelize.define('alert', {
 Alert.belongsTo(User);
 Alert.belongsTo(Note);
 
-Alert.sync();
-
 module.exports = Alert;

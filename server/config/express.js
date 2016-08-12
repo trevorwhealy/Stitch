@@ -5,7 +5,7 @@ const passport = require('passport');
 
 module.exports = (app, config) => {
   // logging for request on the console
-  app.use(morgan(config.logLevel));
+  app.use(morgan(config.apiLogLevel));
 
   // middleware for parsing
   app.use(bodyParser.json());
