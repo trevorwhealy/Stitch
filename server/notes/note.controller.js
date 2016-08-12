@@ -1,5 +1,5 @@
 const logger = require('../config/logger');
-const checkTransactionSuccess = require('../utils/middleware').checkTransactionSuccess;
+const verify = require('../utils/verify');
 
 const Note = require('./note.model');
 
@@ -17,7 +17,7 @@ function deleteOne(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
   Note.destroy({ where: { id, userId } })
-    .then(checkTransactionSuccess)
+    .then(verify.transactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {
       logger.debug('Error updating note ', err);
@@ -67,7 +67,7 @@ function put(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
   Note.update(req.body, { where: { id, userId } })
-    .then(checkTransactionSuccess)
+    .then(verify.transactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {
       logger.debug('Error updating note ', err);

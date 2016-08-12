@@ -1,11 +1,9 @@
 module.exports = {
-  checkTransactionSuccess,
+  ownerOnly,
 };
 
 /***** PUBLIC *****/
 
-function checkTransactionSuccess(numAffected) {
-  if (numAffected === 0) {
-    throw new Error('Not found');
-  }
+function ownerOnly(req, res, next) {
+
 }
