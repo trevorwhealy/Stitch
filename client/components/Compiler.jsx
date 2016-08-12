@@ -55,7 +55,7 @@ class Compiler extends React.Component {
       console.log(data.stdout.indexOf('/usr/src/app/'));
 
       // if /usr/src/app exists in the output
-      if (data.stdout.indexOf('/usr/src/app/') !== -1) {
+      //if (data.stdout.indexOf('/usr/src/app/') !== -1) {
         console.log('entire', data.stdout);
 
         const ErrorLocation = data.stdout.substring(data.stdout.indexOf(',') + 2, data.stdout.indexOf('^') + 1);
@@ -63,7 +63,7 @@ class Compiler extends React.Component {
         const ErrorMessage = `${SyntaxError} \n ${ErrorLocation}`;
 
         console.log('error msg', ErrorMessage);
-      } else {
+
         this.setState({
           loader: false,
         });
@@ -73,7 +73,7 @@ class Compiler extends React.Component {
         });
 
         console.log('success', data.stdout);
-      }
+      //}
     });
   };
 
