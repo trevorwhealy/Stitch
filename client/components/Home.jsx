@@ -10,12 +10,11 @@ class Home extends React.Component {
     this.onChange = (editorState) => this.setState({ editorState });
   }
   render() {
-    <div className="homeContainer"> 
-
-    </div> 
+    const { editorState } = this.state;
+    return <Editor editorState={editorState} onChange={this.onChange} />;
   }
 }
 
+    // </div> 
+    // <div className="homeContainer"> 
 export default Home;
-    // const { editorState } = this.state;
-    // return <Editor editorState={editorState} onChange={this.onChange} />;
