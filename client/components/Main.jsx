@@ -5,7 +5,6 @@ class Main extends React.Component {
     super();
   }
 
-
   render() {
     const fakeNotes = [
       {
@@ -24,11 +23,8 @@ class Main extends React.Component {
         title: 'My Note A',
         updatedAt: '1/11/16 11:11AM',
       },
-      {
-        title: 'My Note A',
-        updatedAt: '1/11/16 11:11AM',
-      },
     ];
+
     const fakeFolders = [
       {
         folderName: 'My Folder A',
@@ -50,18 +46,26 @@ class Main extends React.Component {
     return (
       <div className="MainContainer">
         <div className="recent">
-          {'RECENT NOTES'}
+          <div className="title"> {'RECENT NOTES'} </div>
           <div className="notes">
             {fakeNotes.map(note => {
               return (
                 <div className="note">
-                  {note.tile}
-                  {note.updatedAt}
+                  <div className="top">
+                    {'picture'}
+                  </div>
+                  <div className="bottom">
+                    <div className="noteTitle">
+                      {note.title}
+                    </div>
+                    <div className="noteDetails">
+                      {note.updatedAt}
+                    </div>
+                  </div>
                 </div>
               );
             })}
           </div>
-
         </div>
 
         <div className="folderContainer">
@@ -81,11 +85,7 @@ class Main extends React.Component {
             })}
           </div>
         </div>
-
-
       </div>
-
-
     );
   }
 }
