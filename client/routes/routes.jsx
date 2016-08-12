@@ -4,6 +4,7 @@ import App from '../containers/App.jsx';
 import Login from '../containers/Login.jsx';
 import SignUp from '../containers/SignUp.jsx';
 import Home from '../components/Home.jsx';
+import Main from '../components/Main.jsx';
 
 module.exports = (
   <Router history={browserHistory}>
@@ -11,6 +12,7 @@ module.exports = (
       <Route path="login" component={Login} />
       <Route path="signup" component={SignUp} />
       <Route path="home" component={Home} />
+      <Route path="main" component={Main} />
     </Route>
   </Router>
 );

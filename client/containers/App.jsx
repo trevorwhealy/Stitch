@@ -20,10 +20,6 @@ export default class App extends React.Component {
     return (
       <div>
         <Sidebar />
-        <h1>Homepages</h1>
-        <ul>
-          <li><Link to="/login">Login</Link></li>
-        </ul>
         {this.props.children}
       </div>
     );
