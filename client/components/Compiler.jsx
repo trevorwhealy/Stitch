@@ -1,22 +1,32 @@
 import React from 'react';
 
-$(document).ready(function() {
-   $('select').material_select();
+// Jquery for the material dropdown for language choices
+$(document).ready(function () {
+  $('select').material_select();
 });
 
-const Compiler = () => {
+class Compiler extends React.Component {
+  constructor() {
+    super();
 
-  let globalVariable;
+    this.state = {
+      loader: false,
+      run: false,
+      answer: '',
+    };
+  }
 
-  const compile = e => {
+  compile(e) {
     e.preventDefault();
+    this.setState({
+      loader: true,
+      run: true,
+    });
 
-    var jwtToken = localStorage.getItem('jwtToken');
+    const jwtToken = localStorage.getItem('jwtToken');
 
     const code = document.getElementById('codeToRun').value;
     const lang = document.getElementById('language').value;
-
-    console.log(lang);
 
     fetch('http://localhost:3030/run', {
       method: 'POST',
@@ -26,37 +36,57 @@ const Compiler = () => {
       }),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `JWT ${jwtToken}`,
+        Authorization: `JWT ${jwtToken}`,
       },
     })
     .then(res => res.json())
     .then(data => {
-      if (data.stdout.indexOf('/usr/src/app/')) {
-        const SyntaxError = data.stdout.substring(data.stdout.indexOf(','));
+      console.log(data.stdout.indexOf('/usr/src/app/'));
+      if (data.stdout.indexOf('/usr/src/app/') !== -1) {
+        //const SyntaxError = data.stdout.substring(data.stdout.indexOf(','));
         console.log(data.stdout);
-        console.log(SyntaxError);
+        const ErrorLocation = data.stdout.substring(data.stdout.indexOf(',') + 2, data.stdout.indexOf('^') + 1);
+        const SyntaxError = data.stdout.substring(data.stdout.indexOf('SyntaxError: '));
+
+        const ErrorMessage = `${SyntaxError} \n ${ErrorLocation}`;
+        console.log(ErrorMessage);
       } else {
-        console.log(data.stdout);
+        this.setState({
+          loader: false,
+        });
+
+        this.setState({
+          answer: data.stdout,
+        });
+
+        console.log('success', data.stdout);
       }
-      //var errorIndicator = data.stdout.substring(0,19);
-      //if (data.stdout.substring(0, 12));
-      //console.log(data.stdout)
     });
   };
 
-  return (
-    <div>
-      <select id="language">
-        <option value="" disabled selected>Choose your language</option>
-        <option value="node">Javascript</option>
-        <option value="python">Python</option>
-        <option value="ruby">Ruby</option>
-      </select>
-
-      <textarea id="codeToRun" type="text" name="code" />
-      <button onClick={compile}>Compile</button>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        {console.log(this.state.loader)}
+        <select id="language">
+          <option value="" disabled selected>Choose your language</option>
+          <option value="node">Javascript</option>
+          <option value="python">Python</option>
+          <option value="ruby">Ruby</option>
+        </select>
+        <textarea rows={10} id="codeToRun" type="text" name="code" />
+        {
+          this.state.loader ? <div className="progress"><div className="indeterminate" /></div> : ''
+        }
+        {
+          this.state.run ? <div className="output">{this.state.answer}</div> : ''
+        }
+        <button onClick={this.compile.bind(this)}>
+          Compile
+        </button>
+      </div>
+    );
+  }
 };
 
 export default Compiler;
