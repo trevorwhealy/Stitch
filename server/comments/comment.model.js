@@ -5,10 +5,22 @@ const User = require('../users/user.model');
 const Note = require('../notes/note.model');
 
 const Comment = sequelize.define('comment', {
-  text: Sequelize.BLOB,
-  lineNumber: Sequelize.INTEGER,
-  userId: Sequelize.INTEGER,
-  noteId: Sequelize.INTEGER,
+  text: {
+    type: Sequelize.STRING,
+    required: true,
+  },
+  lineNumber: {
+    type: Sequelize.INTEGER,
+    required: true,
+  },
+  userId: {
+    type: Sequelize.INTEGER,
+    required: true,
+  },
+  noteId: {
+    type: Sequelize.INTEGER,
+    required: true,
+  },
 });
 
 Comment.belongsTo(User);
