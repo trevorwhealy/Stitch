@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 const logger = require('../config/logger');
+const checkTransactionSuccess = require('../utils/middleware').checkTransactionSuccess;
 
 const Folder = require('./folder.model');
 const Share = require('../shares/share.model');
@@ -63,7 +64,7 @@ function put(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
   Folder.update(req.body, { where: { id, userId } })
-    .then(checkSuccess)
+    .then(checkTransactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {
       logger.debug('Error updating folder ', id, userId, err);
@@ -75,18 +76,10 @@ function deleteOne(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
   Folder.destroy({ where: { id, userId } })
-    .then(checkSuccess)
+    .then(checkTransactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {
       logger.debug('Error deleting folder ', id, userId, err);
       res.status(400).send({ message: err.message });
     });
-}
-
-/***** PRIVATE *****/
-
-function checkSuccess(numAffected) {
-  if (numAffected === 0) {
-    throw new Error('No folder found');
-  }
 }

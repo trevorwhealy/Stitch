@@ -7,7 +7,7 @@ const Share = require('../shares/share.model');
 
 const Note = sequelize.define('note', {
   name: { type: Sequelize.STRING, defaultValue: 'Untitled' },
-  content: Sequelize.BLOB,
+  content: Sequelize.JSON,
   userId: { type: Sequelize.INTEGER, required: true },
   folderId: { type: Sequelize.INTEGER, required: true },
 });
