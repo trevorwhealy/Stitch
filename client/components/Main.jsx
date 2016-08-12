@@ -28,18 +28,21 @@ class Main extends React.Component {
     const fakeFolders = [
       {
         folderName: 'My Folder A',
-        createdBy: 'Trevor Easy',
+        createdBy: 'Trevor H.',
         count: 4,
+        shared: true,
       },
       {
         folderName: 'My Folder A',
-        createdBy: 'Trevor Easy',
+        createdBy: 'Trevor H.',
         count: 4,
+        shared: false,
       },
       {
         folderName: 'My Folder A',
-        createdBy: 'Trevor Easy',
+        createdBy: 'Trevor H.',
         count: 4,
+        shared: false,
       },
     ];
 
@@ -51,9 +54,7 @@ class Main extends React.Component {
             {fakeNotes.map(note => {
               return (
                 <div className="note">
-                  <div className="top">
-                    {'picture'}
-                  </div>
+                  <div className="top">{''}</div>
                   <div className="bottom">
                     <div className="noteTitle">
                       {note.title}
@@ -71,15 +72,34 @@ class Main extends React.Component {
         <div className="folderContainer">
           <div className="folderHeader">
             <div>{'Folders'}</div>
-            <div>{'Add Folder'}</div>
+            <div className="add">
+              <i className="material-icons">add</i>
+              <div className="addFolder">{'NEW FOLDER'}</div>
+            </div>
           </div>
           <div className="folders">
             {fakeFolders.map(folder => {
               return (
-                <div className="folder">
-                  {folder.folderName}
-                  {folder.createdBy}
-                  {folder.count}
+                <div className="eachFolder">
+                  <div className="folderContents">
+                    <i className="material-icons">folder</i>
+                    <div className="content">
+                      <div className="top">
+                        {folder.folderName}
+                        {folder.shared ? 'shared' : ''}
+                      </div>
+                      <div className="bottom">
+                        {`${folder.count} notes`}
+                        &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                        {`Created by ${folder.createdBy}`}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="elipses">
+                      <i className="material-icons">more_vert</i>
+                    </div>
+                  </div>
                 </div>
               );
             })}
