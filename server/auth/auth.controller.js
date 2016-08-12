@@ -65,5 +65,5 @@ function signup(req, res) {
 /***** PRIVATE *****/
 
 function getUserInfo(user) {
-  return { fullName: user.fullName, photo: user.photo };
+  return { id: user.id, fullName: user.fullName, photo: user.photo };
 }
