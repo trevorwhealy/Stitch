@@ -35,6 +35,19 @@ export function getAllFolders() {
   };
 }
 
-export function createFolder() {
+export function createFolder(name) {
   const token = localStorage.getItem('jwtToken');
+
+  return () => {
+    return fetch('/api/folders/', {
+      method: 'POST',
+      header: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+      body: {
+        name,
+      },
+    });
+  };
 }
