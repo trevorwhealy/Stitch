@@ -20,8 +20,7 @@ class Home extends React.Component {
       recentNotes =
         notes.map(note => {
           return (
-            <Link to={{ pathname: 'note', query: {noteId: `${note.id}`}}}>
-            <div className="note">
+            <Link className="note" to={{ pathname: 'note', query: {noteId: `${note.id}`}}}>
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
@@ -31,7 +30,6 @@ class Home extends React.Component {
                   {`Updated at ${note.updatedAt.slice(0, 10)}`}
                 </div>
               </div>
-            </div>
             </Link>
           );
         });
