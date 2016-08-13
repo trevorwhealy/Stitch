@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Router, browserHistory } from 'react-router';
+import { Route, Router, browserHistory, IndexRoute } from 'react-router';
 import App from '../containers/App.jsx';
 import Login from '../containers/Login.jsx';
 import SignUp from '../containers/SignUp.jsx';
@@ -19,7 +19,7 @@ const requireAuth = (nextState, replace) => {
 module.exports = (
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={requireAuth}>
-      <Route path="home" component={Home} />
+      <IndexRoute component={Home} />
       <Route path="note" component={Note} />
       <Route path="compiler" component={Compiler} />
     </Route>
