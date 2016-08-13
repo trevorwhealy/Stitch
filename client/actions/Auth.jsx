@@ -7,7 +7,6 @@ export function authInit() {
 }
 
 export function authSuccess(token) {
-  // change the route right here
   return {
     type: 'AUTH_SUCCESS',
     token,

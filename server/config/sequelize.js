@@ -16,4 +16,5 @@ require('../comments/comment.model');
 sequelize.authenticate()
   .then(() => console.log('Database is connected'))
   .then(() => sequelize.sync())
+  .then(() => require('../seeds'))
   .catch(err => console.error('DB Error: ', err));

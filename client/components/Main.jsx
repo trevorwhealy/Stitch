@@ -1,71 +1,46 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+// import { getAllFolders } from '../actions/FolderActions.jsx';
+import * as noteActionCreators from '../actions/NoteActions.jsx';
+import * as folderActionCreators from '../actions/FolderActions.jsx';
 
 class Main extends React.Component {
-  constructor() {
-    super();
+  componentWillMount() {
+    this.props.noteActions.getAllNotes();
+    this.props.folderActions.getAllFolders();
   }
 
   render() {
-    const fakeNotes = [
-      {
-        title: 'My Note A',
-        updatedAt: '1/11/16 11:11AM',
-      },
-      {
-        title: 'My Note A',
-        updatedAt: '1/11/16 11:11AM',
-      },
-      {
-        title: 'My Note A',
-        updatedAt: '1/11/16 11:11AM',
-      },
-      {
-        title: 'My Note A',
-        updatedAt: '1/11/16 11:11AM',
-      },
-    ];
+    const notes = this.props.notes.note;
+    const folders = this.props.folders.folder;
+    let recentNotes;
 
-    const fakeFolders = [
-      {
-        folderName: 'My Folder A',
-        createdBy: 'Trevor H.',
-        count: 4,
-        shared: true,
-      },
-      {
-        folderName: 'My Folder A',
-        createdBy: 'Trevor H.',
-        count: 4,
-        shared: false,
-      },
-      {
-        folderName: 'My Folder A',
-        createdBy: 'Trevor H.',
-        count: 4,
-        shared: false,
-      },
-    ];
+    if (notes) {
+      recentNotes =
+        notes.map(note => {
+          return (
+            <div className="note">
+              <div className="top">{''}</div>
+              <div className="bottom">
+                <div className="noteTitle">
+                  {note.name}
+                </div>
+                <div className="noteDetails">
+                  {`Updated at ${note.updatedAt.slice(0, 10)}`}
+                </div>
+              </div>
+            </div>
+          );
+        });
+      }
 
     return (
       <div className="MainContainer">
         <div className="recent">
           <div className="title"> {'RECENT NOTES'} </div>
           <div className="notes">
-            {fakeNotes.map(note => {
-              return (
-                <div className="note">
-                  <div className="top">{''}</div>
-                  <div className="bottom">
-                    <div className="noteTitle">
-                      {note.title}
-                    </div>
-                    <div className="noteDetails">
-                      {note.updatedAt}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {recentNotes}
           </div>
         </div>
 
@@ -78,20 +53,20 @@ class Main extends React.Component {
             </div>
           </div>
           <div className="folders">
-            {fakeFolders.map(folder => {
+            {folders.map(folder => {
               return (
                 <div className="eachFolder">
                   <div className="folderContents">
                     <i className="material-icons">folder</i>
                     <div className="content">
                       <div className="top">
-                        {folder.folderName}
+                        {folder.name}
                         {folder.shared ? 'shared' : ''}
                       </div>
                       <div className="bottom">
-                        {`${folder.count} notes`}
+                        {`${3} notes`}
                         &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-                        {`Created by ${folder.createdBy}`}
+                        {`Created by ${folder.user.fullName}`}
                       </div>
                     </div>
                   </div>
@@ -110,5 +85,26 @@ class Main extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  folderActions: bindActionCreators(folderActionCreators, dispatch),
+  noteActions: bindActionCreators(noteActionCreators, dispatch),
+});
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    folders: state.folders,
+    notes: state.notes,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main);
+
+Main.propTypes = {
+  folderActions: React.PropTypes.object,
+  noteActions: React.PropTypes.object,
+  folders: React.PropTypes.object,
+  notes: React.PropTypes.object,
+};
