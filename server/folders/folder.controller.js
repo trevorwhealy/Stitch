@@ -9,6 +9,7 @@ const User = require('../users/user.model');
 
 module.exports = {
   getAll,
+  getOne,
   post,
   put,
   deleteOne,
@@ -39,6 +40,25 @@ function getAll(req, res) {
     logger.debug('Error retrieving folders ', err);
     res.status(400).send({ message: err.message });
   });
+}
+
+function getOne(req, res) {
+  const id = req.params.id;
+  Folder.findOne({
+    where: { id },
+    include: [
+      { model: User, attributes: ['id', 'fullName'] },
+      { model: Share, attributes: ['userId'] },
+    ],
+  })
+    .then(folder => {
+      if (!folder) { throw new Error('Folder does not exist'); }
+      res.send(folder);
+    })
+    .catch(err => {
+      logger.debug('Error retrieving folder ', err);
+      res.status(400).send({ message: err.message });
+    });
 }
 
 function post(req, res) {
