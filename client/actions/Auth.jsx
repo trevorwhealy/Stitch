@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 
 export function authInit() {
   return {
@@ -41,6 +42,7 @@ export function login(userCredentials) {
       if (!data.token) { throw new Error('no token'); }
       const token = data.token;
       localStorage.setItem('jwtToken', token);
+      browserHistory.push('/home');
       dispatch(authSuccess(token));
     })
     .catch(err => {
@@ -64,6 +66,7 @@ export function signUp(userCredentials) {
       if (!data.token) { throw new Error('no token'); }
       const token = data.token;
       localStorage.setItem('jwtToken', token);
+      browserHistory.push('/home');
       dispatch(authSuccess(token));
     })
     .catch(err => {

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const UserChip = () => (
   <div className="userChip">
     <img src={userProf} className="circle userIcon" />
