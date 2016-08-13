@@ -5,4 +5,8 @@ CommentRouter.route('/')
   .get(CommentCtrl.getAll)
   .post(CommentCtrl.post);
 
+CommentRouter.route('/:commentId')
+  .put(CommentCtrl.put)
+  .delete(CommentCtrl.deleteOne);
+
 module.exports = CommentRouter;

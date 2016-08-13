@@ -1,25 +1,26 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize');
 const logger = require('../config/logger');
-// const checkTransactionSuccess = require('../utils/middleware').checkTransactionSuccess;
+const checkTransactionSuccess = require('../utils/middleware').checkTransactionSuccess;
 
 const Comment = require('./comment.model');
-const User = require('../users/user.model');
-// const Note = require('../users/note.model');
 
 module.exports = {
   getAll,
   post,
+  put,
   deleteOne,
 };
 
 /***** PUBLIC *****/
 
 function getAll(req, res) {
-  const noteId = req.param('noteId');
+  const noteId = req.query('noteId');
+  const userId = req.user.id;
   Comment.findAll({
     where: {
       noteId,
+      userId,
     },
   })
   .then(comments => {
@@ -33,9 +34,9 @@ function getAll(req, res) {
 
 function post(req, res) {
   const noteId = req.body.noteId;
-  const userId = req.body.userId;
-  const lineNumber = req.user.lineNumber;
-  const text = req.user.text;
+  const userId = req.user.id;
+  const text = req.body.text;
+  const lineNumber = req.body.lineNumber;
 
   Comment.create({
     noteId,
@@ -50,10 +51,26 @@ function post(req, res) {
   });
 }
 
+
+/* ************************************** */
+
+function put(req, res) {
+  const id = req.params.id;
+  const userId = req.user.id;
+  Comment.update(req.body, { where: { id, userId } })
+  .then(checkTransactionSuccess)
+  .then(() => res.sendStatus(200))
+  .catch(err => {
+    logger.debug('Error updating comment ', id, userId, err);
+    res.status(400).send({ message: err.message });
+  });
+}
+
 function deleteOne(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
-  Folder.destroy({ where: { id, userId } })
+
+  Comment.destroy({ where: { id, userId } })
     .then(checkTransactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {
