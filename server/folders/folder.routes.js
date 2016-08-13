@@ -1,7 +1,7 @@
 const FolderRouter = require('express').Router();
 const FolderCtrl = require('./folder.controller');
 
-const NoteRouter = require('../notes/note.routes');
+const ShareCtrl = require('../shares/share.controller');
 
 FolderRouter.route('/')
   .get(FolderCtrl.getAll)
@@ -12,6 +12,7 @@ FolderRouter.route('/:id')
   .put(FolderCtrl.put)
   .delete(FolderCtrl.deleteOne);
 
-FolderRouter.use(NoteRouter);
+FolderRouter.post('/:folderId/share', ShareCtrl.shareFolder);
+FolderRouter.post('/:folderId/unshare', ShareCtrl.unshareFolder);
 
 module.exports = FolderRouter;

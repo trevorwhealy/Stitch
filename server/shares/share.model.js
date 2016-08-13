@@ -4,7 +4,7 @@ const sequelize = require('../config/sequelize');
 const User = require('../users/user.model');
 
 const Share = sequelize.define('share', {
-  userId: Sequelize.INTEGER,
+  userId: { type: Sequelize.INTEGER, required: true },
   folderId: Sequelize.INTEGER,
   noteId: Sequelize.INTEGER,
 });
