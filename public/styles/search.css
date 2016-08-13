@@ -55,6 +55,7 @@ body {
 }
 
 .folderFiles .notes .note .open {
+  transition: all .4s ease;
   border-left: 2px solid gray;
   font-size: 20px;
   align-self: center;
