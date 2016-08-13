@@ -6,13 +6,16 @@ import * as folderActionCreators from '../actions/FolderActions.jsx';
 /* Constant variables to test component render */
 /* TODO: Replace the below test variables with relevant user state from redux */
 const userFullName = 'Trevor';
-const folders = ['chemistry', 'biology', 'java', 'c#', 'python', 'a', 'b', 'c', 'd'];
+//const folders = ['chemistry', 'biology', 'java', 'c#', 'python', 'a', 'b', 'c', 'd'];
 
 class Sidebar extends React.Component {
   componentWillMount() {
-    console.log(this.props.folderActions); //.getAllFolders();
+    this.props.folderActions.getAllFolders();
   }
+
   render() {
+    const folders = this.props.folders.folder;
+    console.log('13412342343432423', folders);
     return (
       <div>
         <ul id="slide-out" className="side-nav">
@@ -78,3 +81,8 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Sidebar);
+
+Sidebar.propTypes = {
+  folderActions: React.PropTypes.object,
+  folders: React.PropTypes.object,
+};

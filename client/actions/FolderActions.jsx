@@ -34,3 +34,7 @@ export function getAllFolders() {
     });
   };
 }
+
+export function createFolder() {
+  const token = localStorage.getItem('jwtToken');
+}
