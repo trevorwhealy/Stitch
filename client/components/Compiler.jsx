@@ -55,11 +55,6 @@ class Compiler extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      // console.log(data.stdout.indexOf('/usr/src/app/'));
-
-      // if /usr/src/app exists in the output
-      // if (data.stdout.indexOf('/usr/src/app/') !== -1) {
-
       const ErrorLocation = data.stdout.substring(data.stdout.indexOf(',') + 2, data.stdout.indexOf('^') + 1);
       const SyntaxError = data.stdout.substring(data.stdout.indexOf('SyntaxError: '));
       const ErrorMessage = `${SyntaxError} \n ${ErrorLocation}`;
