@@ -2,7 +2,7 @@ import React from 'react';
 import { Editor, EditorState } from 'draft-js';
 
 
-class Page extends React.Component {
+class Note extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,7 @@ class Page extends React.Component {
   render() {
   const { editorState } = this.state;
     return(
-      <div className="PageContainer">
+      <div className="NoteContainer">
         <div className="noteTitle">
           {'Biology Notes'}
         </div>
@@ -27,4 +27,4 @@ class Page extends React.Component {
   }
 }
 
-export default Page;
+export default Note;
