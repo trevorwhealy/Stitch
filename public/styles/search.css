@@ -1,0 +1,14 @@
+.folderFiles {
+  padding: 80px;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 500px;
+}
+
+.folderFiles .title {
+  font-size: 36px;
+  color: #4A4A4A;
+  margin-bottom: 50px;
+}
