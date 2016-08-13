@@ -14,7 +14,4 @@ class Home extends React.Component {
     return <Editor editorState={editorState} onChange={this.onChange} />;
   }
 }
-
-    // </div> 
-    // <div className="homeContainer"> 
 export default Home;
