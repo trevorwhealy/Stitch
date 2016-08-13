@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import { getAllFolders } from '../actions/FolderActions.jsx';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
@@ -33,7 +32,7 @@ class Main extends React.Component {
             </div>
           );
         });
-      }
+    }
 
     return (
       <div className="MainContainer">

@@ -5,7 +5,6 @@ import Login from '../containers/Login.jsx';
 import SignUp from '../containers/SignUp.jsx';
 import Home from '../components/Home.jsx';
 import Main from '../components/Main.jsx';
-import Sidebar from '../components/Sidebar.jsx';
 import Page from '../components/Page.jsx';
 
 const requireAuth = (nextState, replace) => {
