@@ -5,7 +5,7 @@ CommentRouter.route('/')
   .get(CommentCtrl.getAll)
   .post(CommentCtrl.post);
 
-CommentRouter.route('/:commentId')
+CommentRouter.route('/:id')
   .put(CommentCtrl.put)
   .delete(CommentCtrl.deleteOne);
 
