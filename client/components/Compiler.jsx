@@ -1,9 +1,5 @@
 import React from 'react';
-
-// Jquery for the material dropdown for language choices
-$(document).ready(function () {
-  $('select').material_select();
-});
+import compilerAPI from '../config';
 
 class Compiler extends React.Component {
   constructor() {
@@ -15,6 +11,10 @@ class Compiler extends React.Component {
       answer: '',
       languages: ['python', 'ruby', 'javascript'],
     };
+  }
+
+  componentDidMount() {
+    $('select').material_select();
   }
 
   compile(e) {
@@ -42,7 +42,7 @@ class Compiler extends React.Component {
 
     const jwtToken = localStorage.getItem('jwtToken');
 
-    fetch('http://localhost:3030/run', {
+    fetch(compilerAPI.endPoint, {
       method: 'POST',
       body: JSON.stringify({
         language: lang,
