@@ -55,30 +55,27 @@ class Compiler extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data.stdout.indexOf('/usr/src/app/'));
+      // console.log(data.stdout.indexOf('/usr/src/app/'));
 
       // if /usr/src/app exists in the output
-      //if (data.stdout.indexOf('/usr/src/app/') !== -1) {
-        console.log('entire', data.stdout);
+      // if (data.stdout.indexOf('/usr/src/app/') !== -1) {
 
-        const ErrorLocation = data.stdout.substring(data.stdout.indexOf(',') + 2, data.stdout.indexOf('^') + 1);
-        const SyntaxError = data.stdout.substring(data.stdout.indexOf('SyntaxError: '));
-        const ErrorMessage = `${SyntaxError} \n ${ErrorLocation}`;
+      const ErrorLocation = data.stdout.substring(data.stdout.indexOf(',') + 2, data.stdout.indexOf('^') + 1);
+      const SyntaxError = data.stdout.substring(data.stdout.indexOf('SyntaxError: '));
+      const ErrorMessage = `${SyntaxError} \n ${ErrorLocation}`;
+      console.log('error msg', ErrorMessage);
 
-        console.log('error msg', ErrorMessage);
+      this.setState({
+        loader: false,
+      });
 
-        this.setState({
-          loader: false,
-        });
+      this.setState({
+        answer: data.stdout,
+      });
 
-        this.setState({
-          answer: data.stdout,
-        });
-
-        console.log('success', data.stdout);
-      //}
+      console.log('success', data.stdout);
     });
-  };
+  }
 
   render() {
     return (
@@ -105,6 +102,6 @@ class Compiler extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default Compiler;
