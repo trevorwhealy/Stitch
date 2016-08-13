@@ -6,6 +6,7 @@ import SignUp from '../containers/SignUp.jsx';
 import Home from '../components/Home.jsx';
 import Compiler from '../components/Compiler.jsx';
 import Note from '../components/Note.jsx';
+import FolderFiles from '../components/FolderFiles.jsx';
 
 const requireAuth = (nextState, replace) => {
   const token = localStorage.getItem('jwtToken');
@@ -13,7 +14,7 @@ const requireAuth = (nextState, replace) => {
     replace({
       pathname: '/login',
     });
-  } 
+  }
 };
 
 module.exports = (
@@ -22,6 +23,7 @@ module.exports = (
       <IndexRoute component={Home} />
       <Route path="note" component={Note} />
       <Route path="compiler" component={Compiler} />
+      <Route path="FolderFiles" component={FolderFiles} />
     </Route>
     <Route path="/login" component={Login} />
     <Route path="/signup" component={SignUp} />
