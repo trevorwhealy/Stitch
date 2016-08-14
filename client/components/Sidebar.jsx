@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import swal from 'sweetalert2';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
 /* Constant variables to test component render */
@@ -9,8 +10,35 @@ const userFullName = 'Trevor';
 //const folders = ['chemistry', 'biology', 'java', 'c#', 'python', 'a', 'b', 'c', 'd'];
 
 class Sidebar extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      addFolder: false,
+    };
+  }
+
   componentWillMount() {
     this.props.folderActions.getAllFolders();
+  }
+
+  createFolder() {
+    this.setState({
+      addFolder: true,
+    });
+  }
+
+  yell(e) {
+    if (e.keyCode === 13) {
+      if (e.target.value.length > 0) {
+        this.props.folderActions.createFolder(e.target.value);
+        this.setState({
+          addFolder: false,
+        });
+
+        e.target.value = '';
+      }
+    }
   }
 
   render() {
@@ -42,8 +70,10 @@ class Sidebar extends React.Component {
           {/*  Create Folder: title and create button */}
           <div className="createFolder">
             <div className="title"> FOLDERS </div>
-            <div className="add">NEW<i className="tiny material-icons alert">add</i></div>
+            <div onClick={this.createFolder.bind(this)} className="add">NEW<i className="tiny material-icons alert">add</i></div>
           </div>
+
+          { this.state.addFolder ? <input type="text" name="folderName" onKeyDown={this.yell.bind(this)} /> : '' }
 
           {/* Folder Names: names of folders */}
           <div className="folderNames">
@@ -51,7 +81,7 @@ class Sidebar extends React.Component {
               // TODO: decide how many folders we want to display - most recent 5? all of them?
               return (
                 <div className="folder">
-                  {folder}
+                  {folder.name}
                 </div>
               );
             })}

@@ -37,17 +37,22 @@ export function getAllFolders() {
 
 export function createFolder(name) {
   const token = localStorage.getItem('jwtToken');
+  //console.log(token, '123412341234123412341234');
 
-  return () => {
+  return (dispatch) => {
     return fetch('/api/folders/', {
       method: 'POST',
-      header: {
+      headers: {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
       },
-      body: {
-        name,
-      },
-    });
+      body: JSON.stringify({ name }),
+    })
+    .then(res => res.text())
+    .then(data => {
+      console.log(data);
+      dispatch(getAllFolders());
+    })
+    .catch(err => console.log(err));
   };
 }
