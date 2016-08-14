@@ -18,6 +18,7 @@ import {
   InlineStyleControls,
 } from  './utils/StyleControls.jsx';
 
+import Compiler from './blocks/Compiler.jsx';
 // import {Map} from 'immutable';
 
 // import { Map } from 'immutable';
@@ -62,9 +63,21 @@ export default class RichEditor extends React.Component {
   getBlockStyle(block) {
     switch (block.getType()) {
       case 'blockquote': return 'RichEditor-blockquote';
+      case 'Code Block': return 'RichEditor-code-block-unique';
       default: return null;
     }
   }
+
+  // myBlockRenderer(contentBlock) {
+  //   console.log(contentBlock);
+  //   const type = contentBlock.getType();
+  //   if ( type === 'Code Block') {
+  //     return {
+  //       component: Compiler,
+  //       editable: true,
+  //     }
+  //   }
+  // }
 
   handleKeyCommand(command) {
     const { editorState } = this.state;
@@ -98,6 +111,7 @@ export default class RichEditor extends React.Component {
         <div className={className} onClick={this.focus}>
           <Editor
             blockStyleFn={this.getBlockStyle}
+            blockRendererFn={this.myBlockRenderer}
             // customStyleMap={styleMap}
             editorState={editorState}
             handleKeyCommand={this.handleKeyCommand}
@@ -113,6 +127,7 @@ export default class RichEditor extends React.Component {
           type="button"
           value="Log State"
         />
+        <Compiler />
       </div>
     );
   }

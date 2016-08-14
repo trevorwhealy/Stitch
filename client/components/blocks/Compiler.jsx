@@ -1,5 +1,5 @@
 import React from 'react';
-import compilerAPI from '../config';
+import compilerAPI from '../../config';
 
 class Compiler extends React.Component {
   constructor() {
