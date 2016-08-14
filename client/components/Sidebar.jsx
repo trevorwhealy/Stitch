@@ -38,7 +38,6 @@ class Sidebar extends React.Component {
 
   render() {
     const folders = this.props.folders.folder;
-    console.log('13412342343432423', folders);
     return (
       <div>
         <ul id="slide-out" className="side-nav">
