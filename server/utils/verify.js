@@ -1,10 +1,10 @@
 module.exports = {
-  checkTransactionSuccess,
+  transactionSuccess,
 };
 
 /***** PUBLIC *****/
 
-function checkTransactionSuccess(numAffected) {
+function transactionSuccess(numAffected) {
   if (numAffected === 0) {
     throw new Error('Not found');
   }
