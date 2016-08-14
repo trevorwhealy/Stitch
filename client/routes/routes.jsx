@@ -4,7 +4,7 @@ import App from '../containers/App.jsx';
 import Login from '../containers/Login.jsx';
 import SignUp from '../containers/SignUp.jsx';
 import Home from '../components/Home.jsx';
-import Compiler from '../components/Compiler.jsx';
+import Compiler from '../components/blocks/Compiler.jsx';
 import Note from '../components/Note.jsx';
 import FolderFiles from '../components/FolderFiles.jsx';
 

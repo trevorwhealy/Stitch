@@ -1,17 +1,10 @@
 import React from 'react';
-import { Editor, EditorState } from 'draft-js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
+import RichEditor from './RichEditor.jsx';
 
 class Note extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(),
-    };
-    this.onChange = (editorState) => this.setState({ editorState });
-  }
 
   componentWillMount() {
     const noteId = this.props.routeParams.id;
@@ -19,14 +12,13 @@ class Note extends React.Component {
   }
 
   render() {
-    const { editorState } = this.state;
     return (
       <div className="NoteContainer">
         <div className="noteTitle">
           {'Biology Notes'}
         </div>
         <div className="editor">
-          <Editor editorState={editorState} onChange={this.onChange} />
+          <RichEditor />
         </div>
       </div>
     );
