@@ -1,5 +1,4 @@
 const passport = require('passport');
-
 const AuthRouter = require('../auth/auth.routes');
 const FolderRouter = require('../folders/folder.routes');
 const NoteRouter = require('../notes/note.routes');

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Editor, EditorState } from 'draft-js';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as noteActionCreators from '../actions/NoteActions.jsx';
 
 class Note extends React.Component {
   constructor(props) {
@@ -11,10 +13,14 @@ class Note extends React.Component {
     this.onChange = (editorState) => this.setState({ editorState });
   }
 
+  componentWillMount() {
+    const noteId = this.props.routeParams.id;
+    this.props.noteActions.getOneNote(noteId);
+  }
 
   render() {
-  const { editorState } = this.state;
-    return(
+    const { editorState } = this.state;
+    return (
       <div className="NoteContainer">
         <div className="noteTitle">
           {'Biology Notes'}
@@ -27,4 +33,22 @@ class Note extends React.Component {
   }
 }
 
-export default Note;
+const mapDispatchToProps = (dispatch) => ({
+  noteActions: bindActionCreators(noteActionCreators, dispatch),
+});
+
+const mapStateToProps = (state) => {
+  return {
+    notes: state.notes,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Note);
+
+Note.propTypes = {
+  noteActions: React.PropTypes.object,
+  routeParams: React.PropTypes.object,
+};

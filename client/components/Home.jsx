@@ -6,6 +6,7 @@ import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
 class Home extends React.Component {
+
   componentWillMount() {
     this.props.noteActions.getAllNotes();
     this.props.folderActions.getAllFolders();
@@ -14,13 +15,15 @@ class Home extends React.Component {
   render() {
     const notes = this.props.notes.note;
     const folders = this.props.folders.folder;
+
     let recentNotes;
-    console.log(notes);
+    let allFolders;
+
     if (notes) {
       recentNotes =
         notes.map(note => {
           return (
-            <Link className="note" to={{ pathname: 'note', query: {noteId: `${note.id}`}}}>
+            <Link className="note" to={{ pathname: `note/${note.id}` }} >
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
@@ -35,11 +38,48 @@ class Home extends React.Component {
         });
     }
 
+    if (folders) {
+      allFolders =
+        folders.map(folder => {
+          return (
+            <div className="eachFolder">
+              <div className="folderContents">
+                <i className="material-icons">folder</i>
+                <div className="content">
+                  <div className="top">
+                    {folder.name}
+                    {folder.shared ? 'shared' : ''}
+                  </div>
+                  <div className="bottom">
+                    {`${3} notes`}
+                    &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                    {`Created by ${folder.user.fullName}`}
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="elipses">
+                  <i className="material-icons">more_vert</i>
+                </div>
+              </div>
+            </div>
+          );
+        });
+    }
+
     return (
       <div className="HomeContainer">
         <div className="recent">
           <div className="title"> {'RECENT NOTES'} </div>
           <div className="notes">
+            <div className="note">
+              <div className="top">{''}</div>
+              <div className="bottom">
+                <div className="noteTitle">
+                  {'Create a new note'}
+                </div>
+              </div>
+            </div>
             {recentNotes}
           </div>
         </div>
@@ -53,31 +93,7 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="folders">
-            {folders.map(folder => {
-              return (
-                <div className="eachFolder">
-                  <div className="folderContents">
-                    <i className="material-icons">folder</i>
-                    <div className="content">
-                      <div className="top">
-                        {folder.name}
-                        {folder.shared ? 'shared' : ''}
-                      </div>
-                      <div className="bottom">
-                        {`${3} notes`}
-                        &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-                        {`Created by ${folder.user.fullName}`}
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="elipses">
-                      <i className="material-icons">more_vert</i>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {allFolders}
           </div>
         </div>
       </div>
