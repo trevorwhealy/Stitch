@@ -15,6 +15,7 @@ class Home extends React.Component {
   render() {
     const notes = this.props.notes.note;
     const folders = this.props.folders.folder;
+
     let recentNotes;
     let allFolders;
 
