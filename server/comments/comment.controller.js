@@ -1,5 +1,5 @@
 const logger = require('../config/logger');
-const checkTransactionSuccess = require('../utils/middleware').checkTransactionSuccess;
+const verify = require('../utils/verify');
 const Comment = require('./comment.model');
 
 module.exports = {
@@ -49,7 +49,7 @@ function put(req, res) {
   const userId = req.user.id;
 
   Comment.update(req.body, { where: { id, userId } })
-  .then(checkTransactionSuccess)
+  .then(verify.transactionSuccess)
   .then(() => res.sendStatus(200))
   .catch(err => {
     logger.debug('Error updating comment ', id, userId, err);
@@ -62,7 +62,7 @@ function deleteOne(req, res) {
   const userId = req.user.id;
 
   Comment.destroy({ where: { id, userId } })
-    .then(checkTransactionSuccess)
+    .then(verify.transactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {
       logger.debug('Error deleting folder ', id, userId, err);
