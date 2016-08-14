@@ -34,3 +34,24 @@ export function getAllFolders() {
     });
   };
 }
+
+export function createFolder(name) {
+  const token = localStorage.getItem('jwtToken');
+
+  return (dispatch) => {
+    return fetch('/api/folders/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+      body: JSON.stringify({ name }),
+    })
+    .then(res => res.text())
+    .then(data => {
+      dispatch(getAllFolders());
+      console.log(data); // Folder that was just created
+    })
+    .catch(err => console.log(err));
+  };
+}

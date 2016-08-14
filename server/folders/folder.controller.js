@@ -64,6 +64,7 @@ function getOne(req, res) {
 function post(req, res) {
   const name = req.body.name;
   const userId = req.user.id;
+
   Folder.findAll({
     where: {
       $and: { name, userId },
