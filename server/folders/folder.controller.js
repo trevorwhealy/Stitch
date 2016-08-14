@@ -65,8 +65,6 @@ function post(req, res) {
   const name = req.body.name;
   const userId = req.user.id;
 
-  console.log('123412343241234123423413412341234132412341234123412341234123413241', name, userId);
-
   Folder.findAll({
     where: {
       $and: { name, userId },

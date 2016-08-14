@@ -37,7 +37,6 @@ export function getAllFolders() {
 
 export function createFolder(name) {
   const token = localStorage.getItem('jwtToken');
-  //console.log(token, '123412341234123412341234');
 
   return (dispatch) => {
     return fetch('/api/folders/', {
@@ -50,8 +49,8 @@ export function createFolder(name) {
     })
     .then(res => res.text())
     .then(data => {
-      console.log(data);
       dispatch(getAllFolders());
+      console.log(data); // Folder that was just created
     })
     .catch(err => console.log(err));
   };

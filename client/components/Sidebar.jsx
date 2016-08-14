@@ -4,10 +4,7 @@ import { bindActionCreators } from 'redux';
 import swal from 'sweetalert2';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
-/* Constant variables to test component render */
-/* TODO: Replace the below test variables with relevant user state from redux */
 const userFullName = 'Trevor';
-//const folders = ['chemistry', 'biology', 'java', 'c#', 'python', 'a', 'b', 'c', 'd'];
 
 class Sidebar extends React.Component {
   constructor() {
@@ -28,14 +25,13 @@ class Sidebar extends React.Component {
     });
   }
 
-  yell(e) {
+  addFolder(e) {
     if (e.keyCode === 13) {
       if (e.target.value.length > 0) {
         this.props.folderActions.createFolder(e.target.value);
         this.setState({
           addFolder: false,
         });
-
         e.target.value = '';
       }
     }
@@ -73,7 +69,7 @@ class Sidebar extends React.Component {
             <div onClick={this.createFolder.bind(this)} className="add">NEW<i className="tiny material-icons alert">add</i></div>
           </div>
 
-          { this.state.addFolder ? <input type="text" name="folderName" onKeyDown={this.yell.bind(this)} /> : '' }
+          { this.state.addFolder ? <input type="text" name="folderName" onKeyDown={this.addFolder.bind(this)} /> : '' }
 
           {/* Folder Names: names of folders */}
           <div className="folderNames">
