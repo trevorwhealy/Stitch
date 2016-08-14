@@ -12,10 +12,6 @@ class Home extends React.Component {
     this.props.folderActions.getAllFolders();
   }
 
-  getSingleNote(noteId) {
-    this.props.noteActions.getOneNote(noteId);
-  }
-
   render() {
     const notes = this.props.notes.note;
     const folders = this.props.folders.folder;

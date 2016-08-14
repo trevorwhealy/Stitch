@@ -14,9 +14,9 @@ class Note extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.props.routeParams.id);
+    const noteId = this.props.routeParams.id;
+    this.props.noteActions.getOneNote(noteId);
   }
-
 
   render() {
     const { editorState } = this.state;
@@ -47,3 +47,8 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Note);
+
+Note.propTypes = {
+  noteActions: React.PropTypes.object,
+  routeParams: React.PropTypes.object,
+};
