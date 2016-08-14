@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import swal from 'sweetalert2';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
 const userFullName = 'Trevor';
