@@ -1,3 +1,8 @@
+/* Libraries Imports */
+import 'materialize-css';
+import 'materialize-css/sass/materialize.scss';
+import 'whatwg-fetch';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -9,6 +14,7 @@ import thunk from 'redux-thunk';
 import routes from './routes/routes.jsx';
 import appReducer from './reducers/index.js';
 
+import './app.scss';
 
 const middleware = [thunk, promiseMiddleware, logger()];
 let store = createStore(appReducer, applyMiddleware(...middleware));

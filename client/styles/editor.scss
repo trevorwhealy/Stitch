@@ -1,0 +1,39 @@
+.NoteContainer { 
+  height: 800px;
+  display: flex;
+  padding: 60px 220px 50px 220px;
+  flex-direction: column;
+}
+
+.noteTitle { 
+  width: 100%;
+  color: #4A4A4A;
+  font-size: 24px;
+  font-weight: bold;
+  min-width: 250px;
+}
+
+.editor { 
+  margin-top: 20px;
+  border: 1px solid black;
+  min-width: 250px;
+}
+
+.RichEditor-controls {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+  user-select: none;
+}
+
+.RichEditor-styleButton {
+  color: #999;
+  cursor: pointer;
+  margin-right: 16px;
+  padding: 2px 0;
+  display: inline-block;
+}
+
+.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
