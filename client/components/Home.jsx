@@ -13,7 +13,6 @@ class Home extends React.Component {
   }
 
   addTheModal() {
-    console.log(this.props.folderActions);
     $('#addFolderModal').openModal();
   }
 
