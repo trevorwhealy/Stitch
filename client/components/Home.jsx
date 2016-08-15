@@ -55,7 +55,7 @@ class Home extends React.Component {
       allFolders =
         folders.map(folder => {
           return (
-            <div className="eachFolder">
+            <Link className="eachFolder" to={{ pathname: `foldernotes/${folder.id}` }} >
               <div className="folderContents">
                 <i className="material-icons">folder</i>
                 <div className="content">
@@ -75,7 +75,7 @@ class Home extends React.Component {
                   <i className="material-icons">more_vert</i>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         });
     }
