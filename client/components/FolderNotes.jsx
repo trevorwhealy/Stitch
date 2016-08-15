@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 
 class FolderNotes extends React.Component {
@@ -11,26 +12,21 @@ class FolderNotes extends React.Component {
     this.props.noteActions.getNotesInFolder(folderId);
   }
 
-
-/* Compressed test data to single line; Meant to demonstrate the 'show more arrow' on a folder with greater than 6 notes */
-
-
   render() {
     const notesInFolder = this.props.notesInFolder.notes;
-    console.log(notesInFolder)
     return (
       <div className="folderFiles">
         <div className="title">{'Folder Name'}</div>
         <div className="number">{`${notesInFolder.length} notes found`}</div>
         <div className="notes"> {notesInFolder.map(note => {
           return (
-            <div className="note">
+            <Link className="note" to={{ pathname: `note/${note.id}` }}>
               <div className="details">
                 <div className="name">{note.name}</div>
-                <div className="date">{moment().startOf(note.date).fromNow()}</div>
+                <div className="date">{moment().startOf(note.createdAt).fromNow()}</div>
               </div>
               <div className="open">{'OPEN'}</div>
-            </div>
+            </Link>
           );
         })}
         </div>
@@ -65,4 +61,5 @@ export default connect(
 FolderNotes.propTypes = {
   routeParams: React.PropTypes.object,
   noteActions: React.PropTypes.object,
+  notesInFolder: React.PropTypes.object,
 };
