@@ -39,7 +39,7 @@ export default class RichEditor extends React.Component {
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.toggleBlockType = this._toggleBlockType.bind(this);
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
-    this.logState = () => console.log(this.state.editorState.toJS()); 
+    this.logState = () => console.log(this.state.editorState.toJS());
   }
 
   _toggleBlockType(blockType) {
@@ -132,9 +132,3 @@ export default class RichEditor extends React.Component {
     );
   }
 }
-
-
-
-
-
-

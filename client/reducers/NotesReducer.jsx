@@ -1,4 +1,4 @@
-const intialNoteState = {
+const noteState = {
   notes: [],
   notesRecieved: false,
   statusMessage: '',
@@ -7,7 +7,7 @@ const intialNoteState = {
 const GET_NOTES_SUCCESS = 'GET_NOTES_SUCCESS';
 const GET_NOTES_FAILURE = 'GET_NOTES_FAILURE';
 
-export default (state = intialNoteState, action) => {
+export default (state = noteState, action) => {
   switch (action.type) {
     case GET_NOTES_SUCCESS:
       return Object.assign({}, state, {

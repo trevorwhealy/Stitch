@@ -1,5 +1,3 @@
-// import { browserHistory } from 'react-router';
-
 export function notesSuccess(notes) {
   return {
     type: 'GET_NOTES_SUCCESS',
@@ -21,6 +19,14 @@ export function receiveSingleNote(note) {
   };
 }
 
+export function receiveNotesInFolder(notes) {
+  return {
+    type: 'GET_ALL_NOTES_IN_FOLDER',
+    notes,
+  };
+}
+
+// Get all the notes that user has
 export function getAllNotes() {
   const token = localStorage.getItem('jwtToken');
   return (dispatch) => {
@@ -41,6 +47,7 @@ export function getAllNotes() {
   };
 }
 
+// Get a specific note that the user requested
 export function getOneNote(noteId) {
   const token = localStorage.getItem('jwtToken');
 
@@ -58,6 +65,31 @@ export function getOneNote(noteId) {
     .then(res => res.json())
     .then(data => {
       dispatch(receiveSingleNote(data));
+    })
+    .catch(err => {
+      dispatch(notesFailure(err));
+    });
+  };
+}
+
+// Get all notes in a specific folder
+export function getNotesInFolder(folderId) {
+  const token = localStorage.getItem('jwtToken');
+
+  return (dispatch) => {
+    return fetch(`/api/notes/${folderId}`, {
+      method: 'GET',
+      body: {
+        params: JSON.stringify(folderId),
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      dispatch(receiveNotesInFolder(data));
     })
     .catch(err => {
       dispatch(notesFailure(err));

@@ -6,7 +6,7 @@ import SignUp from '../containers/SignUp.jsx';
 import Home from '../components/Home.jsx';
 import Compiler from '../components/blocks/Compiler.jsx';
 import Note from '../components/Note.jsx';
-import FolderFiles from '../components/FolderFiles.jsx';
+import FolderNotes from '../components/FolderNotes.jsx';
 
 const requireAuth = (nextState, replace) => {
   const token = localStorage.getItem('jwtToken');
@@ -21,7 +21,7 @@ module.exports = (
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={requireAuth}>
       <IndexRoute component={Home} />
-      <Route path="FolderFiles" component={FolderFiles} />
+      <Route path="foldernotes" component={FolderNotes} />
       <Route path="/note/:id" component={Note} />
       <Route path="/compiler" component={Compiler} />
     </Route>
