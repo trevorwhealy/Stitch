@@ -2,14 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import moment from 'moment';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
+
 
 class Home extends React.Component {
 
   componentWillMount() {
     this.props.noteActions.getAllNotes();
     this.props.folderActions.getAllFolders();
+
+    sessionStorage.active = window.location.href;
   }
 
   addTheModal() {
@@ -27,13 +31,13 @@ class Home extends React.Component {
   }
 
   render() {
-    const notes = this.props.notes.note;
+    const notes = this.props.notes.note || [];
     const folders = this.props.folders.folder;
     let recentNotes;
     let allFolders;
     if (notes) {
       recentNotes =
-        notes.map(note => {
+        notes.slice(0, 3).map(note => {
           return (
             <Link className="note" to={{ pathname: `notes/${note.id}` }} >
               <div className="top">{''}</div>
@@ -42,7 +46,7 @@ class Home extends React.Component {
                   {note.name}
                 </div>
                 <div className="noteDetails">
-                  {`Updated at ${note.updatedAt.slice(0, 10)}`}
+                  {`Updated ${moment(note.updatedAt).fromNow()}`}
                 </div>
               </div>
             </Link>
@@ -52,7 +56,7 @@ class Home extends React.Component {
 
     if (folders) {
       allFolders =
-        folders.map(folder => {
+        folders.slice(0, 3).map(folder => {
           return (
             <Link className="eachFolder" to={{ pathname: `folders/${folder.id}` }} >
               <div className="folderContents">
@@ -84,14 +88,14 @@ class Home extends React.Component {
         <div className="recent">
           <div className="title"> {'RECENT NOTES'} </div>
           <div className="notes">
-            <div className="note">
+            <Link className="note" to={{ pathname: 'notes/new' }} >
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
                   {'Create a new note'}
                 </div>
               </div>
-            </div>
+            </Link>
             {recentNotes}
           </div>
         </div>

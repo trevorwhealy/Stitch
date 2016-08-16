@@ -97,6 +97,37 @@ export function getNotesInFolder(folderId) {
   };
 }
 
+/**
+* Functionality: Creates a new note
+* Parameters: Optional folderId
+* Returns: Newly created note
+* TODO: remove folderID for blank note creation
+* TODO: why have content required on a newly created note, should it not be blank?
+*/
+export function createNote() {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch('/api/notes', {
+      method: 'POST',
+      body: JSON.stringify({
+        folderId: 3,
+        name: 'Trevors Note',
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+}
+
 // export function updateNote(noteId) {
 //   const token = localStorage.getItem('jwtToken');
 //
