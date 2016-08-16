@@ -5,7 +5,7 @@ export const BLOCK_TYPES = [
   {label: 'Blockquote', style: 'blockquote'},
   {label: 'UL', style: 'unordered-list-item'},
   {label: 'OL', style: 'ordered-list-item'},
-  {label: 'Code Block', style: 'Code Block'},
+  {label: 'CODE', style: 'code-block'},
 ];
 
 
@@ -13,6 +13,7 @@ export const INLINE_STYLES = [
   {label: 'BOLD', style: 'BOLD'},
   {label: 'ITALIC', style: 'ITALIC'},
   {label: 'UNDERLINE', style: 'UNDERLINE'},
+  {label: 'STRIKETHROUGH', style: 'STRIKETHROUGH'},
 ];
 
 export default {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BLOCK_TYPES, INLINE_STYLES } from './constants';
+import { BLOCK_TYPES, INLINE_STYLES } from '../util/constants';
 import StyleButton from './StyleButton.jsx';
 
 export const BlockStyleControls = (props) => {
