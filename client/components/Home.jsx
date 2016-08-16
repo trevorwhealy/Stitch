@@ -47,7 +47,6 @@ class Home extends React.Component {
                 </div>
                 <div className="noteDetails">
                   {`Updated ${moment(note.updatedAt).fromNow()}`}
-                  {/*note.updatedAt.slice(0, 10)}`*/}
                 </div>
               </div>
             </Link>

@@ -98,13 +98,12 @@ export function getNotesInFolder(folderId) {
 }
 
 /**
-* Creates a new note
-* params: Optional folderId
-* returns: n/a
-**/
-
-//TODO: remove folderID for blank note creation
-//TODO: why have content required on a newly created note, should it not be blank?
+* Functionality: Creates a new note
+* Parameters: Optional folderId
+* Returns: Newly created note
+* TODO: remove folderID for blank note creation
+* TODO: why have content required on a newly created note, should it not be blank?
+*/
 export function createNote() {
   const token = localStorage.getItem('jwtToken');
   return (dispatch) => {
