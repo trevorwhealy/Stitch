@@ -37,7 +37,7 @@ class Home extends React.Component {
     let allFolders;
     if (notes) {
       recentNotes =
-        notes.map(note => {
+        notes.slice(0, 3).map(note => {
           return (
             <Link className="note" to={{ pathname: `notes/${note.id}` }} >
               <div className="top">{''}</div>
@@ -57,7 +57,7 @@ class Home extends React.Component {
 
     if (folders) {
       allFolders =
-        folders.map(folder => {
+        folders.slice(0, 3).map(folder => {
           return (
             <Link className="eachFolder" to={{ pathname: `folders/${folder.id}` }} >
               <div className="folderContents">
