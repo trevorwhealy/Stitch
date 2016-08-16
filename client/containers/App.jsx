@@ -12,6 +12,8 @@ export default class App extends React.Component {
       edge: 'left',
       closeOnClick: true,
     });
+
+    $('.modal-trigger').leanModal();
   }
 
   render() {
