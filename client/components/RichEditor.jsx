@@ -5,7 +5,9 @@ import {
   // SelectionState,
   // ContentState,
   RichUtils,
-  // convertToRaw,
+  getDefaultKeyBinding,
+  KeyBindingUtil,
+  convertToRaw,
   // convertFromRaw,
   // CompositeDecorator,
   // Entity,
@@ -13,15 +15,15 @@ import {
   // DefaultDraftBlockRenderMap,
 } from 'draft-js';
 
+import CodeUtils from 'draft-js-code';
+
+const { hasCommandModifier } = KeyBindingUtil;
+
 import {
   BlockStyleControls,
   InlineStyleControls,
-} from  './utils/StyleControls.jsx';
+} from './editor/toolbox/StyleControls.jsx';
 
-import Compiler from './blocks/Compiler.jsx';
-// import {Map} from 'immutable';
-
-// import { Map } from 'immutable';
 
 export default class RichEditor extends React.Component {
   constructor(props) {
@@ -34,9 +36,11 @@ export default class RichEditor extends React.Component {
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({ editorState });
 
-    this.getEditorState = () => this.props.editorState;
-
+    this.getEditorState = () => this.state.editorState;
+    this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    this.handleReturn = this.handleReturn.bind(this);
+    this.handleTab = this.handleTab.bind(this);
     this.toggleBlockType = this._toggleBlockType.bind(this);
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
     this.logState = () => console.log(this.state.editorState.toJS());
@@ -62,8 +66,8 @@ export default class RichEditor extends React.Component {
 
   getBlockStyle(block) {
     switch (block.getType()) {
-      case 'blockquote': return 'RichEditor-blockquote';
-      case 'Code Block': return 'RichEditor-code-block-unique';
+      // case 'blockquote': return 'RichEditor-blockquote';
+      // case 'Code Block': return 'RichEditor-code-block-unique';
       default: return null;
     }
   }
@@ -79,9 +83,62 @@ export default class RichEditor extends React.Component {
   //   }
   // }
 
+  keyBindingFn(e) {
+    const { editorState } = this.state;
+    let command;
+
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      command = CodeUtils.getKeyBinding(e);
+    }
+    if (command) {
+      return command;
+    }
+    if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
+      return 'myeditor-save';
+    }
+    return getDefaultKeyBinding(e);
+  }
+
+  handleReturn(e) {
+    const editorState = this.state.editorState;
+
+    if (!CodeUtils.hasSelectionInBlock(editorState)) {
+      return;
+    }
+
+    this.onChange(
+      CodeUtils.handleReturn(e, editorState)
+    );
+
+    return true;
+  }
+
+  handleTab(e) {
+    const editorState = this.state.editorState;
+
+    if (!CodeUtils.hasSelectionInBlock(editorState)) {
+      return;
+    }
+
+    this.onChange(
+      CodeUtils.handleTab(e, editorState)
+    );
+  }
+
   handleKeyCommand(command) {
     const { editorState } = this.state;
-    const newState = RichUtils.handleKeyCommand(editorState, command);
+    let newState;
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      newState = CodeUtils.handleKeyCommand(editorState, command);
+    }
+    if (!newState) {
+      newState = RichUtils.handleKeyCommand(editorState, command);
+    }
+    if (command === 'myeditor-save') {
+      console.log(convertToRaw(editorState.getCurrentContent()));
+
+      return true;
+    }
     if (newState) {
       this.onChange(newState);
       return true;
@@ -112,9 +169,12 @@ export default class RichEditor extends React.Component {
           <Editor
             blockStyleFn={this.getBlockStyle}
             blockRendererFn={this.myBlockRenderer}
-            // customStyleMap={styleMap}
+            customStyleMap={styleMap}
             editorState={editorState}
+            keyBindingFn={this.keyBindingFn}
             handleKeyCommand={this.handleKeyCommand}
+            handleReturn={this.handleReturn}
+            onTab={this.handleTab}
             onChange={this.onChange}
             placeholder="Start your adventure..."
             ref="editor"
@@ -127,8 +187,13 @@ export default class RichEditor extends React.Component {
           type="button"
           value="Log State"
         />
-        <Compiler />
       </div>
     );
   }
 }
+
+const styleMap = {
+  'STRIKETHROUGH': {
+    textDecoration: 'line-through',
+  },
+};
