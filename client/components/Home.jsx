@@ -33,6 +33,7 @@ class Home extends React.Component {
   render() {
     const notes = this.props.notes.note || [];
     const folders = this.props.folders.folder;
+    console.log(folders);
     let recentNotes;
     let allFolders;
     if (notes) {

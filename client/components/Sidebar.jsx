@@ -11,6 +11,7 @@ class Sidebar extends React.Component {
     super();
 
     this.state = {
+      searchInput: '',
       addFolder: false,
     };
   }
@@ -23,6 +24,10 @@ class Sidebar extends React.Component {
     this.setState({
       addFolder: true,
     });
+  }
+
+  searchInput(e) {
+    this.setState({ searchInput: e.target.value });
   }
 
   addFolder(e) {
@@ -58,7 +63,7 @@ class Sidebar extends React.Component {
           <div className="search">
             <div className="left-inner-addon ">
               <i className="material-icons">search</i>
-              <input className="query" type="text" placeholder="Search notes by Name or Tag" />
+              <input className="query" type="text" placeholder="Search folders by name" onChange={this.searchInput.bind(this)}/>
             </div>
           </div>
 

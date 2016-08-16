@@ -7,10 +7,24 @@
 body {
   font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', sans-serif;
   color: #4A4A4A;
+  width: 100vw;
+  height: 100vh;
 }
 
 a {
   color: black;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+
+.EntirePage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .side-nav {
@@ -134,3 +148,4 @@ a {
 @import './styles/search.scss';
 @import './styles/compiler.scss';
 @import './styles/draft.scss';
+@import './styles/navbar.scss';

@@ -1,0 +1,25 @@
+.NavContainer {
+  height: 50px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 8px 6px -6px #999;
+}
+
+.NavContainer .sidebar {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.NavContainer .logo {
+  display: flex;
+  align-items: center;
+}
+
+.NavContainer .alerts {
+  display: flex;
+  align-items: center;
+  margin-right: 25px;
+}
