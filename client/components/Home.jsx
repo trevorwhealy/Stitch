@@ -31,7 +31,6 @@ class Home extends React.Component {
     const folders = this.props.folders.folder;
     let recentNotes;
     let allFolders;
-
     if (notes) {
       recentNotes =
         notes.map(note => {
