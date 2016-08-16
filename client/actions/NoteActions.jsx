@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 export function notesSuccess(notes) {
   return {
     type: 'GET_NOTES_SUCCESS',
@@ -75,7 +77,6 @@ export function getOneNote(noteId) {
 // Get all notes in a specific folder
 export function getNotesInFolder(folderId) {
   const token = localStorage.getItem('jwtToken');
-
   return (dispatch) => {
     return fetch(`/api/notes?folderId=${folderId}`, {
       method: 'GET',
@@ -110,7 +111,7 @@ export function createNote() {
     return fetch('/api/notes', {
       method: 'POST',
       body: JSON.stringify({
-        folderId: 3,
+        folderId: 5,
         name: 'Trevors Note',
       }),
       headers: {
@@ -123,7 +124,31 @@ export function createNote() {
       console.log(data);
     })
     .catch(err => {
-      console.log(err);
+      dispatch(notesFailure(err));
+    });
+  };
+}
+
+export function createNoteInFolder(folderId) {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch('/api/notes', {
+      method: 'POST',
+      body: JSON.stringify({
+        folderId,
+        name,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(res => res.json())
+    .then(data => {
+      browserHistory.push(`notes/${data.id}`);
+    })
+    .catch(err => {
+      dispatch(notesFailure(err));
     });
   };
 }

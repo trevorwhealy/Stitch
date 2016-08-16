@@ -23,6 +23,12 @@ body {
   color: #9B9B9B;
 }
 
+.folderFiles .addNote {
+  align-self: flex-end;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
 .folderFiles .notes {
 
   display: flex;
