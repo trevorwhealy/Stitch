@@ -29,15 +29,13 @@ class Home extends React.Component {
   render() {
     const notes = this.props.notes.note;
     const folders = this.props.folders.folder;
-
     let recentNotes;
     let allFolders;
-
     if (notes) {
       recentNotes =
         notes.map(note => {
           return (
-            <Link className="note" to={{ pathname: `note/${note.id}` }} >
+            <Link className="note" to={{ pathname: `notes/${note.id}` }} >
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
@@ -56,7 +54,7 @@ class Home extends React.Component {
       allFolders =
         folders.map(folder => {
           return (
-            <div className="eachFolder">
+            <Link className="eachFolder" to={{ pathname: `folders/${folder.id}` }} >
               <div className="folderContents">
                 <i className="material-icons">folder</i>
                 <div className="content">
@@ -76,7 +74,7 @@ class Home extends React.Component {
                   <i className="material-icons">more_vert</i>
                 </div>
               </div>
-            </div>
+            </Link>
           );
         });
     }

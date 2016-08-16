@@ -1,6 +1,6 @@
 const intialFolderState = {
   folder: [],
-  foldersRecieved: false,
+  foldersReceived: false,
   statusMessage: '',
 };
 
@@ -12,12 +12,12 @@ export default (state = intialFolderState, action) => {
     case FOLDER_SUCCESS:
       return Object.assign({}, state, {
         folder: action.folders,
-        foldersRecieved: true,
+        foldersReceived: true,
         statusMessage: 'Folders received',
       });
     case FOLDER_FAILURE: {
       return Object.assign({}, state, {
-        foldersRecieved: false,
+        foldersReceived: false,
         statusMessage: 'Folders not received',
       });
     }

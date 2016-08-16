@@ -12,10 +12,11 @@ class Note extends React.Component {
   }
 
   render() {
+    const singleNote = this.props.singleNote.note;
     return (
       <div className="NoteContainer">
         <div className="noteTitle">
-          {'Biology Notes'}
+          {singleNote.name}
         </div>
         <div className="editor">
           <RichEditor />
@@ -32,6 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
   return {
     notes: state.notes,
+    singleNote: state.singleNote,
   };
 };
 
@@ -43,4 +45,5 @@ export default connect(
 Note.propTypes = {
   noteActions: React.PropTypes.object,
   routeParams: React.PropTypes.object,
+  singleNote: React.PropTypes.object,
 };
