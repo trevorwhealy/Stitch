@@ -10,6 +10,8 @@ class Home extends React.Component {
   componentWillMount() {
     this.props.noteActions.getAllNotes();
     this.props.folderActions.getAllFolders();
+
+    sessionStorage.active = window.location.href;
   }
 
   addTheModal() {
@@ -27,7 +29,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const notes = this.props.notes.note;
+    const notes = this.props.notes.note || [];
     const folders = this.props.folders.folder;
     let recentNotes;
     let allFolders;
@@ -84,14 +86,14 @@ class Home extends React.Component {
         <div className="recent">
           <div className="title"> {'RECENT NOTES'} </div>
           <div className="notes">
-            <div className="note">
+            <Link className="note" to={{ pathname: 'notes/new' }} >
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
                   {'Create a new note'}
                 </div>
               </div>
-            </div>
+            </Link>
             {recentNotes}
           </div>
         </div>
