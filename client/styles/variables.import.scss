@@ -1,0 +1,59 @@
+/* ----- Color Variables ----- */
+/* Palette: google.com/design/spec/style/color.html */
+
+$color-blue:           #2196F3;
+$color-blue-lighter:   #64B5F6;
+$color-blue-lightest:  #BBDEFB;
+$color-blue-darker:    #1565C0;
+$color-blue-darkest:   #0D47A1;
+
+$color-bluegrey:         #4D606E;
+$color-bluegrey-darker:  #455662;
+$color-bluegrey-darkest: #35424b;
+
+$color-cyan:  #3FBAC2; // hsl(184, 52%, 50%);
+
+$color-grey:           #9E9E9E;
+$color-grey-lighter:   #EEEEEE;
+$color-grey-lightest:  #F5F5F5;
+$color-grey-darker:    #616161;
+$color-grey-darkest:   #212121;
+
+$color-orange:         #FF9800;
+$color-orange-darker:  #F57C00;
+$color-orange-darkest: #E65100;
+
+$color-red:            #F44336;
+$color-red-darker:     #D32F2F;
+$color-red-darkest:    #B71C1C;
+
+$main-background:    $color-grey-lighter;
+$sidebar-background: $color-bluegrey;
+$primary-color:      $color-blue;
+$primary-color-1:    $color-blue-lightest; //hue 1
+$primary-color-2:    $color-blue-darker;   //hue 2
+$primary-color-3:    $color-blue-lighter;  //hue 3
+$accent-color:       $color-grey;
+$accent-color-1:     $color-grey-lightest;
+$accent-color-2:     $color-grey-darker;
+$accent-color-3:     $color-grey-darkest;
+
+/* ----- RESPONSIVE Variables ----- */
+/* Consistent with Angular Material breakpoints */
+
+$screen-sm-max: 600px;
+$screen-md-min: 601px;
+$screen-md-max: 960px;
+$screen-lg-min: 961px;
+$screen-lg-max: 1200px;
+
+/* ----- SIZING Variables -----  */
+
+$header-height: 70px;
+$sidebar-width: 300px;
+
+/* ----- Z-Indexes ----- */
+
+$zindex-top:         10;
+$zindex-top-higher:  100;
+$zindex-top-highest: 1000;

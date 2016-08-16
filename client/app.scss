@@ -1,3 +1,9 @@
+/***** Library & partials import *****/
+
+@import './styles/variables.import.scss';
+
+/***** App-wide styling *****/
+
 body {
   font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', sans-serif;
   color: #4A4A4A;
@@ -98,27 +104,11 @@ body {
   box-shadow: 0 1px 0 0 gray !important;
 }
 
-/* Necessary for the input placeholder color styling */
-/* Credit to: https://css-tricks.com/almanac/selectors/p/placeholder/ */
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #ABABAB;
-  font-size: 14px;
-}
-::-moz-placeholder { /* Firefox 19+ */
-  color: #ABABAB;
-  font-size: 14px;
-}
-:-ms-input-placeholder { /* IE 10+ */
-  color: #ABABAB;
-  font-size: 14px;
-}
-:-moz-placeholder { /* Firefox 18- */
+::placeholder {
   color: #ABABAB;
   font-size: 14px;
 }
 
-/* Necessary for inline icons in input */
-/* Credit to: https://jsfiddle.net/KyleMit/cyCFS/ */
 .left-inner-addon {
   position: relative;
 }
@@ -132,3 +122,11 @@ body {
   padding: 5px 0px 0px 5px;
   pointer-events: none;
 }
+
+/***** Scss Imports *****/
+
+@import './styles/home.scss';
+@import './styles/editor.scss';
+@import './styles/search.scss';
+@import './styles/compiler.scss';
+@import './styles/draft.scss';

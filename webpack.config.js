@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -14,6 +15,12 @@ module.exports = {
     publicPath: '/',
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      Hammer: 'hammerjs/hammer',
+    }),
     new webpack.HotModuleReplacementPlugin(),
   ],
   module: {
@@ -29,6 +36,17 @@ module.exports = {
           presets: ['react', 'es2015', 'react-hmre'],
         },
       },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap'],
+      },
+      {
+        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+        loader: 'url?prefix=font/&limit=5000',
+      },
     ],
+  },
+  postcss: () => {
+    return [autoprefixer];
   },
 };
