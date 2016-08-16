@@ -4,14 +4,14 @@ const sequelize = require('../config/sequelize');
 const User = require('../users/user.model');
 const Note = require('../notes/note.model');
 
-const Alert = sequelize.define('alert', {
+const Notification = sequelize.define('notification', {
   userId: Sequelize.INTEGER,
   noteId: Sequelize.INTEGER,
-  status: Sequelize.STRING,
+  status: Sequelize.ENUM('READ', 'UNREAD'),
   text: Sequelize.BLOB,
 });
 
-Alert.belongsTo(User);
-Alert.belongsTo(Note);
+Notification.belongsTo(User);
+Notification.belongsTo(Note);
 
-module.exports = Alert;
+module.exports = Notification;

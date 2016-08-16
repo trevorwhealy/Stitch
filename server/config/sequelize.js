@@ -12,6 +12,7 @@ require('../shares/share.model');
 require('../notes/note.model');
 require('../permissions/permission.model');
 require('../comments/comment.model');
+require('../notifications/notification.model');
 
 sequelize.authenticate()
   .then(() => console.log('Database is connected'))
