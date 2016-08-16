@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
+import moment from 'moment';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
+
 
 class Home extends React.Component {
 
@@ -44,7 +46,8 @@ class Home extends React.Component {
                   {note.name}
                 </div>
                 <div className="noteDetails">
-                  {`Updated at ${note.updatedAt.slice(0, 10)}`}
+                  {`Updated ${moment(note.updatedAt).fromNow()}`}
+                  {/*note.updatedAt.slice(0, 10)}`*/}
                 </div>
               </div>
             </Link>
