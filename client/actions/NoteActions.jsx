@@ -77,7 +77,7 @@ export function getNotesInFolder(folderId) {
   const token = localStorage.getItem('jwtToken');
 
   return (dispatch) => {
-    return fetch(`/api/notes/${folderId}`, {
+    return fetch(`/api/notes?folderId=${folderId}`, {
       method: 'GET',
       body: {
         params: JSON.stringify(folderId),
