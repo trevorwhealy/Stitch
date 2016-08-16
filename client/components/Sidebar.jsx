@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
 const userFullName = 'Trevor';
@@ -74,9 +75,9 @@ class Sidebar extends React.Component {
             {folders.map(folder => {
               // TODO: decide how many folders we want to display - most recent 5? all of them?
               return (
-                <div className="folder">
+                <Link className="folder" to={{ pathname: `/folders/${folder.id}` }}>
                   {folder.name}
-                </div>
+                </Link>
               );
             })}
           </div>

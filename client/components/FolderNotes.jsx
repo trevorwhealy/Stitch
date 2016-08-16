@@ -12,6 +12,15 @@ class FolderNotes extends React.Component {
     this.props.noteActions.getNotesInFolder(folderId);
   }
 
+  componentDidUpdate(prevProps) {
+    const oldId = prevProps.params.id;
+    const newId = this.props.params.id;
+    const folderId = this.props.routeParams.id;
+    if (oldId !== newId) {
+      this.props.noteActions.getNotesInFolder(folderId);
+    }
+  }
+
   render() {
     const notesInFolder = this.props.notesInFolder.notes;
     return (
@@ -62,4 +71,5 @@ FolderNotes.propTypes = {
   routeParams: React.PropTypes.object,
   noteActions: React.PropTypes.object,
   notesInFolder: React.PropTypes.object,
+  params: React.PropTypes.object,
 };
