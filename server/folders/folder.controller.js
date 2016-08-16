@@ -6,6 +6,7 @@ const verify = require('../utils/verify');
 const Folder = require('./folder.model');
 const Share = require('../shares/share.model');
 const User = require('../users/user.model');
+const Note = require('../notes/note.model');
 
 module.exports = {
   getAll,
@@ -18,7 +19,10 @@ module.exports = {
 /***** PUBLIC *****/
 
 function getAll(req, res) {
+  const { orderBy, limit, offset } = req.query;
   const userId = req.user.id;
+  const order = orderBy ? [orderBy.slice().split(' ')] : [['updatedAt', 'DESC']];
+
   sequelize.query(`
     SELECT folders.id FROM folders
     LEFT JOIN shares
@@ -32,7 +36,11 @@ function getAll(req, res) {
       include: [
         { model: User, attributes: ['id', 'fullName'] },
         { model: Share, attributes: ['userId'] },
+        { model: Note, attributes: ['id'] },
       ],
+      order,
+      limit,
+      offset,
     });
   })
   .then(folders => res.send(folders))

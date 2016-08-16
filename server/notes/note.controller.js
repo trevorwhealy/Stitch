@@ -31,7 +31,7 @@ function deleteOne(req, res) {
 
 function getAll(req, res) {
   let promise;
-  const { folderId, orderBy } = req.query;
+  const { folderId, orderBy, limit, offset } = req.query;
   const userId = req.user.id;
 
   // Queries
@@ -44,7 +44,7 @@ function getAll(req, res) {
 
   if (folderId) {
     promise = checkHasAccessToFolder(folderId, userId)
-      .then(() => Note.findAll({ where: { folderId }, order, attributes, include }));
+      .then(() => Note.findAll({ where: { folderId }, order, attributes, include, limit, offset }));
   } else {
     promise = getAllAccessibleNoteIds(userId)
       .then(rows => rows.map(row => row.id))
@@ -54,6 +54,8 @@ function getAll(req, res) {
           order,
           attributes,
           include,
+          limit,
+          offset
         });
       });
   }
