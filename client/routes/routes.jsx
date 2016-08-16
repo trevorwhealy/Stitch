@@ -21,8 +21,8 @@ module.exports = (
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={requireAuth}>
       <IndexRoute component={Home} />
-      <Route path="/foldernotes/:id" component={FolderNotes} />
-      <Route path="/note/:id" component={Note} />
+      <Route path="/folders/:id" component={FolderNotes} />
+      <Route path="/notes/:id" component={Note} />
       <Route path="/compiler" component={Compiler} />
     </Route>
     <Route path="/login" component={Login} />

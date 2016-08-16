@@ -20,10 +20,10 @@ class FolderNotes extends React.Component {
         <div className="number">{`${notesInFolder.length} notes found`}</div>
         <div className="notes"> {notesInFolder.map(note => {
           return (
-            <Link className="note" to={{ pathname: `note/${note.id}` }}>
+            <Link className="note" to={{ pathname: `notes/${note.id}` }}>
               <div className="details">
                 <div className="name">{note.name}</div>
-                <div className="date">{moment().startOf(note.createdAt).fromNow()}</div>
+                <div className="date">{moment(note.createdAt).fromNow()}</div>
               </div>
               <div className="open">{'OPEN'}</div>
             </Link>
