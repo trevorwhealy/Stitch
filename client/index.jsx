@@ -1,5 +1,4 @@
 /* Libraries Imports */
-import 'materialize-css';
 import 'materialize-css/sass/materialize.scss';
 import 'whatwg-fetch';
 
