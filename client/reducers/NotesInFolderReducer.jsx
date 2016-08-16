@@ -1,6 +1,6 @@
 const notesInFolderState = {
   notes: [],
-  notesRecieved: false,
+  notesReceived: false,
   statusMessage: '',
 };
 
@@ -12,12 +12,12 @@ export default (state = notesInFolderState, action) => {
     case GET_ALL_NOTES_IN_FOLDER:
       return Object.assign({}, state, {
         notes: action.notes,
-        notesRecieved: true,
+        notesReceived: true,
         statusMessage: 'Notes received',
       });
     case GET_NOTES_FAILURE: {
       return Object.assign({}, state, {
-        notesRecieved: false,
+        notesReceived: false,
         statusMessage: 'Notes not received',
       });
     }

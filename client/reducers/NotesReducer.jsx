@@ -1,6 +1,6 @@
 const noteState = {
   notes: [],
-  notesRecieved: false,
+  notesReceived: false,
   statusMessage: '',
 };
 
@@ -12,12 +12,12 @@ export default (state = noteState, action) => {
     case GET_NOTES_SUCCESS:
       return Object.assign({}, state, {
         note: action.notes,
-        notesRecieved: true,
+        notesReceived: true,
         statusMessage: 'Notes received',
       });
     case GET_NOTES_FAILURE: {
       return Object.assign({}, state, {
-        notesRecieved: false,
+        notesReceived: false,
         statusMessage: 'Notes not received',
       });
     }
