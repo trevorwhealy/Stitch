@@ -3,6 +3,7 @@ const AuthRouter = require('../auth/auth.routes');
 const FolderRouter = require('../folders/folder.routes');
 const NoteRouter = require('../notes/note.routes');
 const CommentRouter = require('../comments/comment.routes');
+const NotificationRouter = require('../notifications/notification.routes');
 
 module.exports = (app, config) => {
   app.use('/auth', AuthRouter);
@@ -11,6 +12,7 @@ module.exports = (app, config) => {
   app.use('/api/folders', FolderRouter);
   app.use('/api/notes', NoteRouter);
   app.use('/api/comments', CommentRouter);
+  app.use('/api/notifications', NotificationRouter);
 
   app.get('/*', (req, res) => {
     res.sendFile(`${config.rootPath}/public/index.html`);
