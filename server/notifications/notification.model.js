@@ -5,13 +5,20 @@ const User = require('../users/user.model');
 const Note = require('../notes/note.model');
 
 const Notification = sequelize.define('notification', {
-  userId: Sequelize.INTEGER,
+  sourceId: Sequelize.INTEGER,
+  targetId: { type: Sequelize.INTEGER, required: true },
   noteId: Sequelize.INTEGER,
-  status: Sequelize.ENUM('READ', 'UNREAD'),
-  text: Sequelize.BLOB,
+  isRead: {
+    type: Sequelize.BOOLEAN,
+    required: true,
+    defaultValue: false,
+  },
+  type: Sequelize.STRING(30), // NOTE: Sequelize ENUM broken for postgres dialect
+  text: Sequelize.STRING,
 });
 
-Notification.belongsTo(User);
-Notification.belongsTo(Note);
-
 module.exports = Notification;
+
+Notification.belongsTo(User, { as: 'source', foreignKey: 'sourceId' });
+Notification.belongsTo(User, { as: 'target', foreignKey: 'targetId' });
+Notification.belongsTo(Note);
