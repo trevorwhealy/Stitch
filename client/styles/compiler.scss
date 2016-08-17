@@ -1,10 +1,10 @@
 .compilerContainer {
-  border: 2px solid blue;
-  padding: 50px;
+  text-align: center;
+  padding: 15px 50px 5px 50px;
   display: flex;
   flex-direction: column;
 }
 
-.compilerContainer select {
-
+.pickLanguage {
+  color: red;
 }

@@ -19,7 +19,6 @@ class Compiler extends React.Component {
 
   compile(e) {
     e.preventDefault();
-    const code = document.getElementById('codeToRun').value;
     let lang = document.getElementById('language').value;
 
     // If no code typed, or no language selected, do not compile
@@ -84,16 +83,6 @@ class Compiler extends React.Component {
             );
           })}
         </select>
-        <textarea className="materialize-textarea" id="codeToRun" type="text" name="code" />
-        {
-          this.state.loader ? <div className="progress"><div className="indeterminate" /></div> : ''
-        }
-        {
-          this.state.run ? <div className="output">{this.state.answer}</div> : ''
-        }
-        <button onClick={this.compile.bind(this)}>
-          Compile
-        </button>
       </div>
     );
   }

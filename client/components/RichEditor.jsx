@@ -20,6 +20,8 @@ import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import mentions from './editor/util/mentions';
 import CodeUtils from 'draft-js-code';
 
+import compiler from './compiler/compiler';
+
 const { hasCommandModifier } = KeyBindingUtil;
 const mentionPlugin = createMentionPlugin();
 const linkifyPlugin = createLinkifyPlugin();
@@ -105,8 +107,13 @@ export default class RichEditor extends React.Component {
     if (command) {
       return command;
     }
-    if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
-      return 'myeditor-save';
+
+    if (e.ctrlKey) {
+      if (e.altKey) {
+        if (e.keyCode === 67) {
+          return 'myeditor-save';
+        }
+      }
     }
     return getDefaultKeyBinding(e);
   }
@@ -147,8 +154,35 @@ export default class RichEditor extends React.Component {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
     if (command === 'myeditor-save') {
-      console.log(convertToRaw(editorState.getCurrentContent()));
+      const answer = $(document.getSelection().focusNode).closest('.public-DraftStyleDefault-pre').text();
+      const lang = document.getElementById('language').value;
 
+      console.log(lang);
+
+      compiler(answer, lang)
+      .then(res => res.json())
+      .then(data => {
+        $('.terminal').append(`<p> ${data.stdout} </p>`);
+        // console.log(data); Need this for future error-handling.
+      })
+      .catch(err => {
+
+        switch(err) {
+          case 'no code typed':
+            break;
+          case 'no lang selected':
+            const languageDropdown = $('.compilerContainer').find('.select-dropdown');
+
+            console.log(languageDropdown);
+
+            languageDropdown.addClass("pickLanguage").delay(1000).queue(function(){
+              $(this).removeClass("pickLanguage").dequeue();
+            });
+            break;
+          default:
+            console.log(err);
+        }
+      });
       return true;
     }
     if (newState) {

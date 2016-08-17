@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import RichEditor from './RichEditor.jsx';
+import Compiler from './compiler/Compiler.jsx';
 
 class Note extends React.Component {
 
@@ -18,8 +19,16 @@ class Note extends React.Component {
         <div className="noteTitle">
           {singleNote.name}
         </div>
-        <div className="editor">
-          <RichEditor />
+        <div className="EditorTerminal">
+          <div className="editor">
+            <RichEditor />
+          </div>
+          <div className="terminal">
+            <p> Fluid Notes Sandbox&#8482; </p>
+            <p> Compile within code using: [ctrl]+[alt]+[c]</p>
+            <p> Free uses remaining 426/500 </p>
+            <Compiler />
+          </div>
         </div>
       </div>
     );
