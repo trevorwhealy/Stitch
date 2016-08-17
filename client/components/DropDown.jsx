@@ -24,7 +24,6 @@ const comments = dummyComments.map(comment => {
           className="circle"
           alt="profile"
           src="/assets/images/sunnyv.jpg"
-          width="35" height="35"
         />
       </div>
     </div>
