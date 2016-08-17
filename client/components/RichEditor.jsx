@@ -110,12 +110,12 @@ export default class RichEditor extends React.Component {
     const { editorState } = this.state;
     let command;
 
-    if (CodeUtils.hasSelectionInBlock(editorState)) {
-      command = CodeUtils.getKeyBinding(e);
-    }
-    if (command) {
-      return command;
-    }
+    // if (CodeUtils.hasSelectionInBlock(editorState)) {
+    //   command = CodeUtils.getKeyBinding(e);
+    // }
+    // if (command) {
+    //   return command;
+    //}
 
     if (e.ctrlKey) {
       if (e.altKey) {

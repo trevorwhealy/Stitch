@@ -74,15 +74,19 @@
     display: inline-block;
     border-right: 1px solid #ddd;
     padding: 0.5em;
-    margin-right: .5em;
     pointer-event: none;
   }
   
 }
 
 .RichEditor-editor .public-DraftStyleDefault-pre > pre > div {
-
+  padding: 0.5em;
   display: inline-block;
   
 }
 
+.RichEditor-editor .public-DraftStyleDefault-pre > pre > div > span {
+  padding: 1px;
+  display: block;
+  
+}
