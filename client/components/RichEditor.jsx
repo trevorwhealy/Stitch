@@ -108,16 +108,13 @@ export default class RichEditor extends React.Component {
       return command;
     }
 
-    if (e.ctrlKey) { // === 17 && hasCommandModifier(e) && e.keyCode === 18 && e.keyCode === 67) {
+    if (e.ctrlKey) {
       if (e.altKey) {
         if (e.keyCode === 67) {
           return 'myeditor-save';
         }
       }
     }
-    // if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
-    //   return 'myeditor-save';
-    // }
     return getDefaultKeyBinding(e);
   }
 
@@ -166,7 +163,7 @@ export default class RichEditor extends React.Component {
       .then(res => res.json())
       .then(data => {
         $('.terminal').append(`<p> ${data.stdout} </p>`);
-        //console.log(data);
+        // console.log(data); Need this for future error-handling.
       })
       .catch(err => {
 
