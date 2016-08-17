@@ -168,7 +168,24 @@ export default class RichEditor extends React.Component {
         $('.terminal').append(`<p> ${data.stdout} </p>`);
         //console.log(data);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+
+        switch(err) {
+          case 'no code typed':
+            break;
+          case 'no lang selected':
+            const languageDropdown = $('.compilerContainer').find('.select-dropdown');
+
+            console.log(languageDropdown);
+
+            languageDropdown.addClass("pickLanguage").delay(1000).queue(function(){
+              $(this).removeClass("pickLanguage").dequeue();
+            });
+            break;
+          default:
+            console.log(err);
+        }
+      });
       return true;
     }
     if (newState) {

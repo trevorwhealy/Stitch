@@ -2,8 +2,12 @@ import compilerAPI from '../../config';
 
 const compile = (input, lang) => {
   // If no code typed, or no language selected, do not compile
-  if (input.length < 1 || lang.length < 1) {
-    throw new Error('no code typed or no language selected');
+  if (input.length < 1) {
+    return Promise.reject('no code typed');
+  }
+
+  if (lang.length < 1) {
+    return Promise.reject('no lang selected');
   }
 
   // Convert JS to node

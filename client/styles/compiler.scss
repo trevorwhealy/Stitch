@@ -1,7 +1,13 @@
 .compilerContainer {
   text-align: center;
-  border: 2px solid blue;
+  //border: 2px solid blue;
   padding: 15px 50px 5px 50px;
   display: flex;
   flex-direction: column;
+}
+
+.pickLanguage {
+  //transition: all .4s ease;
+  //border: 2px solid red !important;
+  color: red;
 }
