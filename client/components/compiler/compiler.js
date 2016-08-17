@@ -2,11 +2,11 @@ import compilerAPI from '../../config';
 
 const compile = (input, lang) => {
   // If no code typed, or no language selected, do not compile
-  if (input.length < 1) {
+  if (!input) {
     return Promise.reject('no code typed');
   }
 
-  if (lang.length < 1) {
+  if (!lang) {
     return Promise.reject('no lang selected');
   }
 
