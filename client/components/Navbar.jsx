@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import Sidebar from './Sidebar.jsx';
 
 const Navbar = () => (
@@ -6,9 +7,9 @@ const Navbar = () => (
     <div className="sidebar">
       <Sidebar />
     </div>
-    <div className="logo">
+    <Link className="logo" to={{ pathname: '/' }}>
       {'Stitch'}
-    </div>
+    </Link>
     <div className="alerts">
       <i className="material-icons">notifications</i>
     </div>
