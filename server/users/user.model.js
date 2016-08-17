@@ -9,6 +9,11 @@ const User = sequelize.define('user', {
   email: Sequelize.STRING,
   googleId: Sequelize.STRING,
   photo: Sequelize.STRING,
+}, {
+  indexes: [
+    { method: 'BTREE', fields: ['fullName'] },
+    { method: 'BTREE', fields: ['email'] },
+  ],
 });
 
 User.beforeCreate((user) => {
