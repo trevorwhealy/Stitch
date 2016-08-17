@@ -56,7 +56,7 @@ class Home extends React.Component {
 
     if (folders) {
       allFolders =
-        folders.slice(0, 3).map(folder => {
+        folders.slice(0, 7).map(folder => {
           return (
             <Link className="eachFolder" to={{ pathname: `folders/${folder.id}` }} >
               <div className="folderContents">
@@ -67,7 +67,7 @@ class Home extends React.Component {
                     {folder.shared ? 'shared' : ''}
                   </div>
                   <div className="bottom">
-                    {`${3} notes`}
+                    {`${folder.notes.length} notes`}
                     &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
                     {`Created by ${folder.user.fullName}`}
                   </div>

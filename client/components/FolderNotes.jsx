@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
+import NewNote from './CreateNewNote.jsx';
 
 class FolderNotes extends React.Component {
 
@@ -23,10 +24,16 @@ class FolderNotes extends React.Component {
 
   render() {
     const notesInFolder = this.props.notesInFolder.notes;
+    const createNoteInFolder = this.props.noteActions.createNoteInFolder;
+    const folderId = this.props.routeParams.id;
     return (
       <div className="folderFiles">
         <div className="title">{'Folder Name'}</div>
         <div className="number">{`${notesInFolder.length} notes found`}</div>
+        <NewNote
+          createNoteInFolder={createNoteInFolder}
+          folderId={folderId}
+        />
         <div className="notes"> {notesInFolder.map(note => {
           return (
             <Link className="note" to={{ pathname: `notes/${note.id}` }}>

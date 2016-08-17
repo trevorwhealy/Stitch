@@ -1,10 +1,7 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar.jsx';
+import Navbar from '../components/Navbar.jsx';
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     $('.button-collapse').sideNav({
@@ -18,8 +15,8 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <Sidebar />
+      <div className="EntirePage">
+        <Navbar />
         {this.props.children}
       </div>
     );
