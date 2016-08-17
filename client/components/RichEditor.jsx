@@ -18,7 +18,6 @@ import Editor from 'draft-js-plugins-editor';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import mentions from './editor/util/mentions';
-// import CodeUtils from 'draft-js-code';
 
 import compiler from './compiler/compiler';
 
@@ -54,8 +53,6 @@ export default class RichEditor extends React.Component {
     this.getEditorState = () => this.state.editorState;
     this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    // this.handleReturn = this.handleReturn.bind(this);
-    // this.handleTab = this.handleTab.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
@@ -95,27 +92,9 @@ export default class RichEditor extends React.Component {
     }
   }
 
-  // myBlockRenderer(contentBlock) {
-  //   console.log(contentBlock);
-  //   const type = contentBlock.getType();
-  //   if ( type === 'Code Block') {
-  //     return {
-  //       component: Compiler,
-  //       editable: true,
-  //     }
-  //   }
-  // }
-
   keyBindingFn(e) {
     const { editorState } = this.state;
     let command;
-
-    // if (CodeUtils.hasSelectionInBlock(editorState)) {
-    //   command = CodeUtils.getKeyBinding(e);
-    // }
-    // if (command) {
-    //   return command;
-    //}
 
     if (e.ctrlKey) {
       if (e.altKey) {
@@ -127,38 +106,11 @@ export default class RichEditor extends React.Component {
     return getDefaultKeyBinding(e);
   }
 
-  // handleReturn(e) {
-  //   const editorState = this.state.editorState;
-
-  //   if (!CodeUtils.hasSelectionInBlock(editorState)) {
-  //     return;
-  //   }
-
-  //   this.onChange(
-  //     CodeUtils.handleReturn(e, editorState)
-  //   );
-
-  //   return true;
-  // }
-
-  // handleTab(e) {
-  //   const editorState = this.state.editorState;
-
-  //   if (!CodeUtils.hasSelectionInBlock(editorState)) {
-  //     return;
-  //   }
-
-  //   this.onChange(
-  //     CodeUtils.handleTab(e, editorState)
-  //   );
-  // }
 
   handleKeyCommand(command) {
     const { editorState } = this.state;
     let newState;
-    // if (CodeUtils.hasSelectionInBlock(editorState)) {
-    //   newState = CodeUtils.handleKeyCommand(editorState, command);
-    // }
+
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
@@ -223,13 +175,10 @@ export default class RichEditor extends React.Component {
         <div className={className} onClick={this.focus}>
           <Editor
             blockStyleFn={this.getBlockStyle}
-            blockRendererFn={this.myBlockRenderer}
             customStyleMap={styleMap}
             editorState={editorState}
             keyBindingFn={this.keyBindingFn}
             handleKeyCommand={this.handleKeyCommand}
-            // handleReturn={this.handleReturn}
-            // onTab={this.handleTab}
             onChange={this.onChange}
             placeholder="Start your adventure..."
             plugins={plugins}
