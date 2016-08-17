@@ -31,6 +31,12 @@ module.exports = {
         },
       },
       {
+        test: /\.css$/,
+        loaders: [
+          'style', 'css'
+          ]
+      },
+      {
         test: /\.scss$/,
         loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap'],
       },
