@@ -9,7 +9,7 @@ const Navbar = () => (
       <Sidebar />
     </div>
     <Link className="logo" to={{ pathname: '/' }}>
-      {'Fluid Notes'}
+      {'Stitch'}
     </Link>
     <div className="alerts">
       <DropDown />
