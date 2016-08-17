@@ -1,0 +1,22 @@
+.dropdown-content {
+  margin-top: 33px;
+  width: 300px !important;
+  right: 2px;
+  left: unset !important;
+}
+
+.dropdown-content .notifications {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.dropdown-content .notifications .message {
+  padding-left: 6px;
+  padding-top: 3px;
+}
+
+.dropdown-content .notifications .user {
+  margin-bottom: 0px;
+}
