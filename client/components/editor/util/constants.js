@@ -16,6 +16,15 @@ export const INLINE_STYLES = [
   {label: 'STRIKETHROUGH', style: 'STRIKETHROUGH'},
 ];
 
+export const StringToTypeMap = {
+  '- ': Block.UL,
+  '1.': Block.OL,
+  '# ': Block.H1,
+  '##': Block.H2,
+  '==': Block.UNSTYLED,
+  '[]': Block.TODO,
+}
+
 export default {
   BLOCK_TYPES,
   INLINE_STYLES,
