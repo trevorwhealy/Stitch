@@ -20,6 +20,8 @@ import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import mentions from './editor/util/mentions';
 import CodeUtils from 'draft-js-code';
 
+import compiler from './compiler/compiler';
+
 const { hasCommandModifier } = KeyBindingUtil;
 const mentionPlugin = createMentionPlugin();
 const linkifyPlugin = createLinkifyPlugin();
@@ -105,9 +107,17 @@ export default class RichEditor extends React.Component {
     if (command) {
       return command;
     }
-    if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
-      return 'myeditor-save';
+
+    if (e.ctrlKey) { // === 17 && hasCommandModifier(e) && e.keyCode === 18 && e.keyCode === 67) {
+      if (e.altKey) {
+        if (e.keyCode === 67) {
+          return 'myeditor-save';
+        }
+      }
     }
+    // if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
+    //   return 'myeditor-save';
+    // }
     return getDefaultKeyBinding(e);
   }
 
@@ -147,8 +157,18 @@ export default class RichEditor extends React.Component {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
     if (command === 'myeditor-save') {
-      console.log(convertToRaw(editorState.getCurrentContent()));
+      const answer = $(document.getSelection().focusNode).closest('.public-DraftStyleDefault-pre').text();
+      const lang = document.getElementById('language').value;
 
+      console.log(lang);
+
+      compiler(answer, lang)
+      .then(res => res.json())
+      .then(data => {
+        $('.terminal').append(`<p> ${data.stdout} </p>`);
+        //console.log(data);
+      })
+      .catch(err => console.log(err));
       return true;
     }
     if (newState) {

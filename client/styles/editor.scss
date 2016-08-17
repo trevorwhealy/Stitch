@@ -1,11 +1,11 @@
-.NoteContainer { 
+.NoteContainer {
   height: 800px;
   display: flex;
   padding: 60px 220px 50px 220px;
   flex-direction: column;
 }
 
-.noteTitle { 
+.noteTitle {
   width: 100%;
   color: #4A4A4A;
   font-size: 24px;
@@ -13,10 +13,28 @@
   min-width: 250px;
 }
 
-.editor { 
+.editor {
   margin-top: 20px;
   border: 1px solid black;
-  min-width: 250px;
+  min-width: 550px;
+}
+
+.EditorTerminal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.terminal {
+  font-family: monospace;
+  background-color: black;
+  box-shadow: 0 2 4;
+  color: white;
+
+  border: 2px solid red;
+  width: 500px;
+  height: 500px;
+  text-align: center;
 }
 
 .RichEditor-controls {
@@ -45,4 +63,3 @@
   padding: 20px;
   margin-bottom: 20px;
 }
-
