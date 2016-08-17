@@ -111,8 +111,7 @@ export function createNote() {
     return fetch('/api/notes', {
       method: 'POST',
       body: JSON.stringify({
-        folderId: 5,
-        name: 'Trevors Note',
+        name: 'Untitled',
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -121,7 +120,7 @@ export function createNote() {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
+      browserHistory.replace(`/notes/${data.id}`);
     })
     .catch(err => {
       dispatch(notesFailure(err));
@@ -136,7 +135,7 @@ export function createNoteInFolder(folderId) {
       method: 'POST',
       body: JSON.stringify({
         folderId,
-        name,
+        name: 'Untitled',
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -145,7 +144,7 @@ export function createNoteInFolder(folderId) {
     })
     .then(res => res.json())
     .then(data => {
-      browserHistory.push(`notes/${data.id}`);
+      browserHistory.push(`/notes/${data.id}`);
     })
     .catch(err => {
       dispatch(notesFailure(err));
@@ -153,19 +152,25 @@ export function createNoteInFolder(folderId) {
   };
 }
 
-// export function updateNote(noteId) {
-//   const token = localStorage.getItem('jwtToken');
-//
-//   return (dispatch) => {
-//     return fetch('/api/notes/:noteId', {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `JWT ${token}`,
-//       },
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-//   };
-// }
+export function saveNote(noteId, title, contents) {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch(`/api/notes/${noteId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: title,
+        contents,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(data => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+}

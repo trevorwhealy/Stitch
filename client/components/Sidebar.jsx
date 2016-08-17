@@ -84,7 +84,16 @@ class Sidebar extends React.Component {
                   {folder.name}
                 </Link>
               );
-            })}
+            })
+            // .filter(folder => {
+            //   console.log(folder);
+            //   if (this.state.searchInput === '') {
+            //     return folder;
+            //   } else if (folder.name === this.state.searchInput) {
+            //     return folder;
+            //   }
+            // })
+          }
           </div>
         </ul>
 
