@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Editor,
   EditorState,
   // SelectionState,
   // ContentState,
@@ -15,9 +14,17 @@ import {
   // DefaultDraftBlockRenderMap,
 } from 'draft-js';
 
+import Editor from 'draft-js-plugins-editor';
+import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
+import createLinkifyPlugin from 'draft-js-linkify-plugin';
+import mentions from './editor/util/mentions';
 import CodeUtils from 'draft-js-code';
 
 const { hasCommandModifier } = KeyBindingUtil;
+const mentionPlugin = createMentionPlugin();
+const linkifyPlugin = createLinkifyPlugin();
+const { MentionSuggestions } = mentionPlugin;
+const plugins = [mentionPlugin, linkifyPlugin];
 
 import {
   BlockStyleControls,
@@ -31,11 +38,16 @@ export default class RichEditor extends React.Component {
 
     this.state = {
       editorState: EditorState.createEmpty(),
+      suggestions: mentions,
     };
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({ editorState });
-
+    this.onSearchChange = ({ value }) => {
+      this.setState({
+        suggestions: defaultSuggestionsFilter(value, mentions),
+      });
+    };
     this.getEditorState = () => this.state.editorState;
     this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
@@ -177,10 +189,15 @@ export default class RichEditor extends React.Component {
             onTab={this.handleTab}
             onChange={this.onChange}
             placeholder="Start your adventure..."
+            plugins={plugins}
             ref="editor"
             spellCheck={true}
           />
         </div>
+        <MentionSuggestions
+          onSearchChange={this.onSearchChange}
+          suggestions={this.state.suggestions}
+        />
         <input
           onClick={this.logState}
           // style={styles.button}
@@ -197,3 +214,6 @@ const styleMap = {
     textDecoration: 'line-through',
   },
 };
+
+import 'draft-js-mention-plugin/lib/plugin.css';
+import 'draft-js-linkify-plugin/lib/plugin.css';
