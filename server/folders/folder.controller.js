@@ -39,8 +39,12 @@ function getAll(req, res) {
   const order = orderBy ? [orderBy.slice().split(' ')] : [['updatedAt', 'DESC']];
   const include = [
     { model: User, attributes: ['id', 'fullName'] },
-    { model: Share, attributes: ['userId'] },
     { model: Note, attributes: ['id'] },
+    {
+      model: Share,
+      attributes: ['userId'],
+      include: [{ model: User, attributes: ['fullName'] }],
+    },
   ];
 
   getAllAccessibleFolderIds(userId)
@@ -61,7 +65,11 @@ function getOne(req, res) {
     where: { id },
     include: [
       { model: User, attributes: ['id', 'fullName'] },
-      { model: Share, attributes: ['userId'] },
+      {
+        model: Share,
+        attributes: ['userId'],
+        include: [{ model: User, attributes: ['fullName'] }],
+      },
     ],
   })
     .then(folder => {

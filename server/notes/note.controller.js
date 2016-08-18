@@ -5,6 +5,7 @@ const verify = require('../utils/verify');
 
 const Note = require('./note.model');
 const Folder = require('../folders/folder.model');
+const Share = require('../shares/share.model');
 const User = require('../users/user.model');
 
 module.exports = {
@@ -41,6 +42,11 @@ function getAll(req, res) {
   const include = [
     { model: User, attributes: ['id', 'fullName'] },
     { model: Folder, attributes: ['id', 'name'] },
+    {
+      model: Share,
+      attributes: ['userId'],
+      include: [{ model: User, attributes: ['fullName'] }],
+    },
   ];
 
   if (folderId) {
@@ -69,9 +75,18 @@ function getAll(req, res) {
 function getOne(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
+  const include = [
+    { model: User, attributes: ['id', 'fullName'] },
+    { model: Folder, attributes: ['id', 'name'] },
+    {
+      model: Share,
+      attributes: ['userId'],
+      include: [{ model: User, attributes: ['fullName'] }],
+    },
+  ];
 
   verify.hasAccessToNote(id, userId)
-    .then(() => Note.findOne({ where: { id } }))
+    .then(() => Note.findOne({ where: { id }, include }))
     .then(note => {
       if (!note) { throw new Error('Note does not exist'); }
       res.send(note);
