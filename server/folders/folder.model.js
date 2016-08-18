@@ -4,6 +4,8 @@ const sequelize = require('../config/sequelize');
 const Folder = sequelize.define('folder', {
   name: { type: Sequelize.STRING, required: true },
   userId: { type: Sequelize.INTEGER, required: true },
+}, {
+  indexes: [{ method: 'BTREE', fields: ['name'] }],
 });
 
 module.exports = Folder;
