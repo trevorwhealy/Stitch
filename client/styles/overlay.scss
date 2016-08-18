@@ -1,0 +1,112 @@
+
+.overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  display: flex;
+  background: rgba(255,255,255,.98);
+  flex-direction: column;
+  transition: all .25s ease;
+}
+
+.overlay .overlay-navbar {
+  display: flex;
+  justify-content: flex-end;
+  height: 60px;
+  border: 1px solid green;
+}
+
+.overlay .overlay-navbar .overlay-close {
+  display: flex;
+  height: 50px;
+  width: 50px;
+  padding-right: 20px;
+  padding-top: 10px;
+  border: 1px solid red;
+}
+
+.overlay .overlay-navbar .overlay-close .closeButton {
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.overlay .overlay-responsive {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid blue;
+}
+
+
+.overlay .overlay-responsive .searchFileOrFolder {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid orange;
+  width: 100px;
+  align-self:center;
+}
+
+.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice {
+  display: flex;
+  flex-direction: row;
+}
+
+.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFile {
+  display: flex;
+  padding-right: 14px;
+  padding-left: 5px;
+  border-right: 1px solid gray;
+}
+
+.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFolder {
+  padding-left: 8px;
+}
+
+
+.overlay .overlay-responsive .searchFileOrFolder .searchIcon {
+  font-size: 80px;
+  display: flex;
+  align-items: center;
+  border: 1px solid pink;
+}
+
+.overlay .overlay-responsive .searchAllInput {
+  display: flex;
+  align-self: center;
+  font-size: 50px;
+  width: 600px;
+  border: 1px solid yellow;
+  padding-top: 23px;
+}
+
+.overlay .overlay-responsive .searchAllInput .userQuery {
+  font-size: 40px;
+  display: flex;
+}
+
+.overlay .overlay-searchResults {
+  width: 100vw;
+  display: flex;
+  border: 1px solid purple;
+}
+
+.overlay .overlay-searchResults .userQueryResults {
+  width: 216px;
+  height: 216px;
+  border: 1px solid black;
+}
+
+.overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName {
+
+}
+
+.overlay .overlay-searchResults .userQueryResults .resultFileCreatedAt {
+
+}
+
+.searchButton {
+  cursor: pointer;
+}
