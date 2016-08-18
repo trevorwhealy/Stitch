@@ -1,24 +1,16 @@
 import React from 'react';
 import {
   EditorState,
-  // SelectionState,
-  // ContentState,
   RichUtils,
   getDefaultKeyBinding,
   KeyBindingUtil,
   convertToRaw,
-  // convertFromRaw,
-  // CompositeDecorator,
-  // Entity,
-  // AtomicBlockUtils,
-  // DefaultDraftBlockRenderMap,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import mentions from './editor/util/mentions';
-import CodeUtils from 'draft-js-code';
 
 import compiler from './compiler/compiler';
 
@@ -40,6 +32,7 @@ export default class RichEditor extends React.Component {
 
     this.state = {
       editorState: EditorState.createEmpty(),
+      editEnabled: true,
       suggestions: mentions,
     };
 
@@ -53,14 +46,13 @@ export default class RichEditor extends React.Component {
     this.getEditorState = () => this.state.editorState;
     this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    this.handleReturn = this.handleReturn.bind(this);
-    this.handleTab = this.handleTab.bind(this);
-    this.toggleBlockType = this._toggleBlockType.bind(this);
-    this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
+    this.toggleBlockType = this.toggleBlockType.bind(this);
+    this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
     this.logState = () => console.log(this.state.editorState.toJS());
   }
 
-  _toggleBlockType(blockType) {
+  toggleBlockType(blockType) {
     this.onChange(
       RichUtils.toggleBlockType(
         this.state.editorState,
@@ -69,7 +61,7 @@ export default class RichEditor extends React.Component {
     );
   }
 
-  _toggleInlineStyle(inlineStyle) {
+  toggleInlineStyle(inlineStyle) {
     this.onChange(
       RichUtils.toggleInlineStyle(
         this.state.editorState,
@@ -78,36 +70,24 @@ export default class RichEditor extends React.Component {
     );
   }
 
+  toggleEdit(e) {
+    this.setState({
+      editEnabled: !this.state.editEnabled,
+    });
+  }
+
   getBlockStyle(block) {
     switch (block.getType()) {
       // case 'blockquote': return 'RichEditor-blockquote';
       // case 'Code Block': return 'RichEditor-code-block-unique';
+      // case 'code-block': return ''
       default: return null;
     }
   }
 
-  // myBlockRenderer(contentBlock) {
-  //   console.log(contentBlock);
-  //   const type = contentBlock.getType();
-  //   if ( type === 'Code Block') {
-  //     return {
-  //       component: Compiler,
-  //       editable: true,
-  //     }
-  //   }
-  // }
-
   keyBindingFn(e) {
     const { editorState } = this.state;
     let command;
-
-    if (CodeUtils.hasSelectionInBlock(editorState)) {
-      command = CodeUtils.getKeyBinding(e);
-    }
-    if (command) {
-      return command;
-    }
-
     if (e.ctrlKey) {
       if (e.altKey) {
         if (e.keyCode === 67) {
@@ -118,38 +98,10 @@ export default class RichEditor extends React.Component {
     return getDefaultKeyBinding(e);
   }
 
-  handleReturn(e) {
-    const editorState = this.state.editorState;
-
-    if (!CodeUtils.hasSelectionInBlock(editorState)) {
-      return;
-    }
-
-    this.onChange(
-      CodeUtils.handleReturn(e, editorState)
-    );
-
-    return true;
-  }
-
-  handleTab(e) {
-    const editorState = this.state.editorState;
-
-    if (!CodeUtils.hasSelectionInBlock(editorState)) {
-      return;
-    }
-
-    this.onChange(
-      CodeUtils.handleTab(e, editorState)
-    );
-  }
-
   handleKeyCommand(command) {
     const { editorState } = this.state;
     let newState;
-    if (CodeUtils.hasSelectionInBlock(editorState)) {
-      newState = CodeUtils.handleKeyCommand(editorState, command);
-    }
+
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
@@ -214,16 +166,14 @@ export default class RichEditor extends React.Component {
         <div className={className} onClick={this.focus}>
           <Editor
             blockStyleFn={this.getBlockStyle}
-            blockRendererFn={this.myBlockRenderer}
             customStyleMap={styleMap}
             editorState={editorState}
             keyBindingFn={this.keyBindingFn}
             handleKeyCommand={this.handleKeyCommand}
-            handleReturn={this.handleReturn}
-            onTab={this.handleTab}
             onChange={this.onChange}
             placeholder="Start your adventure..."
             plugins={plugins}
+            readOnly={!this.state.editEnabled}
             ref="editor"
             spellCheck={true}
           />
@@ -232,6 +182,7 @@ export default class RichEditor extends React.Component {
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
         />
+        <button onClick={this.toggleEdit}>Toggle Edit</button>
         <input
           onClick={this.logState}
           // style={styles.button}
