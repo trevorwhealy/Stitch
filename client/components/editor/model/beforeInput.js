@@ -13,7 +13,7 @@ export default (editorState, str, onChange, mapping=StringToTypeMap) => {
     return false;
   }
   const finalType = blockTo.split(':');
-  if (finalType.length < 1 || finalType.length > 3) {
+  if (finalType.length < 1 || finalType.length > 4) {
     return false;
   }
   let fType = finalType[0];
