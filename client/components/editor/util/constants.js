@@ -6,6 +6,7 @@ export const BLOCK_TYPES = [
   {label: 'UL', style: 'unordered-list-item'},
   {label: 'OL', style: 'ordered-list-item'},
   {label: 'CODE', style: 'code-block'},
+  {label: 'TODO', style: 'todo'},
 ];
 
 
@@ -16,14 +17,16 @@ export const INLINE_STYLES = [
   {label: 'STRIKETHROUGH', style: 'STRIKETHROUGH'},
 ];
 
-// export const StringToTypeMap = {
-//   '- ': Block.UL,
-//   '1.': Block.OL,
-//   '# ': Block.H1,
-//   '##': Block.H2,
-//   '==': Block.UNSTYLED,
-//   '[]': Block.TODO,
-// }
+export const StringToTypeMap = {
+  '- ': 'unordered-list-item',
+  '1.': 'order-list-item',
+  '# ': 'header-one',
+  '## ': 'header-two',
+  '### ': 'header-three',
+  '==': 'unstyled',
+  '```': 'code-block',
+  '[]': 'todo',
+}
 
 export default {
   BLOCK_TYPES,
