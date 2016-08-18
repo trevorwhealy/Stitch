@@ -1,17 +1,10 @@
 import React from 'react';
 import {
   EditorState,
-  // SelectionState,
-  // ContentState,
   RichUtils,
   getDefaultKeyBinding,
   KeyBindingUtil,
   convertToRaw,
-  // convertFromRaw,
-  // CompositeDecorator,
-  // Entity,
-  // AtomicBlockUtils,
-  // DefaultDraftBlockRenderMap,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
@@ -95,7 +88,6 @@ export default class RichEditor extends React.Component {
   keyBindingFn(e) {
     const { editorState } = this.state;
     let command;
-
     if (e.ctrlKey) {
       if (e.altKey) {
         if (e.keyCode === 67) {
@@ -105,7 +97,6 @@ export default class RichEditor extends React.Component {
     }
     return getDefaultKeyBinding(e);
   }
-
 
   handleKeyCommand(command) {
     const { editorState } = this.state;
