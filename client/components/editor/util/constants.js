@@ -26,9 +26,10 @@ export const StringToTypeMap = {
   '==': 'unstyled',
   '```': 'code-block',
   '[]': 'todo',
-}
+};
 
 export default {
   BLOCK_TYPES,
   INLINE_STYLES,
+  StringToTypeMap,
 };

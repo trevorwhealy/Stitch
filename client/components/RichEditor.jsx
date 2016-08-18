@@ -1,4 +1,7 @@
 import React from 'react';
+import 'draft-js-mention-plugin/lib/plugin.css';
+import 'draft-js-linkify-plugin/lib/plugin.css';
+
 import {
   EditorState,
   RichUtils,
@@ -11,8 +14,10 @@ import Editor from 'draft-js-plugins-editor';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import mentions from './editor/util/mentions';
-
-import compiler from './compiler/compiler';
+import { StringToTypeMap } from './editor/util/constants';
+import beforeInput from './editor/model/beforeInput';
+import blockRenderMap from './editor/model/blockRenderMap';
+import blockRendererFn from './editor/model/blockRendererFn';
 
 const { hasCommandModifier } = KeyBindingUtil;
 const mentionPlugin = createMentionPlugin();
@@ -45,11 +50,13 @@ export default class RichEditor extends React.Component {
     };
     this.getEditorState = () => this.state.editorState;
     this.keyBindingFn = this.keyBindingFn.bind(this);
+    this.handleBeforeInput = this.handleBeforeInput.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
     this.logState = () => console.log(this.state.editorState.toJS());
+    this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
   }
 
   toggleBlockType(blockType) {
@@ -78,7 +85,7 @@ export default class RichEditor extends React.Component {
 
   getBlockStyle(block) {
     switch (block.getType()) {
-      // case 'blockquote': return 'RichEditor-blockquote';
+      case 'todo': return 'block-todo';
       // case 'Code Block': return 'RichEditor-code-block-unique';
       // case 'code-block': return ''
       default: return null;
@@ -87,7 +94,6 @@ export default class RichEditor extends React.Component {
 
   keyBindingFn(e) {
     const { editorState } = this.state;
-    let command;
     if (e.ctrlKey) {
       if (e.altKey) {
         if (e.keyCode === 67) {
@@ -96,6 +102,11 @@ export default class RichEditor extends React.Component {
       }
     }
     return getDefaultKeyBinding(e);
+  }
+
+  handleBeforeInput(str) {
+    const { editorState } = this.state;
+    return beforeInput(editorState, str, this.onChange, StringToTypeMap);
   }
 
   handleKeyCommand(command) {
@@ -165,10 +176,13 @@ export default class RichEditor extends React.Component {
         />
         <div className={className} onClick={this.focus}>
           <Editor
+            blockRendererFn={this.blockRendererFn}
+            blockRenderMap={blockRenderMap}
             blockStyleFn={this.getBlockStyle}
             customStyleMap={styleMap}
             editorState={editorState}
             keyBindingFn={this.keyBindingFn}
+            handleBeforeInput={this.handleBeforeInput}
             handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
             placeholder="Start your adventure..."
@@ -200,5 +214,3 @@ const styleMap = {
   },
 };
 
-import 'draft-js-mention-plugin/lib/plugin.css';
-import 'draft-js-linkify-plugin/lib/plugin.css';
