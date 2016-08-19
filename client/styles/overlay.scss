@@ -67,6 +67,15 @@
   cursor: pointer;
 }
 
+.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFolder,
+.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFile {
+  color: lightgrey;
+}
+
+.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .isActive {
+  color: black;
+}
+
 
 .overlay .overlay-responsive .searchFileOrFolder .searchIcon {
   font-size: 80px;
@@ -97,8 +106,8 @@
 }
 
 .overlay .overlay-searchResults .userQueryResults {
-  width: 216px;
-  height: 216px;
+  width: 270px;
+  height: 270px;
   border: 1px solid black;
   display: flex;
   flex-direction: column;

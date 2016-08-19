@@ -31,38 +31,54 @@ const fakeData = [
     fileType: 'folders',
   },
 ];
-const iconType = (fakeData[0].fileType === 'folders') ? 'folder' : 'insert_drive_file';
 
 class OverlaySearchResults extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
     const globalSearchResults = this.props.globalSearch.files;
-    console.log(globalSearchResults)
     let queryResults;
-    if(globalSearchResults) {
-      queryResults = fakeData.map(file => {
-        return (
-          <div className="userQueryResults">
-            <div className="resultTypeAndFileName">
-              <i className="material-icons folderIcon">{iconType}</i>
-              <div className="resultFileName">
-                {file.name}
+    if (globalSearchResults) {
+      if (this.props.fileChoice === 'folders') {
+        const iconType = 'folder';
+        queryResults = globalSearchResults.map(file => {
+          return (
+            <div className="userQueryResults">
+              <div className="resultTypeAndFileName">
+                <i className="material-icons folderIcon">{iconType}</i>
+                <div className="resultFileName">
+                  {file.name}
+                </div>
+              </div>
+              <div className="resultContentsAndUser">
+                {file.notes.length} notes | created by {file.user.fullName}
               </div>
             </div>
-            <div className="resultContentsAndUser">
-              {file.notes.length} notes | created by {file.user.fullname}
+            );
+        });
+      } else if (this.props.fileChoice === 'notes') {
+        const iconType = 'insert_drive_file';
+        queryResults = globalSearchResults.map(file => {
+          return (
+            <div className="userQueryResults">
+              <div className="resultTypeAndFileName">
+                <i className="material-icons folderIcon">{iconType}</i>
+                <div className="resultFileName">
+                  {file.name}
+                </div>
+              </div>
+              <div className="resultContentsAndUser">
+                created by {file.user.fullName}
+              </div>
             </div>
-          </div>
-        );
-      });
+            );
+        });
+      }
+      return (
+        <div className="overlay-searchResults">
+          {queryResults}
+        </div>
+      );
     }
-    return (
-      <div className="overlay-searchResults">
-        {queryResults}
-      </div>
-    );
   }
 }
 

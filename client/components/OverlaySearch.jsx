@@ -56,7 +56,7 @@ class OverlaySearch extends React.Component {
                         <div className="userSearchFile" onClick={this.fileChoice.bind(this)}>
                           {'File'}
                         </div>
-                        <div className="userSearchFolder" onClick={this.folderChoice.bind(this)}>
+                        <div className="userSearchFolder isActive" onClick={this.folderChoice.bind(this)}>
                           {'Folder'}
                         </div>
                       </div>
@@ -65,7 +65,7 @@ class OverlaySearch extends React.Component {
                       <input className="userQuery" type="text" onKeyDown={this.searchInput.bind(this)}/>
                     </div>
                   </div>
-                    <OverlaySearchResults />
+                    <OverlaySearchResults fileChoice={this.state.fileOrFolderChoice}/>
                 </div>
     } else {
       display = <div className="test" />
