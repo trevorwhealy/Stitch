@@ -43,7 +43,7 @@ function getAll(req, res) {
   ];
 
   if (folderId) {
-    promise = checkHasAccessToFolder(folderId, userId)
+    promise = verify.hasAccessToFolder(folderId, userId)
       .then(() => Note.findAll({ where: { folderId }, order, attributes, include, limit, offset }));
   } else {
     promise = getAllAccessibleNoteIds(userId)
@@ -76,7 +76,7 @@ function getOne(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
 
-  checkHasAccessToNote(id, userId)
+  verify.hasAccessToNote(id, userId)
     .then(() => Note.findOne({ where: { id } }))
     .then(note => {
       if (!note) { throw new Error('Note does not exist'); }
@@ -93,7 +93,7 @@ function post(req, res) {
   const { name, content, folderId } = req.body;
   const data = { userId, folderId, name, content };
 
-  checkHasAccessToFolder(folderId, userId)
+  verify.hasAccessToFolder(folderId, userId)
     .then(() => Note.create(data))
     .then(newNote => res.send(newNote))
     .catch(err => {
@@ -107,8 +107,8 @@ function put(req, res) {
   const userId = req.user.id;
   const folderId = req.body.folderId;
 
-  checkHasAccessToFolder(folderId, userId)
-    .then(() => checkHasAccessToNote(id, userId))
+  verify.hasAccessToFolder(folderId, userId)
+    .then(() => verify.hasAccessToNote(id, userId))
     .then(() => Note.update(req.body, { where: { id, userId } }))
     .then(verify.transactionSuccess)
     .then(() => res.sendStatus(200))
@@ -119,38 +119,6 @@ function put(req, res) {
 }
 
 /***** PRIVATE *****/
-
-function checkHasAccessToFolder(folderId, userId) {
-  if (!folderId) { return Promise.resolve(); }
-  return sequelize.query(`
-    SELECT exists(SELECT f.id FROM folders f
-    FULL OUTER JOIN shares s
-    ON f.id = s."folderId"
-    WHERE (f.id = ${folderId} and f."userId" = ${userId})
-    OR	  (s."folderId" = ${folderId} and s."userId" = ${userId})) as "hasAccess";
-  `, { type: Sequelize.QueryTypes.SELECT })
-  .then(([{ hasAccess }]) => {
-    if (!hasAccess) {
-      throw new Error('FORBIDDEN');
-    }
-  });
-}
-
-function checkHasAccessToNote(noteId, userId) {
-  if (!noteId) { return Promise.resolve(); }
-  return sequelize.query(`
-    SELECT exists(SELECT n.id FROM notes n
-    FULL OUTER JOIN shares s
-    ON n.id = s."noteId"
-    WHERE (n.id = ${noteId} and n."userId" = ${userId})
-    OR	  (s."noteId" = ${noteId} and s."userId" = ${userId})) as "hasAccess";
-  `, { type: Sequelize.QueryTypes.SELECT })
-  .then(([{ hasAccess }]) => {
-    if (!hasAccess) {
-      throw new Error('FORBIDDEN');
-    }
-  });
-}
 
 function getAllAccessibleNoteIds(userId) {
   return sequelize.query(`
