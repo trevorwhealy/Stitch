@@ -7,7 +7,6 @@ export const BLOCK_TYPES = [
   {label: 'OL', style: 'ordered-list-item'},
   {label: 'CODE', style: 'code-block'},
   {label: 'TODO', style: 'todo'},
-  {label: 'BREAK', style: 'break'},
   {label: 'PAGEBREAK', style: 'atomic'},
 ];
 
