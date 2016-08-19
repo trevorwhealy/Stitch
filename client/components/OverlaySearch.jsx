@@ -11,6 +11,11 @@ class OverlaySearch extends React.Component {
       isOverLayClicked: false,
       fileOrFolderChoice: 'notes',
     };
+    this.displayOverlay = this.displayOverlay.bind(this);
+    this.fileChoice = this.fileChoice.bind(this);
+    this.folderChoice = this.folderChoice.bind(this);
+    this.searchInput = this.searchInput.bind(this);
+    this.displayOverlay = this.displayOverlay.bind(this);
   }
 
   displayOverlay() {
@@ -43,37 +48,39 @@ class OverlaySearch extends React.Component {
   render() {
     let display;
     if (this.state.isOverLayClicked) {
-      display = <div className="overlay">
-                  <div className="overlay-navbar">
-                    <div className="overlay-close" onClick={this.displayOverlay.bind(this)}>
-                      <i className="material-icons closeButton">close</i>
-                    </div>
-                  </div>
-                  <div className="overlay-responsive">
-                    <div className="searchFileOrFolder">
-                      <i className="material-icons searchIcon">search</i>
-                      <div className="fileOrFolderChoice">
-                        <div className="userSearchFile" onClick={this.fileChoice.bind(this)}>
-                          {'File'}
-                        </div>
-                        <div className="userSearchFolder isActive" onClick={this.folderChoice.bind(this)}>
-                          {'Folder'}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="searchAllInput">
-                      <input className="userQuery" type="text" onKeyDown={this.searchInput.bind(this)}/>
-                    </div>
-                  </div>
-                    <OverlaySearchResults fileChoice={this.state.fileOrFolderChoice}/>
+      display = (
+        <div className="overlay">
+          <div className="overlay-navbar">
+            <div className="overlay-close" onClick={this.displayOverlay}>
+              <i className="material-icons closeButton">close</i>
+            </div>
+          </div>
+          <div className="overlay-responsive">
+            <div className="searchFileOrFolder">
+              <i className="material-icons searchIcon">search</i>
+              <div className="fileOrFolderChoice">
+                <div className="userSearchFile" onClick={this.fileChoice}>
+                  {'File'}
                 </div>
+                <div className="userSearchFolder isActive" onClick={this.folderChoice}>
+                  {'Folder'}
+                </div>
+              </div>
+            </div>
+            <div className="searchAllInput">
+              <input className="userQuery" type="text" onKeyDown={this.searchInput} />
+            </div>
+          </div>
+          <OverlaySearchResults fileChoice={this.state.fileOrFolderChoice} />
+        </div>
+      );
     } else {
-      display = <div className="test" />
+      display = (<div />);
     }
 
     return (
       <div>
-        <i className="material-icons searchButton" onClick={this.displayOverlay.bind(this)}>search</i>
+        <i className="material-icons searchButton" onClick={this.displayOverlay}>search</i>
         { display }
       </div>
     );
