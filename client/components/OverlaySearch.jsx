@@ -1,22 +1,42 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as searchActionCreators from '../actions/SearchActions.jsx';
 
-class Search extends React.Component {
+class OverlaySearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchInput: '',
-      isClicked: false,
+      isOverLayClicked: false,
+      fileOrFolderChoice: 'notes',
     };
   }
 
   displayOverlay() {
     this.setState({
-      isClicked: !this.state.isClicked,
+      isOverLayClicked: !this.state.isOverLayClicked,
     });
   }
 
   searchInput(e) {
-    this.setState({ searchInput: e.target.value });
+    if (e.keyCode === 13) {
+      if (e.target.value.length > 0) {
+        this.props.searchActions.globalSearch(this.state.fileOrFolderChoice, e.target.value);
+        e.target.value = '';
+      }
+    }
+  }
+
+  fileChoice() {
+    this.setState({
+      fileOrFolderChoice: 'notes',
+    });
+  }
+
+  folderChoice() {
+    this.setState({
+      fileOrFolderChoice: 'folders',
+    });
   }
 
   render() {
@@ -24,22 +44,22 @@ class Search extends React.Component {
       {
         fileName: 'Physics',
         createdAt: 'June',
-        fileType: 'Folder',
+        fileType: 'folders',
       },
       {
         fileName: 'Chemistry',
         createdAt: 'May',
-        fileType: 'Folder',
+        fileType: 'folders',
       },
       {
         fileName: 'Gravity',
         createdAt: 'April',
-        fileType: 'File',
+        fileType: 'folders',
       },
     ];
 
     let display;
-    if (this.state.isClicked) {
+    if (this.state.isOverLayClicked) {
       display = <div className="overlay">
                   <div className="overlay-navbar">
                     <div className="overlay-close" onClick={this.displayOverlay.bind(this)}>
@@ -50,16 +70,16 @@ class Search extends React.Component {
                     <div className="searchFileOrFolder">
                       <i className="material-icons searchIcon">search</i>
                       <div className="fileOrFolderChoice">
-                        <div className="userSearchFile">
+                        <div className="userSearchFile" onClick={this.fileChoice.bind(this)}>
                           {'File'}
                         </div>
-                        <div className="userSearchFolder">
+                        <div className="userSearchFolder" onClick={this.folderChoice.bind(this)}>
                           {'Folder'}
                         </div>
                       </div>
                     </div>
                     <div className="searchAllInput">
-                      <input className="userQuery" type="text" onChange={this.searchInput.bind(this)}/>
+                      <input className="userQuery" type="text" onKeyDown={this.searchInput.bind(this)}/>
                     </div>
                   </div>
                   <div className="overlay-searchResults">
@@ -87,4 +107,21 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+const mapDispatchToProps = (dispatch) => ({
+  searchActions: bindActionCreators(searchActionCreators, dispatch),
+});
+
+const mapStateToProps = (state) => {
+  return {
+    globalSearch: state.globalSearch,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OverlaySearch);
+
+OverlaySearch.propTypes = {
+  searchActions: React.PropTypes.object,
+};
