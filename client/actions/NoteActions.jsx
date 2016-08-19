@@ -116,7 +116,6 @@ export function createNoteInFolder(folderId) {
       method: 'POST',
       body: JSON.stringify({
         folderId,
-        name: 'Untitled',
       }),
       headers: {
         'Content-Type': 'application/json',
