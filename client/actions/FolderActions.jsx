@@ -55,3 +55,19 @@ export function createFolder(name) {
     .catch(err => console.log(err));
   };
 }
+
+export function deleteFolder(id) {
+  const token = localStorage.getItem('jwtToken');
+
+  return (dispatch) => {
+    return fetch(`/api/folders/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(() => dispatch(getAllFolders()))
+    .catch(err => console.log(err));
+  };
+}

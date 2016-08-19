@@ -17,5 +17,8 @@ module.exports = {
      "spaced-comment": 0,
      "new-cap": 0,
      "arrow-body-style": 0
+   },
+   "globals": {
+     "$": true
    }
 };

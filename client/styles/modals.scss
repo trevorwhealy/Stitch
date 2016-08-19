@@ -1,0 +1,14 @@
+.cancelDelete {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.cancelDelete .delete, .cancel {
+  flex-grow: 1;
+  margin: 0px 10px 20px 10px;
+}
+
+.FolderOptionsModal {
+  
+}

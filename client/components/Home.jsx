@@ -6,29 +6,41 @@ import moment from 'moment';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
+import DeleteFolder from './modals/DeleteFolder.jsx';
+import AddFolder from './modals/AddFolder.jsx';
+
 
 class Home extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      folderToDelete: '',
+    };
+  }
 
   componentWillMount() {
     this.props.noteActions.getAllNotes();
     this.props.folderActions.getAllFolders();
-
     sessionStorage.active = window.location.href;
   }
 
-  addTheModal() {
+  addFolderModal() {
     $('#addFolderModal').openModal();
   }
 
-  addFolder(e) {
-    if (e.keyCode === 13) {
-      if (e.target.value.length > 0) {
-        this.props.folderActions.createFolder(e.target.value);
-        e.target.value = '';
-        $('#addFolderModal').closeModal();
-      }
-    }
+  deleteFolderModal(folder) {
+    this.setState({
+      folderToDelete: folder,
+    });
+    $('#deleteFolderModal').openModal();
   }
+
+  preventDropdownLink(e) {
+    e.preventDefault();
+  }
+
 
   render() {
     const notes = this.props.notes.note || [];
@@ -58,7 +70,7 @@ class Home extends React.Component {
       allFolders =
         folders.slice(0, 7).map(folder => {
           return (
-            <Link className="eachFolder" to={{ pathname: `folders/${folder.id}` }} >
+            <Link to={{ pathname: `folders/${folder.id}` }} className="eachFolder">
               <div className="folderContents">
                 <i className="material-icons">folder</i>
                 <div className="content">
@@ -73,9 +85,16 @@ class Home extends React.Component {
                   </div>
                 </div>
               </div>
-              <div>
-                <div className="elipses">
+              <div onClick={this.preventDropdownLink} className="elipses">
+                <div className="icon-btn list__more-actions dropdown-btn">
                   <i className="material-icons">more_vert</i>
+                  <ul className="dropdown-menu dropdown-menu--right">
+                    <li onClick={this.renameFolder}>Rename</li>
+                    <li onClick={this.shareFolder}>Share</li>
+                    <li onClick={() => this.deleteFolderModal(folder)}>
+                      Delete
+                    </li>
+                  </ul>
                 </div>
               </div>
             </Link>
@@ -103,24 +122,19 @@ class Home extends React.Component {
         <div className="folderContainer">
           <div className="folderHeader">
             <div>{'Folders'}</div>
-            <div onClick={this.addTheModal.bind(this)} className="add">
+            <div onClick={this.addFolderModal} className="add">
               <i className="material-icons">add</i>
               <div className="addFolder">{'NEW FOLDER'}</div>
-              <div id="addFolderModal" className="modal">
-                <div className="modal-content">
-                  <center>
-                    <h5 style={{ marginBottom: '20px' }}> Add a new folder </h5>
-                    <input style={{ textAlign: "center", fontSize: "1.7em", padding: '5px' }} type="text" onKeyDown={this.addFolder.bind(this)} />
-                    <p style={{ fontSize: '.5em', color: 'gray' }}><i>Press Enter to Save</i></p>
-                  </center>
-                </div>
-              </div>
             </div>
           </div>
           <div className="folders">
             {allFolders}
           </div>
         </div>
+
+        {/* Modals */}
+        <AddFolder />
+        <DeleteFolder folder={this.state.folderToDelete} />
       </div>
     );
   }
