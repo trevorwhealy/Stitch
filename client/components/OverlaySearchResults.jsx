@@ -1,37 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const fakeData = [
-  {
-    fileName: 'Physics',
-    createdAt: 'June',
-    notes: [1],
-    user: { fullname: 'Sunny' },
-    fileType: 'folders',
-  },
-  {
-    fileName: 'Chemistry',
-    createdAt: 'May',
-    notes: [1, 2, 3],
-    user: { fullname: 'Sompop' },
-    fileType: 'folders',
-  },
-  {
-    fileName: 'Gravity',
-    createdAt: 'April',
-    notes: [],
-    user: { fullname: 'Steven' },
-    fileType: 'folders',
-  },
-  {
-    fileName: 'Calc',
-    createdAt: 'August',
-    notes: [2, 3, 5],
-    user: { fullname: 'Trevor' },
-    fileType: 'folders',
-  },
-];
-
 class OverlaySearchResults extends React.Component {
 
   render() {
@@ -73,12 +42,12 @@ class OverlaySearchResults extends React.Component {
             );
         });
       }
-      return (
-        <div className="overlay-searchResults">
-          {queryResults}
-        </div>
-      );
     }
+    return (
+      <div className="overlay-searchResults">
+        {queryResults}
+      </div>
+    );
   }
 }
 
@@ -92,3 +61,9 @@ export default connect(
   mapStateToProps,
   null
 )(OverlaySearchResults);
+
+OverlaySearchResults.propTypes = {
+  fileChoice: React.PropTypes.string,
+  globalSearch: React.PropTypes.object,
+  singleNote: React.PropTypes.object,
+};
