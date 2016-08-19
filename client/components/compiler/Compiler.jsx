@@ -75,8 +75,8 @@ class Compiler extends React.Component {
     return (
       <div className="compilerContainer">
         {console.log(this.state.loader)}
-        <select id="language">
-          <option value="" disabled selected>Choose your language</option>
+        <select id="language" defaultValue="choose">
+          <option value="choose" disabled>Choose your language</option>
           {this.state.languages.map(language => {
             return (
               <option value={`${language}`}>{language}</option>

@@ -14,6 +14,8 @@ class Sidebar extends React.Component {
       searchInput: '',
       addFolder: false,
     };
+    this.searchInput = this.searchInput.bind(this);
+    this.addFolder = this.addFolder.bind(this);
   }
 
   componentWillMount() {
@@ -63,7 +65,7 @@ class Sidebar extends React.Component {
           <div className="search">
             <div className="left-inner-addon ">
               <i className="material-icons">search</i>
-              <input className="query" type="text" placeholder="Search folders by name" onChange={this.searchInput.bind(this)}/>
+              <input className="query" type="text" placeholder="Search folders by name" onChange={this.searchInput}/>
             </div>
           </div>
 
@@ -73,7 +75,7 @@ class Sidebar extends React.Component {
             <div onClick={this.createFolder.bind(this)} className="add">NEW<i className="tiny material-icons alert">add</i></div>
           </div>
 
-          { this.state.addFolder ? <input type="text" name="folderName" onKeyDown={this.addFolder.bind(this)} /> : '' }
+          { this.state.addFolder ? <input type="text" name="folderName" onKeyDown={this.addFolder} /> : '' }
 
           {/* Folder Names: names of folders */}
           <div className="folderNames">
@@ -97,9 +99,9 @@ class Sidebar extends React.Component {
         </ul>
 
         {/* Actual button that will be clicked to open the sideNav */}
-        <a href="#" data-activates="slide-out" className="button-collapse">
+        <button data-activates="slide-out" className="button-collapse buttonSidebar">
           <i className="material-icons">menu</i>
-        </a>
+        </button>
       </div>
     );
   }

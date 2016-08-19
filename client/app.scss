@@ -130,6 +130,12 @@ a {
   pointer-events: none;
 }
 
+.buttonSidebar {
+  background: none;
+  border: 0px;
+  &:active { background: none; }
+}
+
 /***** Scss Imports *****/
 
 @import './styles/home.scss';

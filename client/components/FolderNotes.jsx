@@ -40,7 +40,7 @@ class FolderNotes extends React.Component {
         />
         <div className="notes"> {notes.map(note => {
           return (
-            <Link className="note" to={{ pathname: `notes/${note.id}` }}>
+            <Link className="note" to={{ pathname: `/notes/${note.id}` }}>
               <div className="details">
                 <div className="name">{note.name}</div>
                 <div className="date">{moment(note.createdAt).fromNow()}</div>

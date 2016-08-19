@@ -136,7 +136,6 @@ export default class RichEditor extends React.Component {
         $answer.animate({ scrollTop: $p.position().top + $p.height() }, 250);
       })
       .catch(err => {
-
         switch(err) {
           case 'no code typed':
             break;
@@ -166,8 +165,7 @@ export default class RichEditor extends React.Component {
     const { editorState } = this.state;
     this.setState({
       editorState: insertPageBreak(editorState),
-    })
-
+    });
   }
 
   render() {

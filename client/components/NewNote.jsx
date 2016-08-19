@@ -14,7 +14,7 @@ class NewNote extends React.Component {
   }
 
   render() {
-    const singleNote = this.props.singleNote.note;
+    const singleNote = this.props.note;
     return (
       <div className="NoteContainer">
         <div className="noteTitle">
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
   return {
     notes: state.notes,
-    singleNote: state.singleNote,
+    note: state.singleNote.note,
   };
 };
 
@@ -47,5 +47,5 @@ export default connect(
 NewNote.propTypes = {
   noteActions: React.PropTypes.object,
   routeParams: React.PropTypes.object,
-  singleNote: React.PropTypes.object,
+  note: React.PropTypes.object,
 };
