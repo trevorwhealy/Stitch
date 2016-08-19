@@ -10,127 +10,128 @@
   background: rgba(255,255,255,.95);
   flex-direction: column;
   transition: all .25s ease;
+  
+  .overlay-navbar {
+    display: flex;
+    justify-content: flex-end;
+    height: 60px;
+  }
+
+  .overlay-close {
+    display: flex;
+    height: 50px;
+    width: 50px;
+    padding-right: 20px;
+    padding-top: 10px;
+  }
+
+  .closeButton {
+    font-size: 40px;
+    cursor: pointer;
+  }
+
+  .overlay-responsive {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .searchFileOrFolder {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    align-self:center;
+  }
+
+  .fileOrFolderChoice {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .userSearchFile {
+    display: flex;
+    padding-right: 14px;
+    padding-left: 5px;
+    cursor: pointer;
+  }
+
+  .userSearchFolder {
+    padding-left: 8px;
+    cursor: pointer;
+  }
+
+  .userSearchFolder,
+  .userSearchFile {
+    color: lightgrey;
+  }
+
+  .fileOrFolderChoice .isActive {
+    color: black;
+  }
+
+
+  .searchIcon {
+    font-size: 80px;
+    display: flex;
+    align-items: center;
+  }
+
+  .searchAllInput {
+    display: flex;
+    align-self: center;
+    font-size: 50px;
+    width: 600px;
+    padding-top: 23px;
+  }
+
+  .userQuery {
+    font-size: 40px;
+    display: flex;
+  }
+
+  .overlay-searchResults {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .userQueryResults {
+    width: 270px;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 2px 4px #000000;
+    background: rgba(255,255,255,1);
+  }
+
+  .resultTypeAndFileName {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .resultTypeAndFileName .folderIcon {
+    font-size: 30px;
+    padding-left: 5px;
+    padding-top: 5px;
+  }
+
+  .resultTypeAndFileName .resultFileName {
+    font-size: 30px;
+    padding-right: 10px;
+  }
+
+  .resultContentsAndUser {
+    font-size: 15px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+  }
 }
 
-.overlay .overlay-navbar {
-  display: flex;
-  justify-content: flex-end;
-  height: 60px;
-}
-
-.overlay .overlay-navbar .overlay-close {
-  display: flex;
-  height: 50px;
-  width: 50px;
-  padding-right: 20px;
-  padding-top: 10px;
-}
-
-.overlay .overlay-navbar .overlay-close .closeButton {
-  font-size: 40px;
-  cursor: pointer;
-}
-
-.overlay .overlay-responsive {
-  height: 200px;
-  display: flex;
-  justify-content: center;
-}
-
-
-.overlay .overlay-responsive .searchFileOrFolder {
-  display: flex;
-  flex-direction: column;
-  width: 100px;
-  align-self:center;
-}
-
-.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice {
-  display: flex;
-  flex-direction: row;
-}
-
-.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFile {
-  display: flex;
-  padding-right: 14px;
-  padding-left: 5px;
-  cursor: pointer;
-}
-
-.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFolder {
-  padding-left: 8px;
-  cursor: pointer;
-}
-
-.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFolder,
-.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .userSearchFile {
-  color: lightgrey;
-}
-
-.overlay .overlay-responsive .searchFileOrFolder .fileOrFolderChoice .isActive {
-  color: black;
-}
-
-
-.overlay .overlay-responsive .searchFileOrFolder .searchIcon {
-  font-size: 80px;
-  display: flex;
-  align-items: center;
-}
-
-.overlay .overlay-responsive .searchAllInput {
-  display: flex;
-  align-self: center;
-  font-size: 50px;
-  width: 600px;
-  padding-top: 23px;
-}
-
-.overlay .overlay-responsive .searchAllInput .userQuery {
-  font-size: 40px;
-  display: flex;
-}
-
-.overlay .overlay-searchResults {
-  width: 100vw;
-  display: flex;
-  justify-content: space-around;
-}
-
-.overlay .overlay-searchResults .userQueryResults {
-  width: 270px;
-  height: 270px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0px 2px 4px #000000;
-  background: rgba(255,255,255,1);
-}
-
-.overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName .folderIcon {
-  font-size: 30px;
-  padding-left: 5px;
-  padding-top: 5px;
-}
-
-.overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName .resultFileName {
-  font-size: 30px;
-  padding-right: 10px;
-}
-
-.overlay .overlay-searchResults .userQueryResults  .resultContentsAndUser {
-  font-size: 15px;
-  padding-left: 10px;
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: flex-start;
-}
 
 .searchButton {
   cursor: pointer;

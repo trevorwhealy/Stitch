@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class OverlaySearchResults extends React.Component {
 
   render() {
-    const globalSearchResults = this.props.globalSearch.files;
+    const globalSearchResults = this.props.results;
     let queryResults;
     if (globalSearchResults) {
       if (this.props.fileChoice === 'folders') {
@@ -53,7 +53,7 @@ class OverlaySearchResults extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    globalSearch: state.globalSearch,
+    results: state.globalSearch.files,
   };
 };
 
@@ -64,6 +64,6 @@ export default connect(
 
 OverlaySearchResults.propTypes = {
   fileChoice: React.PropTypes.string,
-  globalSearch: React.PropTypes.object,
+  results: React.PropTypes.array,
   singleNote: React.PropTypes.object,
 };
