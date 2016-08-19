@@ -14,6 +14,13 @@ export function folderFailure(message) {
   };
 }
 
+export function getOneFolder(folder) {
+  return {
+    type: 'GET_ONE_FOLDER',
+    folder,
+  };
+}
+
 export function getAllFolders() {
   const token = localStorage.getItem('jwtToken');
 
@@ -26,12 +33,8 @@ export function getAllFolders() {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(folderSuccess(data));
-    })
-    .catch(err => {
-      dispatch(folderFailure(err));
-    });
+    .then(data => dispatch(folderSuccess(data)))
+    .catch(err => dispatch(folderFailure(err)));
   };
 }
 
@@ -48,11 +51,24 @@ export function createFolder(name) {
       body: JSON.stringify({ name }),
     })
     .then(res => res.text())
-    .then(data => {
-      dispatch(getAllFolders());
-      console.log(data); // Folder that was just created
+    .then(() => dispatch(getAllFolders()))
+    .catch(err => dispatch(folderFailure(err)));
+  };
+}
+
+export function getFolder(folderId) {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch(`/api/folders/${folderId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
     })
-    .catch(err => console.log(err));
+    .then(res => res.json())
+    .then(data => dispatch(getOneFolder(data)))
+    .catch(err => dispatch(folderFailure(err)));
   };
 }
 

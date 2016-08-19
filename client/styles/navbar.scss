@@ -18,9 +18,22 @@
   align-items: center;
 }
 
-.NavContainer .alerts {
+.NavContainer .widgets {
+  display: flex;
+  flex-direction: row;
+  width: 100px;
+  justify-content: space-between;
+}
+
+.NavContainer .widgets .alerts {
   display: flex;
   align-items: center;
   cursor: pointer;
   margin-right: 25px;
+}
+
+.NavContainer .widgets .search {
+  display: flex;
+  align-self: flex-end;
+  padding-top: 5px;
 }

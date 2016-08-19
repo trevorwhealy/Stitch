@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
+import * as folderActionCreators from '../actions/FolderActions.jsx';
 import NewNote from './CreateNewNote.jsx';
 
 class FolderNotes extends React.Component {
@@ -11,6 +12,7 @@ class FolderNotes extends React.Component {
   componentWillMount() {
     const folderId = this.props.routeParams.id;
     this.props.noteActions.getNotesInFolder(folderId);
+    this.props.folderActions.getFolder(folderId);
   }
 
   componentDidUpdate(prevProps) {
@@ -23,18 +25,20 @@ class FolderNotes extends React.Component {
   }
 
   render() {
-    const notesInFolder = this.props.notesInFolder.notes;
+    const notes = this.props.notes;
     const createNoteInFolder = this.props.noteActions.createNoteInFolder;
     const folderId = this.props.routeParams.id;
+    const folderTitle = this.props.folder.name;
+
     return (
       <div className="folderFiles">
-        <div className="title">{'Folder Name'}</div>
-        <div className="number">{`${notesInFolder.length} notes found`}</div>
+        <div className="title">{folderTitle}</div>
+        <div className="number">{`${notes.length} notes found`}</div>
         <NewNote
           createNoteInFolder={createNoteInFolder}
           folderId={folderId}
         />
-        <div className="notes"> {notesInFolder.map(note => {
+        <div className="notes"> {notes.map(note => {
           return (
             <Link className="note" to={{ pathname: `notes/${note.id}` }}>
               <div className="details">
@@ -47,7 +51,7 @@ class FolderNotes extends React.Component {
         })}
         </div>
         {
-          notesInFolder.length > 6 ?
+          notes.length > 6 ?
             <div className="prompt">
               <div>{'Scroll for more'}</div>
               <div><i className="material-icons">keyboard_arrow_down</i></div>
@@ -61,11 +65,13 @@ class FolderNotes extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   noteActions: bindActionCreators(noteActionCreators, dispatch),
+  folderActions: bindActionCreators(folderActionCreators, dispatch),
 });
 
 const mapStateToProps = (state) => {
   return {
-    notesInFolder: state.notesInFolder,
+    notes: state.notesInFolder.notes,
+    folder: state.singleFolder.folder,
   };
 };
 
@@ -77,6 +83,8 @@ export default connect(
 FolderNotes.propTypes = {
   routeParams: React.PropTypes.object,
   noteActions: React.PropTypes.object,
-  notesInFolder: React.PropTypes.object,
+  folderActions: React.PropTypes.object,
+  notes: React.PropTypes.array,
   params: React.PropTypes.object,
+  folder: React.PropTypes.object,
 };

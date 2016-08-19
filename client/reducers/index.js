@@ -5,6 +5,8 @@ import NotesReducer from './NotesReducer.jsx';
 import SingleNoteReducer from './SingleNoteReducer.jsx';
 import NotesInFolderReducer from './NotesInFolderReducer.jsx';
 import NotificationReducer from './NotificationReducer.jsx';
+import SingleFolderReducer from './SingleFolderReducer.jsx';
+import SearchReducer from './SearchReducer.jsx';
 
 const appReducer = combineReducers({
   users: AuthReducer,
@@ -13,6 +15,8 @@ const appReducer = combineReducers({
   singleNote: SingleNoteReducer,
   notesInFolder: NotesInFolderReducer,
   notifications: NotificationReducer,
+  singleFolder: SingleFolderReducer,
+  globalSearch: SearchReducer,
 });
 
 export default appReducer;

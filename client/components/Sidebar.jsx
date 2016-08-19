@@ -77,14 +77,22 @@ class Sidebar extends React.Component {
 
           {/* Folder Names: names of folders */}
           <div className="folderNames">
-            {folders.map(folder => {
-              // TODO: decide how many folders we want to display - most recent 5? all of them?
-              return (
-                <Link className="folder" to={{ pathname: `/folders/${folder.id}` }}>
-                  {folder.name}
-                </Link>
-              );
-            })}
+            {
+              folders
+                .filter(folder => {
+                  const searchInput = this.state.searchInput;
+                  if (!searchInput) { return true; }
+                  return folder.name.match(new RegExp(searchInput, 'i'));
+                })
+                .map(folder => {
+                // TODO: decide how many folders we want to display - most recent 5? all of them?
+                  return (
+                    <Link className="folder" to={{ pathname: `/folders/${folder.id}` }}>
+                      {folder.name}
+                    </Link>
+                  );
+                })
+          }
           </div>
         </ul>
 

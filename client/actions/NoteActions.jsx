@@ -40,12 +40,8 @@ export function getAllNotes() {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(notesSuccess(data));
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => dispatch(notesSuccess(data)))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -65,12 +61,8 @@ export function getOneNote(noteId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(receiveSingleNote(data));
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => dispatch(receiveSingleNote(data)))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -89,12 +81,8 @@ export function getNotesInFolder(folderId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(receiveNotesInFolder(data));
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => dispatch(receiveNotesInFolder(data)))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -110,22 +98,14 @@ export function createNote() {
   return (dispatch) => {
     return fetch('/api/notes', {
       method: 'POST',
-      body: JSON.stringify({
-        folderId: 5,
-        name: 'Trevors Note',
-      }),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
       },
     })
     .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => browserHistory.replace(`/notes/${data.id}`))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -136,7 +116,6 @@ export function createNoteInFolder(folderId) {
       method: 'POST',
       body: JSON.stringify({
         folderId,
-        name,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -144,28 +123,30 @@ export function createNoteInFolder(folderId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      browserHistory.push(`notes/${data.id}`);
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => browserHistory.push(`/notes/${data.id}`))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
-// export function updateNote(noteId) {
-//   const token = localStorage.getItem('jwtToken');
-//
-//   return (dispatch) => {
-//     return fetch('/api/notes/:noteId', {
-//       method: 'PUT',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `JWT ${token}`,
-//       },
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-//   };
-// }
+export function saveNote(noteId, title, contents) {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch(`/api/notes/${noteId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: title,
+        contents,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(data => {
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
+}
