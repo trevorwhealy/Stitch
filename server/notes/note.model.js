@@ -6,6 +6,8 @@ const Note = sequelize.define('note', {
   content: Sequelize.JSON,
   userId: { type: Sequelize.INTEGER, required: true },
   folderId: Sequelize.INTEGER,
+}, {
+  indexes: [{ method: 'BTREE', fields: ['name'] }],
 });
 
 module.exports = Note;

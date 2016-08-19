@@ -9,45 +9,50 @@ const User = require('../users/user.model');
 const Note = require('../notes/note.model');
 
 module.exports = {
+  deleteOne,
   getAll,
   getOne,
   post,
   put,
-  deleteOne,
 };
 
 /***** PUBLIC *****/
 
-function getAll(req, res) {
-  const { orderBy, limit, offset } = req.query;
+function deleteOne(req, res) {
+  const id = req.params.id;
   const userId = req.user.id;
-  const order = orderBy ? [orderBy.slice().split(' ')] : [['updatedAt', 'DESC']];
-
-  sequelize.query(`
-    SELECT folders.id FROM folders
-    LEFT JOIN shares
-    ON folders.id = shares."folderId"
-    WHERE folders."userId" = ${userId} OR shares."userId" = ${userId}
-    ORDER BY folders.name;
-  `, { type: Sequelize.QueryTypes.SELECT })
-  .then(folders => {
-    return Folder.findAll({
-      where: { id: { $in: folders.map(folder => folder.id) } },
-      include: [
-        { model: User, attributes: ['id', 'fullName'] },
-        { model: Share, attributes: ['userId'] },
-        { model: Note, attributes: ['id'] },
-      ],
-      order,
-      limit,
-      offset,
+  Folder.destroy({ where: { id, userId } })
+    .then(verify.transactionSuccess)
+    .then(() => res.sendStatus(200))
+    .catch(err => {
+      logger.debug('Error deleting folder ', id, userId, err);
+      res.status(400).send({ message: err.message });
     });
-  })
-  .then(folders => res.send(folders))
-  .catch(err => {
-    logger.debug('Error retrieving folders ', err);
-    res.status(400).send({ message: err.message });
-  });
+}
+
+function getAll(req, res) {
+  const { orderBy, limit, offset, q } = req.query;
+  const userId = req.user.id;
+
+  // Queries
+  const where = q ? { name: { $ilike: `%${q}%` } } : {};
+  const order = orderBy ? [orderBy.slice().split(' ')] : [['updatedAt', 'DESC']];
+  const include = [
+    { model: User, attributes: ['id', 'fullName'] },
+    { model: Share, attributes: ['userId'] },
+    { model: Note, attributes: ['id'] },
+  ];
+
+  getAllAccessibleFolderIds(userId)
+    .then(folders => {
+      where.id = { $in: folders.map(folder => folder.id) };
+      return Folder.findAll({ where, include, order, limit, offset });
+    })
+    .then(folders => res.send(folders))
+    .catch(err => {
+      logger.debug('Error retrieving folders ', err);
+      res.status(400).send({ message: err.message });
+    });
 }
 
 function getOne(req, res) {
@@ -101,14 +106,14 @@ function put(req, res) {
     });
 }
 
-function deleteOne(req, res) {
-  const id = req.params.id;
-  const userId = req.user.id;
-  Folder.destroy({ where: { id, userId } })
-    .then(verify.transactionSuccess)
-    .then(() => res.sendStatus(200))
-    .catch(err => {
-      logger.debug('Error deleting folder ', id, userId, err);
-      res.status(400).send({ message: err.message });
-    });
+/***** PRIVATE *****/
+
+function getAllAccessibleFolderIds(userId) {
+  return sequelize.query(`
+    SELECT folders.id FROM folders
+    LEFT JOIN shares
+    ON folders.id = shares."folderId"
+    WHERE folders."userId" = ${userId} OR shares."userId" = ${userId}
+    ORDER BY folders.name;
+  `, { type: Sequelize.QueryTypes.SELECT });
 }

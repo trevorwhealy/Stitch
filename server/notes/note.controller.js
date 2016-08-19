@@ -31,10 +31,11 @@ function deleteOne(req, res) {
 
 function getAll(req, res) {
   let promise;
-  const { folderId, orderBy, limit, offset } = req.query;
+  const { folderId, orderBy, limit, offset, q } = req.query;
   const userId = req.user.id;
 
   // Queries
+  const where = q ? { name: { $ilike: `%${q}%` } } : {};
   const order = orderBy ? [orderBy.slice().split(' ')] : [['updatedAt', 'DESC']];
   const attributes = { exclude: ['content'] };
   const include = [
@@ -43,24 +44,17 @@ function getAll(req, res) {
   ];
 
   if (folderId) {
-    promise = checkHasAccessToFolder(folderId, userId)
-      .then(() => Note.findAll({ where: { folderId }, order, attributes, include, limit, offset }));
+    where.folderId = folderId;
+    promise = checkHasAccessToFolder(folderId, userId);
   } else {
     promise = getAllAccessibleNoteIds(userId)
-      .then(rows => rows.map(row => row.id))
-      .then(ids => {
-        return Note.findAll({
-          where: { id: { $in: ids } },
-          order,
-          attributes,
-          include,
-          limit,
-          offset,
-        });
+      .then(rows => {
+        where.id = { $in: rows.map(row => row.id) };
       });
   }
 
   promise
+    .then(() => Note.findAll({ where, order, attributes, include, limit, offset }))
     .then(notes => res.send(notes))
     .catch(err => {
       logger.debug('Error retrieving notes in folder ', folderId, err);
