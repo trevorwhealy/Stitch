@@ -33,12 +33,8 @@ export function getAllFolders() {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(folderSuccess(data));
-    })
-    .catch(err => {
-      dispatch(folderFailure(err));
-    });
+    .then(data => dispatch(folderSuccess(data)))
+    .catch(err => dispatch(folderFailure(err)));
   };
 }
 
@@ -55,9 +51,7 @@ export function createFolder(name) {
       body: JSON.stringify({ name }),
     })
     .then(res => res.text())
-    .then(() => {
-      dispatch(getAllFolders());
-    })
+    .then(() => dispatch(getAllFolders()))
     .catch(err => dispatch(folderFailure(err)));
   };
 }
@@ -73,9 +67,7 @@ export function getFolder(folderId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(getOneFolder(data));
-    })
+    .then(data => dispatch(getOneFolder(data)))
     .catch(err => dispatch(folderFailure(err)));
   };
 }

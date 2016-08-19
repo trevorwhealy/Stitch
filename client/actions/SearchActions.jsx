@@ -23,11 +23,7 @@ export function globalSearch(searchType, searchInput) {
       },
     })
     .then(res => res.json())
-    .then(files => {
-      dispatch(searchSuccess(files));
-    })
-    .catch(err => {
-      dispatch(searchFailure(err));
-    });
+    .then(files => dispatch(searchSuccess(files)))
+    .catch(err => dispatch(searchFailure(err)));
   };
 }

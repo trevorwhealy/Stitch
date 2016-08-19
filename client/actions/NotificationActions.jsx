@@ -44,14 +44,14 @@ export function markAsRead(id = 'all') {
   const token = localStorage.getItem('jwtToken');
 
   return (dispatch) => {
-    return fetch(`/api/notifications/${id}/markAsRead1`, {
+    return fetch(`/api/notifications/${id}/markAsRead`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
       },
     })
-    .then(() => { dispatch(markAsReadSuccess()); })
-    .catch((err) => { dispatch(notificationFailure(err)); });
+    .then(() => dispatch(markAsReadSuccess()))
+    .catch((err) => dispatch(notificationFailure(err)));
   };
 }

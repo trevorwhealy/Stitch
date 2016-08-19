@@ -40,12 +40,8 @@ export function getAllNotes() {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(notesSuccess(data));
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => dispatch(notesSuccess(data)))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -65,12 +61,8 @@ export function getOneNote(noteId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(receiveSingleNote(data));
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => dispatch(receiveSingleNote(data)))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -89,12 +81,8 @@ export function getNotesInFolder(folderId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(receiveNotesInFolder(data));
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => dispatch(receiveNotesInFolder(data)))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -110,21 +98,14 @@ export function createNote() {
   return (dispatch) => {
     return fetch('/api/notes', {
       method: 'POST',
-      body: JSON.stringify({
-        name: 'Untitled',
-      }),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
       },
     })
     .then(res => res.json())
-    .then(data => {
-      browserHistory.replace(`/notes/${data.id}`);
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => browserHistory.replace(`/notes/${data.id}`))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
@@ -143,12 +124,8 @@ export function createNoteInFolder(folderId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      browserHistory.push(`/notes/${data.id}`);
-    })
-    .catch(err => {
-      dispatch(notesFailure(err));
-    });
+    .then(data => browserHistory.push(`/notes/${data.id}`))
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
