@@ -16,13 +16,15 @@ import createLinkifyPlugin from 'draft-js-linkify-plugin';
 import mentions from './editor/util/mentions';
 import { StringToTypeMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
-import blockRenderMap from './editor/model/blockRenderMap';
+import blockRenderMap from './editor/model/blockRenderMap.jsx';
 import blockRendererFn from './editor/model/blockRendererFn';
-import compiler from './compiler/compiler';
+import compiler from './compiler/compiler.js';
+import { resetBlockWithType, insertPageBreak } from './editor/model/index';
 
 const { hasCommandModifier } = KeyBindingUtil;
 const mentionPlugin = createMentionPlugin();
 const linkifyPlugin = createLinkifyPlugin();
+
 const { MentionSuggestions } = mentionPlugin;
 const plugins = [mentionPlugin, linkifyPlugin];
 
@@ -52,10 +54,13 @@ export default class RichEditor extends React.Component {
     this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleBeforeInput = this.handleBeforeInput.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    // this.handleReturn = this.handleReturn.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
-    this.logState = () => console.log(this.state.editorState.toJS());
+    this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()));
+                           console.log(this.state.editorState.toJS());
+                          }
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
   }
 
@@ -86,8 +91,6 @@ export default class RichEditor extends React.Component {
   getBlockStyle(block) {
     switch (block.getType()) {
       case 'todo': return 'block-todo';
-      // case 'Code Block': return 'RichEditor-code-block-unique';
-      // case 'code-block': return ''
       default: return null;
     }
   }
@@ -159,6 +162,14 @@ export default class RichEditor extends React.Component {
     return false;
   }
 
+  insertPageBreak() {
+    const { editorState } = this.state;
+    this.setState({
+      editorState: insertPageBreak(editorState),
+    })
+
+  }
+
   render() {
     const { editorState } = this.state;
     let className = 'RichEditor-editor';
@@ -188,6 +199,7 @@ export default class RichEditor extends React.Component {
             keyBindingFn={this.keyBindingFn}
             handleBeforeInput={this.handleBeforeInput}
             handleKeyCommand={this.handleKeyCommand}
+            // handleReturn={this.handleReturn}
             onChange={this.onChange}
             placeholder="Start your adventure..."
             plugins={plugins}

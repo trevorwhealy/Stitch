@@ -1,5 +1,5 @@
 import StringToTypeMap from '../util/constants';
-import { getCurrentBlock, resetBlockWithType } from './index';
+import { getCurrentBlock, resetBlockWithType, insertPageBreak } from './index';
 
 export default (editorState, str, onChange, mapping = StringToTypeMap) => {
   const selection = editorState.getSelection();
@@ -19,6 +19,10 @@ export default (editorState, str, onChange, mapping = StringToTypeMap) => {
     return false;
   }
   const fType = finalType[0];
+  if ( fType === '---' ) {
+    insertPageBreak(editorState);
+    return true;
+  }
   onChange(resetBlockWithType(editorState, fType));
   return true;
-}
+};
