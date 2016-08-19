@@ -26,13 +26,28 @@
 }
 
 .terminal {
+  position: fixed;
+  top: 100px;
+  right: 50px;
   font-family: monospace;
   background-color: black;
   box-shadow: 0 2 4;
   color: white;
-  min-width: 500px;
-  height: 500px;
+  min-width: 450px;
+  max-width: 450px;
+  height: 700px;
   text-align: center;
+  border-radius: 15px;
+  padding: 15px;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.compileAnswer {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .RichEditor-editor {
@@ -76,19 +91,19 @@
     padding: 0.5em;
     pointer-events: none;
   }
-  
+
 }
 
 .RichEditor-editor .public-DraftStyleDefault-pre > pre > div {
   padding: 0.5em;
   display: inline-block;
-  
+
 }
 
 .RichEditor-editor .public-DraftStyleDefault-pre > pre > div > span {
   padding: 1px;
   display: block;
-  
+
 }
 
 .block-todo {

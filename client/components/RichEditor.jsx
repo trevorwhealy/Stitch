@@ -18,6 +18,7 @@ import { StringToTypeMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap';
 import blockRendererFn from './editor/model/blockRendererFn';
+import compiler from './compiler/compiler';
 
 const { hasCommandModifier } = KeyBindingUtil;
 const mentionPlugin = createMentionPlugin();
@@ -29,7 +30,6 @@ import {
   BlockStyleControls,
   InlineStyleControls,
 } from './editor/toolbox/StyleControls.jsx';
-
 
 export default class RichEditor extends React.Component {
   constructor(props) {
@@ -125,8 +125,12 @@ export default class RichEditor extends React.Component {
       compiler(answer, lang)
       .then(res => res.json())
       .then(data => {
-        $('.terminal').append(`<p> ${data.stdout} </p>`);
-        // console.log(data); Need this for future error-handling.
+        const $p = $(`<p> ${data.stdout} </p>`);
+        const $answer = $('.compileAnswer');
+
+        $answer.append($p);
+        console.log($p.position(), $p.height(), $p.offset());
+        $answer.animate({ scrollTop: $p.position().top + $p.height() }, 250);
       })
       .catch(err => {
 
@@ -213,4 +217,3 @@ const styleMap = {
     textDecoration: 'line-through',
   },
 };
-

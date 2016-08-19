@@ -28,6 +28,7 @@ class Note extends React.Component {
             <p> Compile within code using: [ctrl]+[alt]+[c]</p>
             <p> Free uses remaining 426/500 </p>
             <Compiler />
+            <div className="compileAnswer" />
           </div>
         </div>
       </div>
