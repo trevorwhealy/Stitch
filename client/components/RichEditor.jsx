@@ -125,8 +125,12 @@ export default class RichEditor extends React.Component {
       compiler(answer, lang)
       .then(res => res.json())
       .then(data => {
-        $('.terminal').append(`<p> ${data.stdout} </p>`);
-        // console.log(data); Need this for future error-handling.
+        const $p = $(`<p> ${data.stdout} </p>`);
+        const $answer = $('.compileAnswer');
+
+        $answer.append($p);
+        console.log($p.position(), $p.height(), $p.offset());
+        $answer.animate({ scrollTop: $p.position().top + $p.height() }, 250);
       })
       .catch(err => {
 
