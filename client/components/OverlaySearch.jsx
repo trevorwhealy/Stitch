@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as searchActionCreators from '../actions/SearchActions.jsx';
+import OverlaySearchResults from './OverlaySearchResults.jsx';
 
 class OverlaySearch extends React.Component {
   constructor(props) {
@@ -40,47 +41,6 @@ class OverlaySearch extends React.Component {
   }
 
   render() {
-    const fakeData = [
-      {
-        fileName: 'Physics',
-        createdAt: 'June',
-        fileType: 'folders',
-      },
-      {
-        fileName: 'Chemistry',
-        createdAt: 'May',
-        fileType: 'folders',
-      },
-      {
-        fileName: 'Gravity',
-        createdAt: 'April',
-        fileType: 'folders',
-      },
-      {
-        fileName: 'Calc',
-        createdAt: 'August',
-        fiileType: 'folders',
-      },
-    ];
-
-    const iconType = (fakeData[0].fileType === 'folders') ? 'folder' : 'insert_drive_file';
-
-    let queryResults = fakeData.map(file => {
-      return (
-        <div className="userQueryResults">
-          <div className="resultTypeAndFileName">
-            <i className="material-icons folderIcon">{iconType}</i>
-            <div className="resultFileName">
-              {file.fileName}
-            </div>
-          </div>
-          <div className="resultFileCreatedAt">
-            {file.createdAt}
-          </div>
-        </div>
-      );
-    });
-
     let display;
     if (this.state.isOverLayClicked) {
       display = <div className="overlay">
@@ -105,9 +65,7 @@ class OverlaySearch extends React.Component {
                       <input className="userQuery" type="text" onKeyDown={this.searchInput.bind(this)}/>
                     </div>
                   </div>
-                  <div className="overlay-searchResults">
-                    {queryResults}
-                  </div>
+                    <OverlaySearchResults />
                 </div>
     } else {
       display = <div className="test" />
@@ -126,14 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
   searchActions: bindActionCreators(searchActionCreators, dispatch),
 });
 
-const mapStateToProps = (state) => {
-  return {
-    globalSearch: state.globalSearch,
-  };
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(OverlaySearch);
 

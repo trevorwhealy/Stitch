@@ -102,6 +102,8 @@
   border: 1px solid black;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0px 2px 4px #000000;
 }
 
 .overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName {
@@ -119,6 +121,14 @@
 .overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName .resultFileName {
   font-size: 30px;
   padding-right: 10px;
+}
+
+.overlay .overlay-searchResults .userQueryResults  .resultContentsAndUser {
+  font-size: 15px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .searchButton {
