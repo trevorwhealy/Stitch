@@ -56,7 +56,30 @@ class OverlaySearch extends React.Component {
         createdAt: 'April',
         fileType: 'folders',
       },
+      {
+        fileName: 'Calc',
+        createdAt: 'August',
+        fiileType: 'folders',
+      },
     ];
+
+    const iconType = (fakeData[0].fileType === 'folders') ? 'folder' : 'insert_drive_file';
+
+    let queryResults = fakeData.map(file => {
+      return (
+        <div className="userQueryResults">
+          <div className="resultTypeAndFileName">
+            <i className="material-icons folderIcon">{iconType}</i>
+            <div className="resultFileName">
+              {file.fileName}
+            </div>
+          </div>
+          <div className="resultFileCreatedAt">
+            {file.createdAt}
+          </div>
+        </div>
+      );
+    });
 
     let display;
     if (this.state.isOverLayClicked) {
@@ -83,15 +106,7 @@ class OverlaySearch extends React.Component {
                     </div>
                   </div>
                   <div className="overlay-searchResults">
-                    <div className="userQueryResults">
-                      <div className="resultTypeAndFileName">
-
-                      </div>
-                      <div className="resultFileCreatedAt">
-
-                      </div>
-                    </div>
-                    <div className="userQueryResults"></div>
+                    {queryResults}
                   </div>
                 </div>
     } else {

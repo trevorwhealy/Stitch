@@ -93,20 +93,32 @@
   width: 100vw;
   display: flex;
   border: 1px solid purple;
+  justify-content: space-around;
 }
 
 .overlay .overlay-searchResults .userQueryResults {
   width: 216px;
   height: 216px;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
 }
 
 .overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName {
-
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.overlay .overlay-searchResults .userQueryResults .resultFileCreatedAt {
+.overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName .folderIcon {
+  font-size: 30px;
+  padding-left: 5px;
+  padding-top: 5px;
+}
 
+.overlay .overlay-searchResults .userQueryResults .resultTypeAndFileName .resultFileName {
+  font-size: 30px;
+  padding-right: 10px;
 }
 
 .searchButton {

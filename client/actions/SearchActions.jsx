@@ -24,6 +24,7 @@ export function globalSearch(searchType, searchInput) {
     })
     .then(res => res.json())
     .then(files => {
+      console.log(files);
       dispatch(searchSuccess(files));
     })
     .catch(err => {
