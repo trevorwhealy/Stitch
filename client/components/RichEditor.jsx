@@ -18,6 +18,7 @@ import { StringToTypeMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap';
 import blockRendererFn from './editor/model/blockRendererFn';
+import compiler from './compiler/compiler';
 
 const { hasCommandModifier } = KeyBindingUtil;
 const mentionPlugin = createMentionPlugin();
@@ -29,7 +30,6 @@ import {
   BlockStyleControls,
   InlineStyleControls,
 } from './editor/toolbox/StyleControls.jsx';
-
 
 export default class RichEditor extends React.Component {
   constructor(props) {
@@ -217,4 +217,3 @@ const styleMap = {
     textDecoration: 'line-through',
   },
 };
-
