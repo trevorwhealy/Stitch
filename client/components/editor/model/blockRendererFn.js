@@ -1,4 +1,5 @@
-import Todo from '../blocks/todo';
+import Todo from '../blocks/Todo';
+import PageBreak from '../blocks/PageBreak.jsx';
 
 export default (onChange, getEditorState) => (contentBlock) => {
   // console.log(editorState, onChange);
@@ -11,7 +12,14 @@ export default (onChange, getEditorState) => (contentBlock) => {
         getEditorState,
       },
     };
+    case 'atomic': return {
+      component: PageBreak,
+      props: {
+        onChange,
+        getEditorState,
+      }
+    };
     default: return null;
   }
-}
+};
 

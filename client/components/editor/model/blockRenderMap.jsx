@@ -5,6 +5,9 @@ const RenderMap = Map({
   todo: {
     element: 'div',
   },
+  pagebreak: {
+    element: 'div',
+  },
 }).merge(DefaultDraftBlockRenderMap);
 
 

@@ -1,4 +1,4 @@
-import { EditorState } from 'draft-js';
+import { EditorState, AtomicBlockUtils, Entity } from 'draft-js';
 
 export const getDefaultBlockData = (blockType, initialData = {}) => {
   switch (blockType) {
@@ -7,7 +7,6 @@ export const getDefaultBlockData = (blockType, initialData = {}) => {
   }
 };
 
-
 export const getCurrentBlock = (editorState) => {
   const selectionState = editorState.getSelection();
   const contentState = editorState.getCurrentContent();
@@ -15,42 +14,13 @@ export const getCurrentBlock = (editorState) => {
   return block;
 };
 
-// export const addNewBlock = (editorState, newType = 'unstyled') => {
-//   const selectionState = editorState.getSelection();
-//   if (!selectionState.isCollapsed()) {
-//     return editorState;
-//   }
-//   const contentState = editorState.getCurrentContent();
-//   const key = selectionState.getStartKey();
-//   const blockMap = contentState.getBlockMap();
-//   const currentBlock = getCurrentBlock(editorState);
-//   if (!currentBlock) {
-//     return editorState;
-//   }
-//   if (currentBlock.getLength() == 0) {
-//     if (currentBlock.getType() == newType) {
-//       return editorState;
-//     }
-//     const newBlock = currentBlock.merge({
-//       type: newType,
-//       data: getDefaultBlockData(newType),
-//     });
-//     const newContentState = contentState.merge({
-//       blockMap: blockMap.set(key, newBlock),
-//       selectionAfter: selectionState
-//     });
-//     return EditorState.push(editorState, newContentState, 'change-block-type');
-//   }
-//   return editorState;
-// };
-
 export const resetBlockWithType = (editorState, newType = 'unstyled') => {
   const contentState = editorState.getCurrentContent();
   const selectionState = editorState.getSelection();
   const key = selectionState.getStartKey();
   const blockMap = contentState.getBlockMap();
   const block = blockMap.get(key);
-  let newText = '';
+  const newText = '';
   const newBlock = block.merge({
     text: newText,
     type: newType,
@@ -79,3 +49,12 @@ export const updateDataOfBlock = (editorState, block, newData) => {
   // return editorState;
 };
 
+export const insertPageBreak = (editorState) => {
+  const entityKey = Entity.create(
+    'TOKEN',
+    'IMMUTABLE',
+    { content: ' ' }
+  );
+
+  return AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
+};

@@ -7,6 +7,7 @@ export const BLOCK_TYPES = [
   {label: 'OL', style: 'ordered-list-item'},
   {label: 'CODE', style: 'code-block'},
   {label: 'TODO', style: 'todo'},
+  {label: 'PAGEBREAK', style: 'atomic'},
 ];
 
 
@@ -19,13 +20,14 @@ export const INLINE_STYLES = [
 
 export const StringToTypeMap = {
   '- ': 'unordered-list-item',
-  '1.': 'order-list-item',
+  '1. ': 'ordered-list-item',
   '# ': 'header-one',
   '## ': 'header-two',
   '### ': 'header-three',
   '==': 'unstyled',
   '```': 'code-block',
   '[]': 'todo',
+  '---': 'atomic',
 };
 
 export default {
