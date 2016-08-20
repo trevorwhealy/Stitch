@@ -8,12 +8,7 @@
 
 /** Recent block **/
 
-.recent {
-  width: 100%;
-}
-
 .recent .notes {
-  width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
@@ -25,8 +20,9 @@
   margin: 14px;
   height: 250px;
   flex-basis: 250px;
-  min-width: 250px;
+  max-width: 250px;
   display: flex;
+  flex: 1 0 250px;
   flex-direction: column;
 }
 
@@ -41,11 +37,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  //align-content: space-between;
 }
 
 .recent .notes .note .bottom .noteTitle {
   font-size: 18px;
+  overflow: hidden;
 }
 
 .recent .notes .note .bottom .noteDetails {
@@ -62,7 +58,6 @@
 /** Folder block **/
 
 .folderContainer {
-
   padding: 30px 50px;
 }
 

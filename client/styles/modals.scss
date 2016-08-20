@@ -8,3 +8,28 @@
   flex-grow: 1;
   margin: 0px 10px 20px 10px;
 }
+
+.actions {
+  display: flex;
+  flex-drection: row;
+}
+
+.actions .chip {
+  transition: all .4s ease;
+  cursor: pointer;
+  padding: 0px 5px;
+  align-items: center;
+  background-color: #D8D8D8;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-left: 25px;
+}
+
+.actions .chip:hover {
+  background-color: #9C9999;
+}
+
+.NoteContainer .noteTitle {
+  border: 2px solid blue;
+  width: 800px;
+}

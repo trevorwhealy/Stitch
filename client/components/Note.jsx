@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import RichEditor from './RichEditor.jsx';
 import Compiler from './compiler/Compiler.jsx';
+import RenameNoteModal from './modals/RenameNote.jsx';
+import DeleteNoteModal from './modals/DeleteNote.jsx';
 
 class Note extends React.Component {
 
@@ -12,12 +14,28 @@ class Note extends React.Component {
     this.props.noteActions.getOneNote(noteId);
   }
 
+  renameNote() {
+    $('#renameNoteModal').openModal();
+  }
+
+  deleteNote() {
+    $('#deleteNoteModal').openModal();
+  }
+
   render() {
     const singleNote = this.props.note;
     return (
       <div className="NoteContainer">
         <div className="noteTitle">
-          {singleNote.name}
+          <div id="noteName">{singleNote.name}</div>
+          <div className="actions">
+            <div onClick={this.renameNote} className="chip">
+              Rename
+            </div>
+            <div onClick={this.deleteNote} className="chip">
+              Delete
+            </div>
+          </div>
         </div>
         <div className="EditorTerminal">
           <div className="editor">
@@ -31,6 +49,10 @@ class Note extends React.Component {
             <div className="compileAnswer" />
           </div>
         </div>
+
+        {/* Modals*/}
+        <RenameNoteModal note={this.props.note} />
+        <DeleteNoteModal note={this.props.note} />
       </div>
     );
   }

@@ -87,3 +87,20 @@ export function deleteFolder(id) {
     .catch(err => console.log(err));
   };
 }
+
+export function renameFolder(folderId, title) {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch(`/api/folders/${folderId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: title,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(() => dispatch(getAllFolders()));
+  };
+}

@@ -8,7 +8,7 @@ import * as folderActionCreators from '../actions/FolderActions.jsx';
 
 import DeleteFolder from './modals/DeleteFolder.jsx';
 import AddFolder from './modals/AddFolder.jsx';
-
+import RenameFolder from './modals/RenameFolder.jsx';
 
 class Home extends React.Component {
 
@@ -17,6 +17,7 @@ class Home extends React.Component {
 
     this.state = {
       folderToDelete: '',
+      folderToRename: '',
     };
   }
 
@@ -35,6 +36,13 @@ class Home extends React.Component {
       folderToDelete: folder,
     });
     $('#deleteFolderModal').openModal();
+  }
+
+  renameFolderModal(folder) {
+    this.setState({
+      folderToRename: folder,
+    });
+    $('#renameFolderModal').openModal();
   }
 
   preventDropdownLink(e) {
@@ -89,7 +97,9 @@ class Home extends React.Component {
                 <div className="icon-btn list__more-actions dropdown-btn">
                   <i className="material-icons">more_vert</i>
                   <ul className="dropdown-menu dropdown-menu--right">
-                    <li onClick={this.renameFolder}>Rename</li>
+                    <li onClick={() => this.renameFolderModal(folder)}>
+                      Rename
+                    </li>
                     <li onClick={this.shareFolder}>Share</li>
                     <li onClick={() => this.deleteFolderModal(folder)}>
                       Delete
@@ -135,6 +145,7 @@ class Home extends React.Component {
         {/* Modals */}
         <AddFolder />
         <DeleteFolder folder={this.state.folderToDelete} />
+        <RenameFolder folder={this.state.folderToRename} />
       </div>
     );
   }
