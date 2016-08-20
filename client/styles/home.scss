@@ -8,12 +8,7 @@
 
 /** Recent block **/
 
-.recent {
-  //width: 100%;
-}
-
 .recent .notes {
-  //width: 100%;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
@@ -42,7 +37,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  //align-content: space-between;
 }
 
 .recent .notes .note .bottom .noteTitle {
@@ -64,7 +58,6 @@
 /** Folder block **/
 
 .folderContainer {
-
   padding: 30px 50px;
 }
 

@@ -171,7 +171,6 @@ export function renameNote(noteId, title) {
         Authorization: `JWT ${token}`,
       },
     });
-    //.then(() => dispatch(getAllNotes()));
   };
 }
 

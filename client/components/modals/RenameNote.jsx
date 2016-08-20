@@ -6,13 +6,6 @@ import * as noteActionCreators from '../../actions/NoteActions.jsx';
 
 class RenameNote extends React.Component {
 
-  componentWillMount() {
-    console.log('12423412342134234', this.props.note);
-    this.setState({
-      title: this.props.note.id,
-    });
-  }
-
   renameNote() {
     const newTitle = $('#renameNoteInput').val();
     if (newTitle.length) {

@@ -102,6 +102,5 @@ export function renameFolder(folderId, title) {
       },
     })
     .then(() => dispatch(getAllFolders()));
-    //.then(() => dispatch(getOneNote()));
   };
 }
