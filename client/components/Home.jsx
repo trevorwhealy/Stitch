@@ -9,6 +9,7 @@ import * as folderActionCreators from '../actions/FolderActions.jsx';
 import DeleteFolder from './modals/DeleteFolder.jsx';
 import AddFolder from './modals/AddFolder.jsx';
 import RenameFolder from './modals/RenameFolder.jsx';
+import ShareContent from './modals/ShareContent.jsx';
 
 class Home extends React.Component {
 
@@ -18,6 +19,7 @@ class Home extends React.Component {
     this.state = {
       folderToDelete: '',
       folderToRename: '',
+      contentToShare: '',
     };
   }
 
@@ -43,6 +45,13 @@ class Home extends React.Component {
       folderToRename: folder,
     });
     $('#renameFolderModal').openModal();
+  }
+
+  shareContentModal(content) {
+    this.setState({
+      contentToShare: content,
+    });
+    $('#shareContentModal').openModal();
   }
 
   preventDropdownLink(e) {
@@ -100,7 +109,7 @@ class Home extends React.Component {
                     <li onClick={() => this.renameFolderModal(folder)}>
                       Rename
                     </li>
-                    <li onClick={this.shareFolder}>Share</li>
+                    <li onClick={() => this.shareContentModal(folder)}>Share</li>
                     <li onClick={() => this.deleteFolderModal(folder)}>
                       Delete
                     </li>
@@ -146,6 +155,7 @@ class Home extends React.Component {
         <AddFolder />
         <DeleteFolder folder={this.state.folderToDelete} />
         <RenameFolder folder={this.state.folderToRename} />
+        <ShareContent content={this.state.contentToShare} />
       </div>
     );
   }
