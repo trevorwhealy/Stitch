@@ -249,13 +249,6 @@ const styleMap = {
   },
 };
 
-// const mapStateToProps = (state) => {
-//   console.log('Get note success >>>> ', state.singleNote.note);
-//   return {
-//     note: state.singleNote.note,
-//   };
-// };
-
 const mapDispatchToProps = (dispatch) => ({
   noteActions: bindActionCreators(noteActionCreators, dispatch),
 });
