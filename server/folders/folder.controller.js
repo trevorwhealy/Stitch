@@ -21,7 +21,11 @@ module.exports = {
 function deleteOne(req, res) {
   const id = req.params.id;
   const userId = req.user.id;
-  Folder.destroy({ where: { id, userId } })
+
+  sequelize.transaction(transaction => {
+    return Note.destroy({ where: { folderId: id } }, { transaction })
+      .then(() => Folder.destroy({ where: { id, userId } }, { transaction }));
+  })
     .then(verify.transactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {
