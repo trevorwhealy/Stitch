@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
+import * as noteActionCreators from '../actions/NoteActions.jsx';
 
 import {
   EditorState,
@@ -8,6 +11,7 @@ import {
   getDefaultKeyBinding,
   KeyBindingUtil,
   convertToRaw,
+  convertFromRaw,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
@@ -33,12 +37,13 @@ import {
   InlineStyleControls,
 } from './editor/toolbox/StyleControls.jsx';
 
-export default class RichEditor extends React.Component {
+class RichEditor extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorState: props.note && props.note.content
+        ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
+        : EditorState.createEmpty(),
       editEnabled: true,
       suggestions: mentions,
     };
@@ -62,6 +67,15 @@ export default class RichEditor extends React.Component {
                            console.log(this.state.editorState.toJS());
                           }
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
+    //this.updateContents = this.updateContents.bind(this);
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      editorState: props.note && props.note.content
+        ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
+        : EditorState.createEmpty(),
+    })
   }
 
   toggleBlockType(blockType) {
@@ -96,11 +110,13 @@ export default class RichEditor extends React.Component {
   }
 
   keyBindingFn(e) {
-    const { editorState } = this.state;
     if (e.ctrlKey) {
+      if (e.keyCode ===  83 ) {
+        return 'editor-save';
+      }
       if (e.altKey) {
         if (e.keyCode === 67) {
-          return 'myeditor-save';
+          return 'compile';
         }
       }
     }
@@ -119,7 +135,12 @@ export default class RichEditor extends React.Component {
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
-    if (command === 'myeditor-save') {
+    if (command === 'editor-save') {
+      const content = convertToRaw(this.state.editorState.getCurrentContent());
+      this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
+    }
+
+    if (command === 'compile') {
       const answer = $(document.getSelection().focusNode).closest('.public-DraftStyleDefault-pre').text();
       const lang = document.getElementById('language').value;
 
@@ -136,7 +157,6 @@ export default class RichEditor extends React.Component {
         $answer.animate({ scrollTop: $p.position().top + $p.height() }, 250);
       })
       .catch(err => {
-
         switch(err) {
           case 'no code typed':
             break;
@@ -166,8 +186,7 @@ export default class RichEditor extends React.Component {
     const { editorState } = this.state;
     this.setState({
       editorState: insertPageBreak(editorState),
-    })
-
+    });
   }
 
   render() {
@@ -229,3 +248,12 @@ const styleMap = {
     textDecoration: 'line-through',
   },
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  noteActions: bindActionCreators(noteActionCreators, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(RichEditor);

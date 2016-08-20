@@ -61,7 +61,9 @@ export function getOneNote(noteId) {
       },
     })
     .then(res => res.json())
-    .then(data => dispatch(receiveSingleNote(data)))
+    .then(data => {
+      dispatch(receiveSingleNote(data));
+    })
     .catch(err => dispatch(notesFailure(err)));
   };
 }
@@ -104,7 +106,10 @@ export function createNote() {
       },
     })
     .then(res => res.json())
-    .then(data => browserHistory.replace(`/notes/${data.id}`))
+    .then(data => {
+      dispatch(receiveSingleNote(data));
+      browserHistory.replace(`/notes/${data.id}`);
+    })
     .catch(err => dispatch(notesFailure(err)));
   };
 }
@@ -128,14 +133,15 @@ export function createNoteInFolder(folderId) {
   };
 }
 
-export function saveNote(noteId, title, contents) {
+export function saveNote(noteId, title, content) {
   const token = localStorage.getItem('jwtToken');
+  const name = 'Hello';
   return (dispatch) => {
     return fetch(`/api/notes/${noteId}`, {
       method: 'PUT',
       body: JSON.stringify({
-        name: title,
-        contents,
+        name,
+        content,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -143,10 +149,11 @@ export function saveNote(noteId, title, contents) {
       },
     })
     .then(data => {
-      console.log(data);
+      console.log('fasho');
     })
     .catch(err => {
-      console.log(err);
+      console.log('error', err);
+      dispatch(notesFailure(err));
     });
   };
 }
