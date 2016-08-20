@@ -80,7 +80,8 @@ function getOne(req, res) {
     { model: Folder, attributes: ['id', 'name'] },
     {
       model: Share,
-      attributes: ['userId'],
+      attributes: ['id', 'userId'],
+      on: { $or: { noteId: { $col: 'note.id' }, folderId: { $col: 'note.folderId' } } },
       include: [{ model: User, attributes: ['fullName'] }],
     },
   ];

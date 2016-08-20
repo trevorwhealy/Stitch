@@ -38,7 +38,7 @@ function getAll(req, res) {
   const where = q ? { name: { $ilike: `%${q}%` } } : {};
   const order = orderBy ? [orderBy.slice().split(' ')] : [['updatedAt', 'DESC']];
   const include = [
-    { model: User, attributes: ['id', 'fullName'] },
+    { model: User, attributes: ['id', 'fullName', 'photo'] },
     { model: Note, attributes: ['id'] },
     {
       model: Share,
@@ -64,13 +64,17 @@ function getOne(req, res) {
   Folder.findOne({
     where: { id },
     include: [
-      { model: User, attributes: ['id', 'fullName'] },
+      {
+        model: User,
+        attributes: ['id', 'fullName', 'email', 'photo'],
+      },
       {
         model: Share,
-        attributes: ['userId'],
-        include: [{ model: User, attributes: ['fullName'] }],
+        attributes: ['id'],
+        include: [{ model: User, attributes: ['id', 'fullName', 'email', 'photo'] }],
       },
     ],
+    order: [[Share, User, 'fullName', 'ASC']],
   })
     .then(folder => {
       if (!folder) { throw new Error('Folder does not exist'); }
