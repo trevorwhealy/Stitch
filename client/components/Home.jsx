@@ -109,8 +109,6 @@ class Home extends React.Component {
                     <li onClick={() => this.renameFolderModal(folder)}>
                       Rename
                     </li>
-                    <li onClick={this.shareFolder}>Share</li>
-                    <li onClick={this.renameFolder}>Rename</li>
                     <li onClick={() => this.shareContentModal(folder)}>Share</li>
                     <li onClick={() => this.deleteFolderModal(folder)}>
                       Delete
