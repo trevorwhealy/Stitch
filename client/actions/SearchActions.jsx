@@ -40,8 +40,7 @@ export function findUser(content, userInfo) {
   })
   .then(res => res.json())
   .then(([{ id }]) => {
-    console.log('the id is', id)
-    //shareContent(content, id);
+    shareContent(content, id);
   })
   .catch(err => console.log(err));
 }

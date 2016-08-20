@@ -16,6 +16,7 @@ class Sidebar extends React.Component {
     };
     this.searchInput = this.searchInput.bind(this);
     this.addFolder = this.addFolder.bind(this);
+    this.createFolder = this.createFolder.bind(this);
   }
 
   componentWillMount() {
@@ -65,17 +66,27 @@ class Sidebar extends React.Component {
           <div className="search">
             <div className="left-inner-addon ">
               <i className="material-icons">search</i>
-              <input className="query" type="text" placeholder="Search folders by name" onChange={this.searchInput}/>
+              <input
+                className="query"
+                type="text"
+                placeholder="Search folders by name"
+                onChange={this.searchInput}
+              />
             </div>
           </div>
 
           {/*  Create Folder: title and create button */}
           <div className="createFolder">
             <div className="title"> FOLDERS </div>
-            <div onClick={this.createFolder.bind(this)} className="add">NEW<i className="tiny material-icons alert">add</i></div>
+            <div
+              onClick={this.createFolder}
+              className="add"
+            >NEW<i className="tiny material-icons alert">add</i>
+            </div>
           </div>
 
-          { this.state.addFolder ? <input type="text" name="folderName" onKeyDown={this.addFolder} /> : '' }
+          { this.state.addFolder
+            ? <input type="text" name="folderName" onKeyDown={this.addFolder} /> : '' }
 
           {/* Folder Names: names of folders */}
           <div className="folderNames">

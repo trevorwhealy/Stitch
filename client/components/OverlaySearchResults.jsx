@@ -1,44 +1,55 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 class OverlaySearchResults extends React.Component {
 
   render() {
     const globalSearchResults = this.props.results;
+    const toggleOverlay = this.props.toggleOverlay;
     let queryResults;
-    if (globalSearchResults) {
-      if (this.props.fileChoice === 'folders') {
+
+    if (globalSearchResults.length > 0) {
+      if (globalSearchResults[0].type === 'folder') {
         const iconType = 'folder';
-        queryResults = globalSearchResults.map(file => {
+        queryResults = globalSearchResults.map(folder => {
           return (
-            <div className="userQueryResults">
+            <Link
+              to={{ pathname: `/folders/${folder.id}` }}
+              onClick={() => toggleOverlay()}
+              className="userQueryResults"
+            >
               <div className="resultTypeAndFileName">
                 <i className="material-icons folderIcon">{iconType}</i>
                 <div className="resultFileName">
-                  {file.name}
+                  {folder.name}
                 </div>
               </div>
               <div className="resultContentsAndUser">
-                {file.notes.length} notes | created by {file.user.fullName}
+                {folder.notes.length} notes | created by {folder.user.fullName}
               </div>
-            </div>
+            </Link>
             );
         });
-      } else if (this.props.fileChoice === 'notes') {
+      } else if (globalSearchResults[0].type === 'note') {
         const iconType = 'insert_drive_file';
-        queryResults = globalSearchResults.map(file => {
+        queryResults = globalSearchResults.map(note => {
           return (
-            <div className="userQueryResults">
+            <Link
+              to={{ pathname: `/notes/${note.id}` }}
+              onClick={() => toggleOverlay()}
+              className="userQueryResults"
+            >
               <div className="resultTypeAndFileName">
                 <i className="material-icons folderIcon">{iconType}</i>
                 <div className="resultFileName">
-                  {file.name}
+                  {note.name}
                 </div>
               </div>
               <div className="resultContentsAndUser">
-                created by {file.user.fullName}
+                created by {note.user.fullName}
               </div>
-            </div>
+            </Link>
             );
         });
       }
@@ -66,4 +77,5 @@ OverlaySearchResults.propTypes = {
   fileChoice: React.PropTypes.string,
   results: React.PropTypes.array,
   singleNote: React.PropTypes.object,
+  toggleOverlay: React.PropTypes.function,
 };

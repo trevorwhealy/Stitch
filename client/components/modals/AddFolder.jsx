@@ -5,6 +5,11 @@ import * as folderActionCreators from '../../actions/FolderActions.jsx';
 
 class AddFolder extends React.Component {
 
+  constructor() {
+    super();
+    this.addFolder = this.addFolder.bind(this);
+  }
+
   addFolder(e) {
     if (e.keyCode === 13) {
       if (e.target.value.length > 0) {
@@ -21,7 +26,11 @@ class AddFolder extends React.Component {
         <div className="modal-content">
           <center>
             <h5 style={{ marginBottom: '20px' }}> Add a new folder </h5>
-            <input style={{ textAlign: "center", fontSize: "1.7em", padding: '5px' }} type="text" onKeyDown={this.addFolder.bind(this)} />
+            <input
+              style={{ textAlign: 'center', fontSize: '1.7em', padding: '5px' }}
+              type="text"
+              onKeyDown={this.addFolder}
+            />
             <p style={{ fontSize: '.5em', color: 'gray' }}><i>Press Enter to Save</i></p>
           </center>
         </div>

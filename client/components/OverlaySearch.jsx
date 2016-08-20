@@ -9,7 +9,6 @@ class OverlaySearch extends React.Component {
     super(props);
     this.state = {
       isOverLayClicked: false,
-      fileOrFolderChoice: 'notes',
     };
     this.displayOverlay = this.displayOverlay.bind(this);
     this.fileChoice = this.fileChoice.bind(this);
@@ -71,7 +70,7 @@ class OverlaySearch extends React.Component {
               <input className="userQuery" type="text" onKeyDown={this.searchInput} />
             </div>
           </div>
-          <OverlaySearchResults fileChoice={this.state.fileOrFolderChoice} />
+          <OverlaySearchResults toggleOverlay={this.displayOverlay} />
         </div>
       );
     } else {
