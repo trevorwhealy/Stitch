@@ -6,7 +6,7 @@ const compile = (input, lang) => {
     return Promise.reject('no code typed');
   }
 
-  if (!lang) {
+  if (!lang || lang === 'none') {
     return Promise.reject('no lang selected');
   }
 

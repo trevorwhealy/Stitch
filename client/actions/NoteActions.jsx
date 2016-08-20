@@ -157,3 +157,39 @@ export function saveNote(noteId, title, content) {
     });
   };
 }
+
+export function renameNote(noteId, title) {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch(`/api/notes/${noteId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: title,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    });
+    //.then(() => dispatch(getAllNotes()));
+  };
+}
+
+
+export function deleteNote(noteId) {
+  const token = localStorage.getItem('jwtToken');
+  return (dispatch) => {
+    return fetch(`/api/notes/${noteId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(() => {
+      dispatch(getAllNotes());
+      browserHistory.replace('/');
+    })
+    .catch(err => console.log(err));
+  };
+}
