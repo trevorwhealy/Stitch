@@ -52,6 +52,7 @@ function getAll(req, res) {
       where.id = { $in: folders.map(folder => folder.id) };
       return Folder.findAll({ where, include, order, limit, offset });
     })
+    .then(folders => folders.map(f => Object.assign({ type: 'folder' }, f.dataValues)))
     .then(folders => res.send(folders))
     .catch(err => {
       logger.debug('Error retrieving folders ', err);

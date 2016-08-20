@@ -61,6 +61,7 @@ function getAll(req, res) {
 
   promise
     .then(() => Note.findAll({ where, order, attributes, include, limit, offset }))
+    .then(notes => notes.map(n => Object.assign({ type: 'note' }, n.dataValues)))
     .then(notes => res.send(notes))
     .catch(err => {
       logger.debug('Error retrieving notes in folder ', folderId, err);
