@@ -8,7 +8,6 @@ class AddFolder extends React.Component {
   addFolder(e) {
     if (e.keyCode === 13) {
       if (e.target.value.length > 0) {
-        console.log(this.props.folderActions);
         this.props.folderActions.createFolder(e.target.value);
         e.target.value = '';
         $('#addFolderModal').closeModal();

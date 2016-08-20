@@ -61,9 +61,7 @@ export function getOneNote(noteId) {
       },
     })
     .then(res => res.json())
-    .then(data => {
-      dispatch(receiveSingleNote(data));
-    })
+    .then(data => dispatch(receiveSingleNote(data)))
     .catch(err => dispatch(notesFailure(err)));
   };
 }
@@ -133,9 +131,8 @@ export function createNoteInFolder(folderId) {
   };
 }
 
-export function saveNote(noteId, title, content) {
+export function saveNote(noteId, name, content) {
   const token = localStorage.getItem('jwtToken');
-  const name = 'Hello';
   return (dispatch) => {
     return fetch(`/api/notes/${noteId}`, {
       method: 'PUT',
@@ -148,13 +145,7 @@ export function saveNote(noteId, title, content) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(data => {
-      console.log('fasho');
-    })
-    .catch(err => {
-      console.log('error', err);
-      dispatch(notesFailure(err));
-    });
+    .catch(err => dispatch(notesFailure(err)));
   };
 }
 
