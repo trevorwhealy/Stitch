@@ -48,7 +48,7 @@ export function findUser(content, userInfo) {
 export function shareContent(content, userId) {
   const token = localStorage.getItem('jwtToken');
 
-  return fetch(`/api/${content.type}/${content.id}/share`, {
+  return fetch(`/api/${content.type}s/${content.id}/share`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
