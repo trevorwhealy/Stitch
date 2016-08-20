@@ -17,9 +17,6 @@ class NewNote extends React.Component {
     const singleNote = this.props.note;
     return (
       <div className="NoteContainer">
-        <div className="noteTitle">
-          {'Untitled'}
-        </div>
         <div className="editor">
           <RichEditor />
         </div>

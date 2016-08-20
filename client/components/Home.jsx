@@ -51,7 +51,7 @@ class Home extends React.Component {
       recentNotes =
         notes.slice(0, 3).map(note => {
           return (
-            <Link className="note" to={{ pathname: `notes/${note.id}` }} >
+            <Link className="note" to={{ pathname: `/notes/${note.id}` }} >
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
@@ -70,7 +70,7 @@ class Home extends React.Component {
       allFolders =
         folders.slice(0, 7).map(folder => {
           return (
-            <Link to={{ pathname: `folders/${folder.id}` }} className="eachFolder">
+            <Link to={{ pathname: `/folders/${folder.id}` }} className="eachFolder">
               <div className="folderContents">
                 <i className="material-icons">folder</i>
                 <div className="content">
@@ -107,7 +107,7 @@ class Home extends React.Component {
         <div className="recent">
           <div className="title"> {'RECENT NOTES'} </div>
           <div className="notes">
-            <Link className="note" to={{ pathname: 'notes/new' }} >
+            <Link className="note" to={{ pathname: '/notes/new' }} >
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
