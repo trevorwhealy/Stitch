@@ -3,136 +3,136 @@
   display: flex;
   padding: 60px 220px 50px 220px;
   flex-direction: column;
-}
 
-.noteTitle {
-  width: 100%;
-  color: #4A4A4A;
-  font-size: 24px;
-  font-weight: bold;
-  min-width: 250px;
-  display: flex;
-  flex-direction: row;
-}
-
-.editor {
-  margin-top: 20px;
-  //border: 1px solid black;
-  min-width: 550px;
-}
-
-.EditorTerminal {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.terminal {
-  position: fixed;
-  top: 100px;
-  right: 50px;
-  font-family: monospace;
-  background-color: black;
-  box-shadow: 0 2 4;
-  color: white;
-  min-width: 450px;
-  max-width: 450px;
-  height: 700px;
-  text-align: center;
-  border-radius: 15px;
-  padding: 15px;
-  overflow: hidden;
-  display: flex;
-  flex-flow: column nowrap;
-}
-
-.compileAnswer {
-  flex: 1;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.RichEditor-editor {
-  padding-left: 10px;
-}
-
-.RichEditor-controls {
-  font-family: 'Helvetica', sans-serif;
-  font-size: 14px;
-  margin-bottom: 5px;
-  user-select: none;
-}
-
-.RichEditor-styleButton {
-  color: #999;
-  cursor: pointer;
-  margin-right: 16px;
-  padding: 2px 0;
-  display: inline-block;
-}
-
-.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
-  display: none;
-}
-
-.RichEditor-editor .public-DraftStyleDefault-pre {
-  background-color: rgba(0, 0, 0, 0.05);
-  font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
-  font-size: 16px;
-  padding: 20px;
-  counter-reset: section;
-}
-
-.RichEditor-editor .public-DraftStyleDefault-pre > pre {
-
-  &:before {
-    counter-increment: section;
-    content: counter(section);
-    display: inline-block;
-    border-right: 1px solid #ddd;
-    padding: 0.5em;
-    pointer-events: none;
+  .noteTitle {
+    width: 100%;
+    color: #4A4A4A;
+    font-size: 24px;
+    font-weight: bold;
+    min-width: 250px;
+    display: flex;
+    flex-direction: row;
   }
 
-}
+  .editor {
+    margin-top: 20px;
+    //border: 1px solid black;
+    min-width: 550px;
+  }
 
-.RichEditor-editor .public-DraftStyleDefault-pre > pre > div {
-  padding: 0.5em;
-  display: inline-block;
+  .EditorTerminal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-}
+  .terminal {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+    font-family: monospace;
+    background-color: black;
+    box-shadow: 0 2 4;
+    color: white;
+    min-width: 450px;
+    max-width: 450px;
+    height: 700px;
+    text-align: center;
+    border-radius: 15px;
+    padding: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+  }
 
-.RichEditor-editor .public-DraftStyleDefault-pre > pre > div > span {
-  padding: 1px;
-  display: block;
+  .compileAnswer {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+  }
 
-}
+  .RichEditor-editor {
+    padding-left: 10px;
+  }
 
-.block-todo {
+  .RichEditor-controls {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px;
+    user-select: none;
+  }
 
-  input[type="checkbox"] {
+  .RichEditor-styleButton {
+    color: #999;
+    cursor: pointer;
+    margin-right: 16px;
+    padding: 2px 0;
+    display: inline-block;
+  }
+
+  .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+    display: none;
+  }
+
+  .RichEditor-editor .public-DraftStyleDefault-pre {
+    background-color: rgba(0, 0, 0, 0.05);
+    font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+    font-size: 16px;
+    padding: 20px;
+    counter-reset: section;
+  }
+
+  .RichEditor-editor .public-DraftStyleDefault-pre > pre {
+
+    &:before {
+      counter-increment: section;
+      content: counter(section);
+      display: inline-block;
+      border-right: 1px solid #ddd;
+      padding: 0.5em;
+      pointer-events: none;
+    }
+
+  }
+
+  .RichEditor-editor .public-DraftStyleDefault-pre > pre > div {
+    padding: 0.5em;
+    display: inline-block;
+
+  }
+
+  .RichEditor-editor .public-DraftStyleDefault-pre > pre > div > span {
+    padding: 1px;
+    display: block;
+
+  }
+
+  .block-todo {
+
+    input[type="checkbox"] {
       cursor: pointer;
       float: left;
       position: relative;
       top: 4px;
       left: -4px;
       opacity: 1 !important;
-  }
+    }
 
-  .public-DraftStyleDefault-block {
+    .public-DraftStyleDefault-block {
       margin-left: 18px;
-  }
+    }
 
-  .block-todo-completed {
+    .block-todo-completed {
       color: #949494;
       text-decoration: line-through;
+    }
   }
-}
 
-.pagebreak {
-  min-width: 700px;
-}
+  .pagebreak {
+    min-width: 700px;
+  }
 
-figure {
-  margin: 0px;
+  figure {
+    margin: 0px;
+  }
 }
