@@ -1,6 +1,4 @@
 import React from 'react';
-//import { connect } from 'react-redux';
-//import { bindActionCreators } from 'redux';
 import { findUser } from '../../actions/SearchActions.jsx';
 
 
@@ -58,15 +56,6 @@ export default class ShareContent extends React.Component {
     );
   }
 }
-
-// const mapDispatchToProps = (dispatch) => ({
-//   searchActions: bindActionCreators(searchActionCreators, dispatch),
-// });
-//
-// export default connect(
-//   null,
-//   null,
-// )(ShareContent);
 
 ShareContent.propTypes = {
   content: React.PropTypes.object,
