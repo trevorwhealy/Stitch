@@ -28,11 +28,6 @@ class DeleteContent extends React.Component {
     $('#deleteContentModal').closeModal();
   }
 
-  keyTracking(e) {
-    if (e.keyCode === 13) {
-      this.deleteContent();
-    }
-  }
 
   render() {
     return (
