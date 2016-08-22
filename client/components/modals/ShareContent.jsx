@@ -8,15 +8,22 @@ export default class ShareContent extends React.Component {
     super(props);
 
     this.shareContent = this.shareContent.bind(this);
+    this.keyTracking = this.keyTracking.bind(this);
   }
 
-  shareContent(e) {
+  keyTracking(e) {
     if (e.keyCode === 13) {
-      if (e.target.value.length > 0) {
-        findUser(this.props.content, e.target.value);
-        e.target.value = '';
-        $('#shareContentModal').closeModal();
-      }
+      this.shareContent();
+    }
+  }
+
+  shareContent() {
+    const shareTarget = $('#shareContentInput').val();
+
+    if (shareTarget.length) {
+      findUser(this.props.content, shareTarget);
+      $('#shareContentModal').closeModal();
+      $('#shareContentInput').val('');
     }
   }
 
@@ -32,9 +39,10 @@ export default class ShareContent extends React.Component {
             <h5> With whom would you like to share, </h5>
             <h5><b>{this.props.content.name}</b></h5>
             <input
+              id="shareContentInput"
               style={{ textAlign: 'center', fontSize: '1.7em', padding: '5px' }}
               type="text" placeholder="type email here"
-              onKeyDown={this.shareContent}
+              onKeyDown={this.keyTracking}
             />
           </div>
         </center>
@@ -47,7 +55,7 @@ export default class ShareContent extends React.Component {
           </button>
           <button
             onClick={this.shareContent}
-            className="waves-effect waves-red btn-flat delete"
+            className="waves-effect waves-purple btn-flat delete"
           >
             Share
           </button>

@@ -166,7 +166,7 @@ export function renameNote(noteId, title) {
 }
 
 
-export function deleteNote(noteId) {
+export function deleteNote(noteId, redirect) {
   const token = localStorage.getItem('jwtToken');
   return (dispatch) => {
     return fetch(`/api/notes/${noteId}`, {
@@ -178,7 +178,9 @@ export function deleteNote(noteId) {
     })
     .then(() => {
       dispatch(getAllNotes());
-      browserHistory.replace('/');
+      if (redirect) {
+        browserHistory.replace('/');
+      }
     })
     .catch(err => console.log(err));
   };
