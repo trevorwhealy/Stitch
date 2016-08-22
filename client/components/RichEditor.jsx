@@ -47,7 +47,7 @@ class RichEditor extends React.Component {
         ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
         : EditorState.createEmpty(),
       editEnabled: true,
-      suggestions: mentions,
+      suggestions: mentions,  //props.note.shares
     };
 
     this.focus = () => this.refs.editor.focus();
@@ -131,8 +131,33 @@ class RichEditor extends React.Component {
     return beforeInput(editorState, str, this.onChange, StringToTypeMap);
   }
 
+  findMentionEntities(users, block) {
+    let entityKey;
+    block.findEntityRanges(
+      (character) => {
+        entityKey = character.getEntity();
+        return (
+          entityKey !== null &&
+          Entity.get(entityKey).getType() === 'mention');
+      },
+      (block, key) => {
+        const data = Entity.get(entityKey).getData();
+        if ( !data.notified ) {
+          Entity.mergeData(entityKey, { notified: true });
+          console.log('notified');
+          users.push(data.mention.get('name'));
+        }
+        else {
+          console.log('already notified');
+        }
+        
+      });
+    return users;
+  }
+
   handleKeyCommand(command) {
     const { editorState } = this.state;
+    const contentState = editorState.getCurrentContent();
     let newState;
     console.log(command);
 
@@ -140,12 +165,15 @@ class RichEditor extends React.Component {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
     if (command === 'editor-save') {
-      const { entityMap } = convertToRaw(editorState.getCurrentContent());
-      console.log(entityMap);
-      console.log(editorState.getCurrentContent(), ' save editor state');
-      //console.log(editorState.get('entityMap'));
+      const blockMap = contentState.getBlockMap();
+
+      const users = blockMap.reduce(this.findMentionEntities, []);
+
+      console.log('USERS TO NOTIFY ', users);
+
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
+      return true;
     }
 
     if (command === 'compile') {
@@ -238,6 +266,7 @@ class RichEditor extends React.Component {
         <MentionSuggestions
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
+          onClose={this.onClose}
         />
         <button onClick={this.toggleEdit}>Toggle Edit</button>
         <input
