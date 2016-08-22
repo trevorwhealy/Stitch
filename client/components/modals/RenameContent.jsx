@@ -19,7 +19,6 @@ class RenameContent extends React.Component {
         this.props.folderActions.renameFolder(this.props.content.id, newName);
       } else if (this.props.type === 'note') {
         this.props.noteActions.renameNote(this.props.content.id, newName);
-        console.log(this.props);
         if (this.props.content.folderId) {
           this.props.noteActions.getNotesInFolder(this.props.content.folderId);
         }
