@@ -10,6 +10,9 @@ import FolderNotes from '../components/FolderNotes.jsx';
 import NewNote from '../components/NewNote.jsx';
 
 const requireAuth = (nextState, replace) => {
+  if (nextState.location.query.token) {
+    localStorage.setItem('jwtToken', nextState.location.query.token);
+  }
   const token = localStorage.getItem('jwtToken');
   if (!token) {
     replace({

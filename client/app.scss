@@ -11,6 +11,11 @@ body {
   height: 100vh;
 }
 
+#app {
+  width: 100%;
+  height: 100%;
+}
+
 a {
   color: black;
 }
@@ -138,6 +143,7 @@ a {
 
 /***** Scss Imports *****/
 
+@import './styles/auth.scss';
 @import './styles/home.scss';
 @import './styles/editor.scss';
 @import './styles/search.scss';

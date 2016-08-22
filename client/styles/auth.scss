@@ -1,0 +1,48 @@
+.auth {
+  width: 100%;
+  height: 100%;
+  padding: 12px 32px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+@media (max-width: $screen-sm-max) {
+  .auth { padding: 12px; }
+  .auth h2 { font-size: 2.5rem; }
+  .auth h5 { display: none; }
+}
+
+.auth__form {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 30px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.auth__form > h5 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: grey;
+}
+.auth__form > .input-field,
+.auth__form > .btn {
+  width: 100%;
+}
+.auth__form > .btn {
+  margin-top: 24px;
+}
+
+.auth__alternative {
+  margin: 24px 0;
+}
+
+.auth__thirdParty {
+  width: 100%;
+  border-top: 1px solid lightgrey;
+  padding-top: 32px;
+}
+.auth__thirdParty > .googleBtn {
+  width: 100%;
+  background-color: $color-red !important;
+}

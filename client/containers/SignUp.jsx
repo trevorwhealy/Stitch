@@ -4,7 +4,7 @@ import SignUpForm from '../components/SignUpForm.jsx';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onClick: (userCredentials) => {
+    onSubmit: (userCredentials) => {
       dispatch(signUp(userCredentials));
     },
   };
