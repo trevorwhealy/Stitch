@@ -23,7 +23,7 @@ const requireAuth = (nextState, replace) => {
 
 module.exports = (
   <Router history={browserHistory}>
-    <Route path="/" component={App} onEnter={requireAuth} >
+    <Route path="/" component={App} onEnter={requreAuth}>
       <IndexRoute component={Home} />
       <Route path="/folders/:id" component={FolderNotes} />
       <Route path="/notes/new" component={NewNote} />

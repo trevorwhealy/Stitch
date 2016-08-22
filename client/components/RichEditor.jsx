@@ -12,6 +12,8 @@ import {
   KeyBindingUtil,
   convertToRaw,
   convertFromRaw,
+  SelectionState,
+  Entity,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
@@ -26,7 +28,7 @@ import compiler from './compiler/compiler.js';
 import { resetBlockWithType, insertPageBreak } from './editor/model/index';
 
 const { hasCommandModifier } = KeyBindingUtil;
-const mentionPlugin = createMentionPlugin();
+const mentionPlugin = createMentionPlugin({});
 const linkifyPlugin = createLinkifyPlugin();
 
 const { MentionSuggestions } = mentionPlugin;
@@ -63,8 +65,9 @@ class RichEditor extends React.Component {
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
-    this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()));
+    this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()), ' entitymap');
                            console.log(this.state.editorState.toJS());
+                           console.log(this.state.editorState.getSelection());
                           }
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
     //this.updateContents = this.updateContents.bind(this);
@@ -131,11 +134,16 @@ class RichEditor extends React.Component {
   handleKeyCommand(command) {
     const { editorState } = this.state;
     let newState;
+    console.log(command);
 
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
     if (command === 'editor-save') {
+      const { entityMap } = convertToRaw(editorState.getCurrentContent());
+      console.log(entityMap);
+      console.log(editorState.getCurrentContent(), ' save editor state');
+      //console.log(editorState.get('entityMap'));
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
     }
