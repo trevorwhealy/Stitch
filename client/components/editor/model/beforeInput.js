@@ -15,9 +15,6 @@ export default (editorState, str, onChange, mapping = StringToTypeMap) => {
   }
   const finalType = blockTo.split(':');
 
-  if (finalType.length < 1 || finalType.length > 4) {
-    return false;
-  }
   const fType = finalType[0];
   if ( fType === '---' ) {
     insertPageBreak(editorState);
