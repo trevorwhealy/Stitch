@@ -3,10 +3,9 @@ const sequelize = require('../config/sequelize');
 const encryption = require('../utils/encryption');
 
 const User = sequelize.define('user', {
-  username: { type: Sequelize.STRING, required: true, unique: true },
-  password: { type: Sequelize.STRING, required: true },
+  email: { type: Sequelize.STRING, required: true },
+  password: { type: Sequelize.STRING },
   fullName: { type: Sequelize.STRING, required: true },
-  email: Sequelize.STRING,
   googleId: Sequelize.STRING,
   photo: Sequelize.STRING,
 }, {
@@ -17,6 +16,7 @@ const User = sequelize.define('user', {
 });
 
 User.beforeCreate((user) => {
+  if (!user.password) { return Promise.resolve(user); }
   return encryption.hashPassword(user.password)
     .then(hashedPw => {
       user.password = hashedPw;

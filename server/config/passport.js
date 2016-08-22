@@ -10,9 +10,9 @@ passport.use(new JwtStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeader(),
   secretOrKey: config.secret,
 }, (jwtPayload, done) => {
-  const username = jwtPayload.username || null;
+  const email = jwtPayload.email || null;
   const googleId = jwtPayload.googleId || null;
-  User.findOne({ where: { username, googleId } })
+  User.findOne({ where: { email, googleId } })
     .then(user => done(null, user))
     .catch(done);
 }));
@@ -23,6 +23,7 @@ passport.use(new GoogleStrategy(config.googleAuth, (accessToken, refreshToken, p
     defaults: {
       fullName: profile.displayName,
       photo: profile.photos[0] ? profile.photos[0].value : undefined,
+      email: profile.emails[0] ? profile.emails[0].value : undefined,
     },
   })
   .then(users => done(null, users[0]))
