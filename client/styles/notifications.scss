@@ -1,9 +1,13 @@
 .dropdown-content {
   margin-top: 33px;
-  width: 300px !important;
-  right: 2px;
+  width: 450px !important;
+  right: 30px;
   left: unset !important;
 }
+
+// .dropdown-content .dropdown-content-navbar {
+//   display:flex;
+// }
 
 .dropdown-content .notifications {
   display: flex;
@@ -19,6 +23,7 @@
 
 .dropdown-content .notifications .user {
   margin-bottom: 0px;
+  padding-left: 10px;
 }
 
 .dropdown-content .notifications .user .circle {

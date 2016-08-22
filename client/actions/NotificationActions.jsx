@@ -15,7 +15,12 @@ export function notificationFailure(message) {
 export function markAsReadSuccess() {
   return {
     type: 'MARK_AS_READ',
+  };
+}
 
+export function markAsReadFailure() {
+  return {
+    type: 'MARK_AS_READ_FAILURE',
   };
 }
 
@@ -31,20 +36,17 @@ export function getNotifications() {
       },
     })
     .then(res => res.json())
-    .then(notifications => {
-      console.log('the notis', notifications);
-    })
-    .catch(err => {
-      console.log('the error is', err);
-    });
+    .then(notifications => dispatch(notificationSuccess(notifications)))
+    .catch(err => dispatch(notificationFailure(err)));
   };
 }
 
-export function markAsRead(id = 'all') {
+// id can be 'all'
+export function markAsRead(id) {
   const token = localStorage.getItem('jwtToken');
 
   return (dispatch) => {
-    return fetch(`/api/notifications/${id}/markAsRead`, {
+    return fetch(`/api/notifications/${id}/markasread`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,6 +54,6 @@ export function markAsRead(id = 'all') {
       },
     })
     .then(() => dispatch(markAsReadSuccess()))
-    .catch((err) => dispatch(notificationFailure(err)));
+    .catch((err) => dispatch(markAsReadFailure(err)));
   };
 }

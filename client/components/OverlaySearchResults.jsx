@@ -77,5 +77,4 @@ OverlaySearchResults.propTypes = {
   fileChoice: React.PropTypes.string,
   results: React.PropTypes.array,
   singleNote: React.PropTypes.object,
-  toggleOverlay: React.PropTypes.function,
 };
