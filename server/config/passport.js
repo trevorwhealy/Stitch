@@ -11,8 +11,7 @@ passport.use(new JwtStrategy({
   secretOrKey: config.secret,
 }, (jwtPayload, done) => {
   const email = jwtPayload.email || null;
-  const googleId = jwtPayload.googleId || null;
-  User.findOne({ where: { email, googleId } })
+  User.findOne({ where: { email } })
     .then(user => done(null, user))
     .catch(done);
 }));
