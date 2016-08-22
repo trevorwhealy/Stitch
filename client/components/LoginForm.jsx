@@ -33,7 +33,9 @@ const LoginForm = ({ onSubmit }) => {
           />
         </div>
         <button type="submit" className="waves-effect waves-light btn">Continue</button>
-        <div className="auth__alternative">Don't have an account? <Link to="/signup">Register</Link></div>
+        <div className="auth__alternative">
+          Don't have an account? <Link to="/signup">Register</Link>
+        </div>
         <div className="auth__thirdParty">
           <a className="btn googleBtn" href="/auth/google">Sign In With Google</a>
         </div>
@@ -42,5 +44,8 @@ const LoginForm = ({ onSubmit }) => {
   );
 };
 
+LoginForm.propTypes = {
+  onSubmit: React.PropTypes.func,
+};
 
 export default LoginForm;

@@ -53,4 +53,8 @@ const SignUpForm = ({ onSubmit }) => {
   );
 };
 
+SignUpForm.propTypes = {
+  onSubmit: React.PropTypes.func,
+};
+
 export default SignUpForm;
