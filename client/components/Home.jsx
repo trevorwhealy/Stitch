@@ -6,10 +6,10 @@ import moment from 'moment';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
-import DeleteFolder from './modals/DeleteFolder.jsx';
 import AddFolder from './modals/AddFolder.jsx';
-import RenameFolder from './modals/RenameFolder.jsx';
+import RenameContent from './modals/RenameContent.jsx';
 import ShareContent from './modals/ShareContent.jsx';
+import DeleteContent from './modals/DeleteContent.jsx';
 
 class Home extends React.Component {
 
@@ -33,18 +33,18 @@ class Home extends React.Component {
     $('#addFolderModal').openModal();
   }
 
-  deleteFolderModal(folder) {
+  deleteContentModal(folder) {
     this.setState({
       folderToDelete: folder,
     });
-    $('#deleteFolderModal').openModal();
+    $('#deleteContentModal').openModal();
   }
 
   renameFolderModal(folder) {
     this.setState({
       folderToRename: folder,
     });
-    $('#renameFolderModal').openModal();
+    $('#renameContentModal').openModal();
   }
 
   shareContentModal(content) {
@@ -110,7 +110,7 @@ class Home extends React.Component {
                       Rename
                     </li>
                     <li onClick={() => this.shareContentModal(folder)}>Share</li>
-                    <li onClick={() => this.deleteFolderModal(folder)}>
+                    <li onClick={() => this.deleteContentModal(folder)}>
                       Delete
                     </li>
                   </ul>
@@ -153,8 +153,8 @@ class Home extends React.Component {
 
         {/* Modals */}
         <AddFolder />
-        <DeleteFolder folder={this.state.folderToDelete} />
-        <RenameFolder folder={this.state.folderToRename} />
+        <RenameContent type="folder" content={this.state.folderToRename} />
+        <DeleteContent type="folder" content={this.state.folderToDelete} />
         <ShareContent content={this.state.contentToShare} />
       </div>
     );

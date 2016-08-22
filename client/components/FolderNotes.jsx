@@ -7,7 +7,21 @@ import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 import NewNote from './CreateNewNote.jsx';
 
+import RenameContent from './modals/RenameContent.jsx';
+import DeleteContent from './modals/DeleteContent.jsx';
+import ShareContent from './modals/ShareContent.jsx';
+
 class FolderNotes extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      noteToRename: '',
+      noteToDelete: '',
+      contentToShare: '',
+    };
+  }
 
   componentWillMount() {
     const folderId = this.props.routeParams.id;
@@ -22,6 +36,31 @@ class FolderNotes extends React.Component {
     if (oldId !== newId) {
       this.props.noteActions.getNotesInFolder(folderId);
     }
+  }
+
+  renameContentModal(note) {
+    this.setState({
+      noteToRename: note,
+    });
+    $('#renameContentModal').openModal();
+  }
+
+  shareContentModal(note) {
+    this.setState({
+      contentToShare: note,
+    });
+    $('#shareContentModal').openModal();
+  }
+
+  deleteContentModal(note) {
+    this.setState({
+      noteToDelete: note,
+    });
+    $('#deleteContentModal').openModal();
+  }
+
+  preventDropdownLink(e) {
+    e.preventDefault();
   }
 
   render() {
@@ -40,12 +79,27 @@ class FolderNotes extends React.Component {
         />
         <div className="notes"> {notes.map(note => {
           return (
-            <Link className="note" to={{ pathname: `/notes/${note.id}` }}>
+            <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }}>
               <div className="details">
                 <div className="name">{note.name}</div>
                 <div className="date">{moment(note.createdAt).fromNow()}</div>
               </div>
-              <div className="open">{'OPEN'}</div>
+              <div onClick={this.preventDropdownLink} className="elipses">
+                <div className="icon-btn list__more-actions dropdown-btn">
+                  <i className="material-icons">more_vert</i>
+                  <ul className="dropdown-menu dropdown-menu--right">
+                    <li onClick={() => this.renameContentModal(note)}>
+                      Rename
+                    </li>
+                    <li onClick={() => this.shareContentModal(note)}>
+                      Share
+                    </li>
+                    <li onClick={() => this.deleteContentModal(note)}>
+                      Delete
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </Link>
           );
         })}
@@ -58,6 +112,10 @@ class FolderNotes extends React.Component {
             </div>
           : ''
         }
+        {/* Modals */}
+        <RenameContent type="note" content={this.state.noteToRename} />
+        <DeleteContent type="note" content={this.state.noteToDelete} />
+        <ShareContent type="note" content={this.state.contentToShare} />
       </div>
     );
   }

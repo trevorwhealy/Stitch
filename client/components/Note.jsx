@@ -4,8 +4,10 @@ import { bindActionCreators } from 'redux';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import RichEditor from './RichEditor.jsx';
 import Compiler from './compiler/Compiler.jsx';
-import RenameNoteModal from './modals/RenameNote.jsx';
-import DeleteNoteModal from './modals/DeleteNote.jsx';
+
+import DeleteContentModal from './modals/DeleteContent.jsx';
+import RenameContentModal from './modals/RenameContent.jsx';
+import ShareContentModal from './modals/ShareContent.jsx';
 
 class Note extends React.Component {
 
@@ -14,12 +16,25 @@ class Note extends React.Component {
     this.props.noteActions.getOneNote(noteId);
   }
 
+  componentDidUpdate(prevProps) {
+    const oldId = prevProps.params.id;
+    const newId = this.props.params.id;
+    const noteId = this.props.routeParams.id;
+    if (oldId !== newId) {
+      this.props.noteActions.getOneNote(noteId);
+    }
+  }
+
   renameNote() {
-    $('#renameNoteModal').openModal();
+    $('#renameContentModal').openModal();
   }
 
   deleteNote() {
-    $('#deleteNoteModal').openModal();
+    $('#deleteContentModal').openModal();
+  }
+
+  shareNote() {
+    $('#shareContentModal').openModal();
   }
 
   render() {
@@ -34,6 +49,9 @@ class Note extends React.Component {
             </div>
             <div onClick={this.deleteNote} className="chip">
               Delete
+            </div>
+            <div onClick={this.shareNote} className="chip">
+              Share
             </div>
           </div>
         </div>
@@ -51,8 +69,9 @@ class Note extends React.Component {
         </div>
 
         {/* Modals*/}
-        <RenameNoteModal note={this.props.note} />
-        <DeleteNoteModal note={this.props.note} />
+        <DeleteContentModal type="note" content={this.props.note} redirect="true" />
+        <RenameContentModal type="note" content={this.props.note} />
+        <ShareContentModal type="note" content={this.props.note} />
       </div>
     );
   }
@@ -78,4 +97,5 @@ Note.propTypes = {
   noteActions: React.PropTypes.object,
   routeParams: React.PropTypes.object,
   note: React.PropTypes.object,
+  params: React.PropTypes.object,
 };
