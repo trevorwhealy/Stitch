@@ -4,7 +4,7 @@ import LoginForm from '../components/LoginForm.jsx';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onClick: (userCredentials) => {
+    onSubmit: (userCredentials) => {
       dispatch(login(userCredentials));
     },
   };

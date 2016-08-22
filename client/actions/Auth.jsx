@@ -30,7 +30,7 @@ export function logout() {
 export function login(userCredentials) {
   return (dispatch) => {
     dispatch(authInit());
-    return fetch('auth/login', {
+    return fetch('/auth/login', {
       method: 'POST',
       body: JSON.stringify(userCredentials),
       headers: {
@@ -42,7 +42,7 @@ export function login(userCredentials) {
       if (!data.token) { throw new Error('no token'); }
       const token = data.token;
       localStorage.setItem('jwtToken', token);
-      browserHistory.push('/home');
+      browserHistory.push('/');
       dispatch(authSuccess(token));
     })
     .catch(err => {
@@ -54,7 +54,7 @@ export function login(userCredentials) {
 export function signUp(userCredentials) {
   return (dispatch) => {
     dispatch(authInit());
-    return fetch('auth/signup', {
+    return fetch('/auth/signup', {
       method: 'POST',
       body: JSON.stringify(userCredentials),
       headers: {
@@ -66,7 +66,7 @@ export function signUp(userCredentials) {
       if (!data.token) { throw new Error('no token'); }
       const token = data.token;
       localStorage.setItem('jwtToken', token);
-      browserHistory.push('/home');
+      browserHistory.push('/');
       dispatch(authSuccess(token));
     })
     .catch(err => {

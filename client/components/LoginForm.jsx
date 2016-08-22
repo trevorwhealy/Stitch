@@ -1,59 +1,46 @@
 import React from 'react';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import Form from 'react-bootstrap/lib/Form';
-import FormGroup from 'react-bootstrap/lib/FormGroup';
-import FormControl from 'react-bootstrap/lib/FormControl';
-import Button from 'react-bootstrap/lib/Button';
+import { Link } from 'react-router';
 
-const userInfo = {
-  username: '',
-  password: '',
-};
+const LoginForm = ({ onSubmit }) => {
+  let emailInput;
+  let passwordInput;
 
-let signIn = (e) => {
-  userInfo[e.target.placeholder] = e.target.value;
-};
+  const login = e => {
+    e.preventDefault();
+    onSubmit({
+      email: emailInput.value,
+      password: passwordInput.value,
+    });
+  };
 
-const LoginForm = ({ onClick }) => (
-  <Grid>
-    <Row>
-      <Col xs={7} sm={5} md={4} className="authComponent">
-        <h1 className="welcome">Sign In</h1>
-      </Col>
-    </Row>
-    <Form horizontal>
-      <FormGroup>
-        <Col xs={7} sm={5} md={4} className="authComponent">
-          <FormControl
-            className="username" type="text" placeholder="username"
-            onChange={signIn}
+  return (
+    <div className="auth">
+      <form className="auth__form" onSubmit={login}>
+        <h2>Welcome Back</h2>
+        <h5>Sign in to continue using Stitch</h5>
+        <div className="input-field">
+          <label htmlFor="email">Email</label>
+          <input
+            id="email" type="email" className="validate" required
+            ref={c => { emailInput = c; }}
           />
-        </Col>
-      </FormGroup>
-
-      <FormGroup controlId="formHorizontalPassword">
-        <Col xs={7} sm={5} md={4} className="authComponent">
-          <FormControl
-            className="password" type="password" placeholder="password"
-            onChange={signIn}
+        </div>
+        <div className="input-field">
+          <label htmlFor="password">Password</label>
+          <input
+            id="password" type="password" className="validate" required
+            ref={c => { passwordInput = c; }}
           />
-        </Col>
-      </FormGroup>
-
-      <FormGroup>
-        <Col xs={7} sm={5} md={4} className="authComponent">
-          <Button
-            onClick={e => { e.preventDefault(); onClick(userInfo); }}
-            type="submit" bsStyle="primary" block
-          >Sign in
-          </Button>
-        </Col>
-      </FormGroup>
-    </Form>
-  </Grid>
-);
+        </div>
+        <button type="submit" className="waves-effect waves-light btn">Continue</button>
+        <div className="auth__alternative">Don't have an account? <Link to="/signup">Register</Link></div>
+        <div className="auth__thirdParty">
+          <a className="btn googleBtn" href="/auth/google">Sign In With Google</a>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 
 export default LoginForm;
