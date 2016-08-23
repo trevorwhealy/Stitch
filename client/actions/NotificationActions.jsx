@@ -36,9 +36,7 @@ export function getNotifications() {
       },
     })
     .then(res => res.json())
-    .then(notifications => {
-      dispatch(notificationSuccess(notifications));
-    })
+    .then(notifications => dispatch(notificationSuccess(notifications)))
     .catch(err => dispatch(notificationFailure(err)));
   };
 }
@@ -55,11 +53,5 @@ export function markAsRead(id) {
     })
     .then(notifications => dispatch(notificationSuccess(notifications)))
     .catch((err) => dispatch(markAsReadFailure(err)));
-  };
-}
-
-export function updateNotificationState(notifications) {
-  return (dispatch) => {
-    dispatch(notificationSuccess(notifications));
   };
 }

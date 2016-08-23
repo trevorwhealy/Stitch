@@ -56,8 +56,6 @@ export function getComments(id) {
 
 export function postMention(noteId, users) {
   const token = localStorage.getItem('jwtToken');
-  console.log('the note id is', noteId);
-  console.log('the user is', users);
   return (dispatch) => {
     return fetch(`/api/notes/${noteId}/mentions`, {
       method: 'POST',

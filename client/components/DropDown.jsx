@@ -19,10 +19,6 @@ class DropDown extends React.Component {
     this.props.notificationActions.getNotifications();
   }
 
-  componentWillReceiveProps() {
-    this.props.notificationActions.getNotifications();
-  }
-
   markAsRead(id) {
     const noteId = id || 'all';
     this.props.notificationActions.markAsRead(noteId);
