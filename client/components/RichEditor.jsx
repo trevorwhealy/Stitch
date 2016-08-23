@@ -20,10 +20,7 @@ import Editor from 'draft-js-plugins-editor';
 import { fromJS } from 'immutable';
 
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
-
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
-
-// import mentions from './editor/util/mentions';
 
 import { StringToTypeMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
@@ -48,9 +45,8 @@ import {
 class RichEditor extends React.Component {
   constructor(props) {
     super(props);
-    console.log('the props are', props);
+
     this.state = {
-      // editorState: EditorState.createEmpty(),
       editorState: EditorState.createEmpty(),
       editEnabled: true,
       suggestions: fromJS([]),
@@ -78,14 +74,12 @@ class RichEditor extends React.Component {
 
   componentWillReceiveProps(props) {
     const { editorState } = this.state
-    console.log('this is props ', props);
     if (props.note.shares) {
       const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: 'https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-1/c17.79.218.218/s160x160/521938_10151860735607845_816431469_n.jpg?oh=a5267c69b23d393bc02148ade9d41237&oe=5854E0ED'})));
       this.setState({
       editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
       suggestions: mentions,
     })
-    console.log('HI SUNNY');
   } else {
     this.setState({
       editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
@@ -177,7 +171,6 @@ class RichEditor extends React.Component {
       const users = blockMap.reduce(this.findMentionEntities, []);
 
       const content = convertToRaw(this.state.editorState.getCurrentContent());
-      console.log('props.node ', this.props.note);
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
       return true;
     }
