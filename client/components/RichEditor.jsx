@@ -20,6 +20,8 @@ import {
 import Editor from 'draft-js-plugins-editor';
 import { fromJS } from 'immutable';
 
+import CodeUtils from 'draft-js-code';
+
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 
@@ -60,7 +62,8 @@ class RichEditor extends React.Component {
     this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleBeforeInput = this.handleBeforeInput.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    // this.handleReturn = this.handleReturn.bind(this);
+    this.handleReturn = this.handleReturn.bind(this);
+    this.handleTab = this.handleTab.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
@@ -129,6 +132,8 @@ class RichEditor extends React.Component {
   }
 
   keyBindingFn(e) {
+    const { editorState } = this.state;
+    let command;
     if (e.ctrlKey) {
       if (e.keyCode ===  83 ) {
         return 'editor-save';
@@ -139,12 +144,46 @@ class RichEditor extends React.Component {
         }
       }
     }
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      command = CodeUtils.getKeyBinding(e);
+      if (command) {
+        return command;
+      }
+      // return getDefaultKeyBinding(e);
+    }
+
+
     return getDefaultKeyBinding(e);
   }
 
   handleBeforeInput(str) {
     const { editorState } = this.state;
     return beforeInput(editorState, str, this.onChange, StringToTypeMap);
+  }
+
+  handleReturn(e) {
+    const { editorState } = this.state;
+
+    if (!CodeUtils.hasSelectionInBlock(editorState)) {
+      return;
+    }
+
+    this.onChange(
+      CodeUtils.handleReturn(e, editorState)
+    );
+    return true;
+  }
+
+  handleTab(e) {
+    const { editorState } = this.state;
+
+    if (!CodeUtils.hasSelectionInBlock(editorState)) {
+      return;
+    }
+
+    this.onChange(
+      CodeUtils.handleTab(e, editorState)
+    );
   }
 
   findMentionEntities(users, block) {
@@ -168,6 +207,10 @@ class RichEditor extends React.Component {
     const { editorState } = this.state;
     const contentState = editorState.getCurrentContent();
     let newState;
+
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      newState = CodeUtils.handleKeyCommand(editorState, command);
+    }
 
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
@@ -267,8 +310,9 @@ class RichEditor extends React.Component {
             keyBindingFn={this.keyBindingFn}
             handleBeforeInput={this.handleBeforeInput}
             handleKeyCommand={this.handleKeyCommand}
-            // handleReturn={this.handleReturn}
+            handleReturn={this.handleReturn}
             onChange={this.onChange}
+            onTab={this.handleTab}
             placeholder="Start your adventure..."
             plugins={plugins}
             readOnly={!this.state.editEnabled}
