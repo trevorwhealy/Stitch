@@ -16,7 +16,7 @@ module.exports = {
 
 function getAll(req, res) {
   const targetId = req.user.id;
-  const { limit, offset } = req.query;
+  const { limit = 10, offset } = req.query;
   const order = '"createdAt" DESC';
 
   const include = [
@@ -40,7 +40,8 @@ function markAsRead(req, res) {
 
   Notification.update({ isRead: true }, { where: { id, targetId } })
     .then(verify.transactionSuccess)
-    .then(() => res.sendStatus(200))
+    .then(() => Notification.findOne({ where: { id } }))
+    .then(updated => res.send(updated))
     .catch(err => {
       logger.debug('Error updating notification status ', id, err);
       res.status(400).send({ message: err.message });
