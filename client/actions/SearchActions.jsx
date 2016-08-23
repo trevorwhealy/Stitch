@@ -13,8 +13,6 @@ export function searchFailure() {
 }
 
 export function globalSearch(searchType, searchInput) {
-  console.log('the searchtype is', searchType);
-  console.log('the search input is', searchInput);
   const token = localStorage.getItem('jwtToken');
   return (dispatch) => {
     return fetch(`/api/${searchType}?q=${searchInput}`, {
