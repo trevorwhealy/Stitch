@@ -4,6 +4,7 @@ const verify = require('../utils/verify');
 const Notification = require('./notification.model');
 const User = require('../users/user.model');
 const Note = require('../notes/note.model');
+const Folder = require('../folders/folder.model');
 
 module.exports = {
   getAll,
@@ -20,6 +21,7 @@ function getAll(req, res) {
 
   const include = [
     { model: Note, attributes: ['name'] },
+    { model: Folder, attributes: ['name'] },
     { model: User, attributes: ['fullName'], foreignKey: 'sourceId', as: 'source' },
     { model: User, attributes: ['fullName'], foreignKey: 'targetId', as: 'target' },
   ];

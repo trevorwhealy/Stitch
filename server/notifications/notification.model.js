@@ -3,11 +3,13 @@ const sequelize = require('../config/sequelize');
 
 const User = require('../users/user.model');
 const Note = require('../notes/note.model');
+const Folder = require('../folders/folder.model');
 
 const Notification = sequelize.define('notification', {
   sourceId: Sequelize.INTEGER,
   targetId: { type: Sequelize.INTEGER, required: true },
   noteId: Sequelize.INTEGER,
+  folderId: Sequelize.INTEGER,
   isRead: {
     type: Sequelize.BOOLEAN,
     required: true,
@@ -22,3 +24,4 @@ module.exports = Notification;
 Notification.belongsTo(User, { as: 'source', foreignKey: 'sourceId' });
 Notification.belongsTo(User, { as: 'target', foreignKey: 'targetId' });
 Notification.belongsTo(Note);
+Notification.belongsTo(Folder);
