@@ -146,9 +146,6 @@ class RichEditor extends React.Component {
         }
       }
     }
-
-
-
     return getDefaultKeyBinding(e);
   }
 
