@@ -237,7 +237,6 @@ class RichEditor extends React.Component {
       compiler(answer, lang)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         const $compilesRemaining = $('.compilesRemaining').first();
         $compilesRemaining.text(`${data.compiles} Compiles Remaining`);
 
@@ -252,7 +251,6 @@ class RichEditor extends React.Component {
         $answer.animate({ scrollTop: $p.position().top + $p.height() }, 250);
       })
       .catch(err => {
-        console.log(err);
         switch (err) {
           case 'no code typed':
             break;
