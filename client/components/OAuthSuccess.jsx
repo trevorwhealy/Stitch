@@ -7,8 +7,9 @@ const OAuthSuccess = (props) => {
     const user = { id, email, fullName, photo };
     localStorage.setItem('jwtToken', props.location.query.token);
     localStorage.setItem('user', JSON.stringify(user));
-    browserHistory.replace('/');
   }
+
+  browserHistory.replace('/');
 
   return (
     <div />
