@@ -62,7 +62,7 @@ class Note extends React.Component {
           <div className="terminal">
             <p> Fluid Notes Sandbox&#8482; </p>
             <p> Compile within code using: [ctrl]+[alt]+[c]</p>
-            <p> Free uses remaining 426/500 </p>
+            <p className="compilesRemaining" />
             <Compiler />
             <div className="compileAnswer" />
           </div>
