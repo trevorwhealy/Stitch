@@ -47,7 +47,7 @@ function getAll(req, res) {
     {
       model: Share,
       attributes: ['userId'],
-      include: [{ model: User, attributes: ['fullName'] }],
+      include: [{ model: User, attributes: ['fullName', 'photo', 'email'] }],
     },
   ];
 

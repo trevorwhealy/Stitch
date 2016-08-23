@@ -45,7 +45,7 @@ function getAll(req, res) {
     {
       model: Share,
       attributes: ['userId'],
-      include: [{ model: User, attributes: ['fullName'] }],
+      include: [{ model: User, attributes: ['fullName', 'photo', 'email'] }],
     },
   ];
 
@@ -83,7 +83,7 @@ function getOne(req, res) {
       model: Share,
       attributes: ['id', 'userId'],
       on: { $or: { noteId: { $col: 'note.id' }, folderId: { $col: 'note.folderId' } } },
-      include: [{ model: User, attributes: ['fullName'] }],
+      include: [{ model: User, attributes: ['fullName', 'photo', 'email'] }],
     },
   ];
 
