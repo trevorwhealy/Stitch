@@ -169,7 +169,7 @@ class RichEditor extends React.Component {
     if (command === 'editor-save') {
       const blockMap = contentState.getBlockMap();
       const users = blockMap.reduce(this.findMentionEntities, []);
-
+      this.props.commentActions.postMention(this.props.note.id, users);
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
       return true;
@@ -298,4 +298,3 @@ export default connect(
   null,
   mapDispatchToProps
 )(RichEditor);
-

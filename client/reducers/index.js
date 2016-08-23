@@ -10,7 +10,7 @@ import SearchReducer from './SearchReducer.jsx';
 import CommentReducer from './CommentReducer.jsx';
 
 const appReducer = combineReducers({
-  users: AuthReducer,
+  user: AuthReducer,
   folders: FolderReducer,
   notes: NotesReducer,
   singleNote: SingleNoteReducer,
