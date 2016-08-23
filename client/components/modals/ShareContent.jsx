@@ -66,6 +66,6 @@ export default class ShareContent extends React.Component {
 }
 
 ShareContent.propTypes = {
-  content: React.PropTypes.object,
+  content: React.PropTypes.string,
   searchActions: React.PropTypes.object,
 };

@@ -44,16 +44,16 @@ export function getNotifications() {
 // id can be 'all'
 export function markAsRead(id) {
   const token = localStorage.getItem('jwtToken');
-
-  return (dispatch) => {
-    return fetch(`/api/notifications/${id}/markasread`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `JWT ${token}`,
-      },
-    })
-    .then(() => dispatch(markAsReadSuccess()))
-    .catch((err) => dispatch(markAsReadFailure(err)));
-  };
+  console.log('i get here', id);
+  // return (dispatch) => {
+  //   return fetch(`/api/notifications/${id}/markasread`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `JWT ${token}`,
+  //     },
+  //   })
+  //   .then(() => dispatch(markAsReadSuccess()))
+  //   .catch((err) => dispatch(markAsReadFailure(err)));
+  // };
 }

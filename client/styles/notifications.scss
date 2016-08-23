@@ -3,27 +3,64 @@
   width: 450px !important;
   right: 30px;
   left: unset !important;
+  cursor: auto;
 }
 
-// .dropdown-content .dropdown-content-navbar {
-//   display:flex;
-// }
+.dropdown-content .notifications-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 18px;
+    border-bottom: 1px solid gray;
+    height: 43px;
+    align-items: center;
+}
+
+.dropdown-content .notifications-heading .notifications-panel-tabs {
+  display: flex;
+  width: 220px;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
+.dropdown-content .notifications-heading .markAsRead {
+  cursor: pointer;
+}
+
+.dropdown-content .notifications-heading .notifications-panel-tabs .notifications-tab {
+  cursor: pointer;
+}
+
+.dropdown-content .notifications-heading .notifications-panel-tabs .notifications-unreadtab {
+  cursor: pointer;
+}
 
 .dropdown-content .notifications {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
+  flex-direction: row;
   border-bottom: 1px solid #e6e6e6;
 }
 
-.dropdown-content .notifications .message {
-  padding-left: 6px;
-  padding-top: 3px;
+.dropdown-content .notifications .notifications-userbody {
+  display: flex;
+  flex-direction: row;
+  width: 355px;
 }
 
-.dropdown-content .notifications .user {
+.dropdown-content .notifications .notifications-userbody .message {
+  padding-left: 12px;
+  padding-top: 3px;
+  width: 315px;
+}
+
+.dropdown-content .notifications .notifications-userbody .user {
   margin-bottom: 0px;
   padding-left: 10px;
+}
+
+.dropdown-content .notifications .message-date {
+  padding-top: 5px;
+  padding-left: 3px;
 }
 
 .dropdown-content .notifications .user .circle {
