@@ -1,7 +1,7 @@
 import React from 'react';
 // import { FocusDecorator } from 'draft-js-focus-plugin';
 // import { AlignmentDecorator } from 'draft-js-alignment-plugin';
-import { Modifier, EditorState, ContentBlock } from 'draft-js';
+import { Modifier, EditorState } from 'draft-js';
 
 export default class PageBreak extends React.Component {
   constructor(props) {

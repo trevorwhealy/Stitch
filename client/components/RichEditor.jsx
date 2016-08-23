@@ -15,7 +15,6 @@ import {
   convertFromRaw,
   SelectionState,
   Entity,
-  Modifier,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
@@ -26,12 +25,12 @@ import CodeUtils from 'draft-js-code';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 
-import { StringToTypeMap } from './editor/util/constants';
+import { StringToTypeMap, BREAKOUT } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
 import blockRendererFn from './editor/model/blockRendererFn';
 import compiler from './compiler/compiler.js';
-import { resetBlockWithType, insertPageBreak } from './editor/model/index';
+import { resetBlockWithType, insertPageBreak, addBlock } from './editor/model/index';
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -58,6 +57,7 @@ class RichEditor extends React.Component {
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = this.onChange.bind(this);
+    this.onEscape = this.onEscape.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.getEditorState = () => this.state.editorState;
     this.keyBindingFn = this.keyBindingFn.bind(this);
@@ -157,21 +157,25 @@ class RichEditor extends React.Component {
   handleReturn(e) {
     const { editorState } = this.state;
 
-    if (!CodeUtils.hasSelectionInBlock(editorState)) {
-      return;
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      this.onChange(
+        CodeUtils.handleReturn(e, editorState)
+      );
+      return true;
     }
 
-    this.onChange(
-      CodeUtils.handleReturn(e, editorState)
-    );
-
-    return true;
+    const currentBlockType = RichUtils.getCurrentBlockType(editorState);
+    if (BREAKOUT.indexOf(currentBlockType) !== -1) {
+      this.onChange(addBlock(editorState));
+      return true;
+    }
+    return;
   }
 
   handleTab(e) {
     const { editorState } = this.state;
 
-    if (!CodeUtils.hasSelectionInBlock(editorState)) {
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
       return;
     }
 
@@ -213,7 +217,7 @@ class RichEditor extends React.Component {
     if (command === 'editor-save') {
       const blockMap = contentState.getBlockMap();
       const users = blockMap.reduce(this.findMentionEntities, []);
-      console.log('the users inside', users);
+
       this.props.commentActions.postMention(this.props.note.id, users);
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
@@ -269,6 +273,15 @@ class RichEditor extends React.Component {
     });
   }
 
+  onEscape(){
+    const { editorState } = this.state;
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      this.onChange(addBlock(editorState));
+      return;
+    }
+    return;
+  }
+
   insertPageBreak() {
     const { editorState } = this.state;
     this.setState({
@@ -307,6 +320,7 @@ class RichEditor extends React.Component {
             handleKeyCommand={this.handleKeyCommand}
             handleReturn={this.handleReturn}
             onChange={this.onChange}
+            onEscape={this.onEscape}
             onTab={this.handleTab}
             placeholder="Start your adventure..."
             plugins={plugins}

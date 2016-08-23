@@ -10,6 +10,7 @@ export const BLOCK_TYPES = [
   {label: 'PAGEBREAK', style: 'atomic'},
 ];
 
+export const BREAKOUT = ['header-one', 'header-two', 'header-three'];
 
 export const INLINE_STYLES = [
   {label: 'BOLD', style: 'BOLD'},

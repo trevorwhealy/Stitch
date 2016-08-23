@@ -1,4 +1,4 @@
-import { EditorState, AtomicBlockUtils, Entity } from 'draft-js';
+import { EditorState, AtomicBlockUtils, Entity, Modifier } from 'draft-js';
 
 export const getDefaultBlockData = (blockType, initialData = {}) => {
   switch (blockType) {
@@ -36,6 +36,24 @@ export const resetBlockWithType = (editorState, newType = 'unstyled') => {
   return EditorState.push(editorState, newContentState, 'change-block-type');
 };
 
+export const addBlock = (editorState) => {
+  const contentState = editorState.getCurrentContent();
+  const targetSelection = editorState.getSelection();
+  console.log(targetSelection);
+  const insertionTargetBlock = Modifier.splitBlock(contentState, targetSelection);
+  const insertionTargetSelection = insertionTargetBlock.getSelectionAfter();
+  const newContentStateAfterSplit = Modifier.setBlockType(insertionTargetBlock, insertionTargetSelection, 'unstyled');
+
+
+  const newState = EditorState.push(
+    editorState,
+    newContentStateAfterSplit,
+    'insert-fragment'
+  );
+
+  return newState;
+};
+
 
 export const updateDataOfBlock = (editorState, block, newData) => {
   const contentState = editorState.getCurrentContent();
@@ -58,3 +76,4 @@ export const insertPageBreak = (editorState) => {
 
   return AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
 };
+
