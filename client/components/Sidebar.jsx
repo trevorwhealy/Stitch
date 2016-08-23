@@ -96,7 +96,7 @@ class Sidebar extends React.Component {
                 .map(folder => {
                 // TODO: decide how many folders we want to display - most recent 5? all of them?
                   return (
-                    <Link className="folder" to={{ pathname: `/folders/${folder.id}` }}>
+                    <Link key={folder.id} className="folder" to={{ pathname: `/folders/${folder.id}` }}>
                       {folder.name}
                     </Link>
                   );
@@ -133,4 +133,5 @@ export default connect(
 Sidebar.propTypes = {
   folderActions: React.PropTypes.object,
   folders: React.PropTypes.object,
+  user: React.PropTypes.object,
 };

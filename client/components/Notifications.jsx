@@ -49,6 +49,6 @@ export default Notifications;
 
 Notifications.propTypes = {
   notificationType: React.PropTypes.string,
-  markAsRead: React.PropTypes.function,
-  notifications: React.PropTypes.object,
+  markAsRead: React.PropTypes.func,
+  notifications: React.PropTypes.array,
 };

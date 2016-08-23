@@ -20,130 +20,15 @@ a {
   color: black;
 }
 
-.side-nav {
-  padding: 32px;
-  width: 320px !important;
-  display: flex;
-  flex-direction: column;
-}
-
-.user {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-/* TODO: Ensure that long names will shrink/restrict to within space provided */
-.user .name {
-  font-size: 1.5em;
-  margin-left: 30px;
-  flex: 1;
-}
-
-.user .alert {
-  cursor: pointer;
-  transition: all .4s ease;
-}
-
-.user .alert:hover {
-  color: red;
-}
-
-.createFolder {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.createFolder .title {
-  font-size: 18px;
-}
-
-.createFolder .add {
-  transition: all .4s ease;
-  cursor: pointer;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  background-color: #D8D8D8;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.createFolder .add:hover {
-  background-color: #9C9999;
-}
-
-.folderNames {
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.folder {
-  transition: all .4s ease;
-  font-size: 20px;
-  margin-bottom: 25px;
-  padding-left: 40px;
-  border-left: 3px solid transparent;
-}
-
-.folder:hover {
-  cursor: pointer;
-  border-left: 3px solid gray;
-  color: black;
-}
-
-.search {
-  margin-bottom: 10px;
-}
-
-.search .query {
-  background-color: #D8D8D8;
-  height: 30px;
-  border-radius: 15px;
-  padding: 10px 15px 10px 35px;
-  box-sizing: border-box !important;
-}
-
-.search .query:focus {
-  border-bottom: 1px solid gray !important;
-  box-shadow: 0 1px 0 0 gray !important;
-}
-
-::placeholder {
-  color: #ABABAB;
-  font-size: 14px;
-  text-align: center;
-}
-
-.left-inner-addon {
-  position: relative;
-}
-
-.left-inner-addon input {
-  padding-left: 30px;
-}
-
-.left-inner-addon i {
-  position: absolute;
-  padding: 5px 0px 0px 5px;
-  pointer-events: none;
-}
-
-.buttonSidebar {
+#sidenav-overlay {
+  z-index: 0;
   background: none;
-  border: 0px;
-  &:active { background: none; }
 }
+
 
 /***** Scss Imports *****/
 
+@import './styles/sidebar.scss';
 @import './styles/auth.scss';
 @import './styles/home.scss';
 @import './styles/editor.scss';

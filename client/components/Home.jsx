@@ -17,9 +17,9 @@ class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      folderToDelete: '',
-      folderToRename: '',
-      contentToShare: '',
+      folderToDelete: {},
+      folderToRename: {},
+      contentToShare: {},
     };
   }
 

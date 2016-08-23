@@ -101,5 +101,5 @@ export default connect(
 
 DropDown.propTypes = {
   notificationActions: React.PropTypes.object,
-  notifications: React.PropTypes.object,
+  notifications: React.PropTypes.array,
 };
