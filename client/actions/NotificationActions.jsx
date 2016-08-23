@@ -53,7 +53,7 @@ export function markAsRead(id) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(() => dispatch(markAsReadSuccess()))
+    .then(notifications => dispatch(notificationSuccess(notifications)))
     .catch((err) => dispatch(markAsReadFailure(err)));
   };
 }
