@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import moment from 'moment';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
+import * as authActionCreators from '../actions/Auth.jsx';
 
 import AddFolder from './modals/AddFolder.jsx';
 import RenameContent from './modals/RenameContent.jsx';
@@ -15,7 +16,6 @@ class Home extends React.Component {
 
   constructor() {
     super();
-
     this.state = {
       folderToDelete: '',
       folderToRename: '',
@@ -26,6 +26,7 @@ class Home extends React.Component {
   componentWillMount() {
     this.props.noteActions.getAllNotes();
     this.props.folderActions.getAllFolders();
+    this.props.authActions.currentUser();
     sessionStorage.active = window.location.href;
   }
 
@@ -164,6 +165,7 @@ class Home extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   folderActions: bindActionCreators(folderActionCreators, dispatch),
   noteActions: bindActionCreators(noteActionCreators, dispatch),
+  authActions: bindActionCreators(authActionCreators, dispatch),
 });
 
 const mapStateToProps = (state) => {
@@ -183,4 +185,5 @@ Home.propTypes = {
   noteActions: React.PropTypes.object,
   folders: React.PropTypes.object,
   notes: React.PropTypes.object,
+  authActions: React.PropTypes.object,
 };

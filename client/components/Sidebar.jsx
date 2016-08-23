@@ -4,12 +4,9 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
 
-const userFullName = 'Trevor';
-
 class Sidebar extends React.Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = {
       searchInput: '',
       addFolder: false,
@@ -55,11 +52,10 @@ class Sidebar extends React.Component {
             <img
               className="circle"
               alt="profile"
-              src="/assets/images/sunnyv.jpg"
-              width="35" height="35"
+              src={this.props.user.photo}
+              width="65" height="65"
             />
-            <div className="name">{userFullName}</div>
-            <i className="material-icons alert">power_settings_new</i>
+            <div className="name">{this.props.user.fullName}</div>
           </div>
 
           {/* Searchbar */}
@@ -125,6 +121,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
   return {
     folders: state.folders,
+    user: state.user,
   };
 };
 

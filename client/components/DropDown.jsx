@@ -73,7 +73,7 @@ class DropDown extends React.Component {
           <Notifications
             notificationType={this.state.notificationType}
             markAsRead={this.markAsRead}
-            notifications
+            notifications={this.notifications}
           />
         </ul>
         <a className="dropdown-button" data-activates="dropdown">

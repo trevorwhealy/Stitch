@@ -8,11 +8,9 @@ import Compiler from '../components/compiler/Compiler.jsx';
 import Note from '../components/Note.jsx';
 import FolderNotes from '../components/FolderNotes.jsx';
 import NewNote from '../components/NewNote.jsx';
+import OAuthSuccess from '../components/OAuthSuccess.jsx';
 
 const requireAuth = (nextState, replace) => {
-  if (nextState.location.query.token) {
-    localStorage.setItem('jwtToken', nextState.location.query.token);
-  }
   const token = localStorage.getItem('jwtToken');
   if (!token) {
     replace({
@@ -30,6 +28,7 @@ module.exports = (
       <Route path="/notes/:id" component={Note} />
       <Route path="/compiler" component={Compiler} />
     </Route>
+    <Route path="/oauthsuccess" component={OAuthSuccess} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={SignUp} />
   </Router>

@@ -1,8 +1,8 @@
-import jwtDecode from 'jwt-decode';
 
 const initialState = {
-  token: null,
-  username: '',
+  fullName: '',
+  email: '',
+  photo: '',
   isAuthenticated: false,
   isAuthenticating: false,
   statusMessage: '',
@@ -22,18 +22,19 @@ export default (state = initialState, action) => {
       });
     case AUTH_SUCCESS:
       return Object.assign({}, state, {
+        fullName: action.user.fullName,
+        email: action.user.email,
+        photo: action.user.photo,
         isAuthenticating: false,
         isAuthenticated: true,
-        token: action.token,
-        username: jwtDecode(action.token).username,
         statusMessage: 'You have been successfully logged in.',
       });
     case AUTH_FAILURE:
       return Object.assign({}, state, {
         isAuthenticating: false,
         isAuthenticated: false,
-        token: null,
-        username: null,
+        fullName: '',
+        email: '',
         statusMessage: action.message,
       });
     case LOGOUT_USER:
@@ -43,6 +44,8 @@ export default (state = initialState, action) => {
         username: null,
         statusMessage: 'Successfully logged out',
       });
-    default: return state;
+    default: {
+      return state;
+    }
   }
 };

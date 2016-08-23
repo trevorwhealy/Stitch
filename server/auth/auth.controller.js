@@ -49,7 +49,7 @@ function oauthSuccess(req, res) {
   if (!req.user) { return res.status(404).send({ message: 'Login failed' }); }
   const user = req.user;
   const token = jwt.encode({ email: user.email }, config.secret);
-  return res.redirect(`/?token=${token}`);
+  return res.redirect(`/oauthsuccess?token=${token}&id=${user.id}&email=${user.email}&fullName=${user.fullName}&photo=${user.photo}`);
 }
 
 function signup(req, res) {

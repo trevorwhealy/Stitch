@@ -30,7 +30,6 @@ export function globalSearch(searchType, searchInput) {
 
 export function findUser(content, userInfo) {
   const token = localStorage.getItem('jwtToken');
-  console.log(content);
 
   return fetch(`/api/users/search?q=${userInfo}`, {
     method: 'GET',

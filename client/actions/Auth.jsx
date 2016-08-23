@@ -6,10 +6,10 @@ export function authInit() {
   };
 }
 
-export function authSuccess(token) {
+export function authSuccess(user) {
   return {
     type: 'AUTH_SUCCESS',
-    token,
+    user,
   };
 }
 
@@ -41,9 +41,11 @@ export function login(userCredentials) {
     .then(data => {
       if (!data.token) { throw new Error('no token'); }
       const token = data.token;
+      const user = data.user;
       localStorage.setItem('jwtToken', token);
+      localStorage.setItem('user', JSON.stringify(user));
       browserHistory.push('/');
-      dispatch(authSuccess(token));
+      dispatch(authSuccess(user));
     })
     .catch(err => {
       dispatch(authFailure(err));
@@ -65,12 +67,21 @@ export function signUp(userCredentials) {
     .then(data => {
       if (!data.token) { throw new Error('no token'); }
       const token = data.token;
+      const user = data.user;
       localStorage.setItem('jwtToken', token);
+      localStorage.setItem('user', JSON.stringify(user));
       browserHistory.push('/');
-      dispatch(authSuccess(token));
+      dispatch(authSuccess(user));
     })
     .catch(err => {
       dispatch(authFailure(err));
     });
+  };
+}
+
+export function currentUser() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return (dispatch) => {
+    dispatch(authSuccess(user));
   };
 }
