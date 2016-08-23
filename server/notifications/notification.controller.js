@@ -4,6 +4,7 @@ const verify = require('../utils/verify');
 const Notification = require('./notification.model');
 const User = require('../users/user.model');
 const Note = require('../notes/note.model');
+const Folder = require('../folders/folder.model');
 
 module.exports = {
   getAll,
@@ -15,11 +16,12 @@ module.exports = {
 
 function getAll(req, res) {
   const targetId = req.user.id;
-  const { limit, offset } = req.query;
+  const { limit = 10, offset } = req.query;
   const order = '"createdAt" DESC';
 
   const include = [
     { model: Note, attributes: ['name'] },
+    { model: Folder, attributes: ['name'] },
     { model: User, attributes: ['fullName'], foreignKey: 'sourceId', as: 'source' },
     { model: User, attributes: ['fullName'], foreignKey: 'targetId', as: 'target' },
   ];
@@ -38,7 +40,8 @@ function markAsRead(req, res) {
 
   Notification.update({ isRead: true }, { where: { id, targetId } })
     .then(verify.transactionSuccess)
-    .then(() => res.sendStatus(200))
+    .then(() => Notification.findOne({ where: { id } }))
+    .then(updated => res.send(updated))
     .catch(err => {
       logger.debug('Error updating notification status ', id, err);
       res.status(400).send({ message: err.message });
