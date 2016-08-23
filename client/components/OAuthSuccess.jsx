@@ -11,9 +11,7 @@ const OAuthSuccess = (props) => {
 
   browserHistory.replace('/');
 
-  return (
-    <div />
-  );
+  return (<div />);
 };
 
 export default OAuthSuccess;
