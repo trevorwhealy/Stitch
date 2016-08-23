@@ -1,13 +1,13 @@
 export function notificationSuccess(notifications) {
   return {
-    type: 'GET_NOTES_SUCCESS',
+    type: 'GET_NOTIFICATION_SUCCESS',
     notifications,
   };
 }
 
 export function notificationFailure(message) {
   return {
-    type: 'GET_NOTES_FAILURE',
+    type: 'GET_NOTIFICATION_FAILURE',
     message,
   };
 }
@@ -51,7 +51,7 @@ export function markAsRead(id) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(() => dispatch(markAsReadSuccess()))
+    .then(notifications => dispatch(notificationSuccess(notifications)))
     .catch((err) => dispatch(markAsReadFailure(err)));
   };
 }
