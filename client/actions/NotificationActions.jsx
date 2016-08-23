@@ -1,13 +1,13 @@
 export function notificationSuccess(notifications) {
   return {
-    type: 'GET_NOTES_SUCCESS',
+    type: 'GET_NOTIFICATION_SUCCESS',
     notifications,
   };
 }
 
 export function notificationFailure(message) {
   return {
-    type: 'GET_NOTES_FAILURE',
+    type: 'GET_NOTIFICATION_FAILURE',
     message,
   };
 }
@@ -36,7 +36,9 @@ export function getNotifications() {
       },
     })
     .then(res => res.json())
-    .then(notifications => dispatch(notificationSuccess(notifications)))
+    .then(notifications => {
+      dispatch(notificationSuccess(notifications));
+    })
     .catch(err => dispatch(notificationFailure(err)));
   };
 }
@@ -53,5 +55,11 @@ export function markAsRead(id) {
     })
     .then(() => dispatch(markAsReadSuccess()))
     .catch((err) => dispatch(markAsReadFailure(err)));
+  };
+}
+
+export function updateNotificationState(notifications) {
+  return (dispatch) => {
+    dispatch(notificationSuccess(notifications));
   };
 }

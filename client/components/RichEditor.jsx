@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
+import * as commentActionCreators from '../actions/CommentActions.jsx';
 
 import {
   EditorState,
@@ -74,15 +75,20 @@ class RichEditor extends React.Component {
 
   componentWillReceiveProps(props) {
     const { editorState } = this.state
-    if (props.note.shares) {
-      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg'})));
+    if (props.note.shares && props.note.content) {
+      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg', id: share.userId})));
       this.setState({
       editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
       suggestions: mentions,
     })
-  } else {
+  } else if (!props.note.shares && props.note.content) {
     this.setState({
       editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
+    })
+  } else if (props.note.shares && !props.note.content) {
+    const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg', id: share.userId})));
+    this.setState({
+      suggestions: mentions,
     })
   }
   }
@@ -152,7 +158,7 @@ class RichEditor extends React.Component {
         const data = Entity.get(entityKey).getData();
         if (!data.notified) {
           Entity.mergeData(entityKey, { notified: true });
-          users.push(data.mention.get('name'));
+          users.push(data.mention.get('id'));
         }
       });
     return users;
@@ -169,6 +175,7 @@ class RichEditor extends React.Component {
     if (command === 'editor-save') {
       const blockMap = contentState.getBlockMap();
       const users = blockMap.reduce(this.findMentionEntities, []);
+      console.log('the users inside', users);
       this.props.commentActions.postMention(this.props.note.id, users);
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
@@ -292,6 +299,7 @@ const styleMap = {
 
 const mapDispatchToProps = (dispatch) => ({
   noteActions: bindActionCreators(noteActionCreators, dispatch),
+  commentActions: bindActionCreators(commentActionCreators, dispatch),
 });
 
 export default connect(

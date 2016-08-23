@@ -12,7 +12,6 @@ class DropDown extends React.Component {
     this.state = {
       notificationType: 'unread',
     };
-    const { notifications } = this.props;
     this.markAsRead = this.markAsRead.bind(this);
   }
 
@@ -36,6 +35,7 @@ class DropDown extends React.Component {
   }
 
   render() {
+    const { notifications } = this.props;
     return (
       <div>
         <ul id="dropdown" className="dropdown-content">
@@ -73,7 +73,7 @@ class DropDown extends React.Component {
           <Notifications
             notificationType={this.state.notificationType}
             markAsRead={this.markAsRead}
-            notifications={this.notifications}
+            notifications={notifications}
           />
         </ul>
         <a className="dropdown-button" data-activates="dropdown">
@@ -101,4 +101,5 @@ export default connect(
 
 DropDown.propTypes = {
   notificationActions: React.PropTypes.object,
+  notifications: React.PropTypes.object,
 };
