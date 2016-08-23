@@ -9,6 +9,7 @@ class OverlaySearch extends React.Component {
     super(props);
     this.state = {
       isOverLayClicked: false,
+      isActive: false,
     };
     this.displayOverlay = this.displayOverlay.bind(this);
     this.fileChoice = this.fileChoice.bind(this);
@@ -20,6 +21,12 @@ class OverlaySearch extends React.Component {
   displayOverlay() {
     this.setState({
       isOverLayClicked: !this.state.isOverLayClicked,
+    });
+  }
+
+  isActive() {
+    this.setState({
+      isActive: !this.state.isActive,
     });
   }
 
@@ -58,10 +65,10 @@ class OverlaySearch extends React.Component {
             <div className="searchFileOrFolder">
               <i className="material-icons searchIcon">search</i>
               <div className="fileOrFolderChoice">
-                <div className="userSearchFile" onClick={this.fileChoice}>
+                <div className="userSearchFile isActive" onClick={this.fileChoice}>
                   {'File'}
                 </div>
-                <div className="userSearchFolder isActive" onClick={this.folderChoice}>
+                <div className="userSearchFolder" onClick={this.folderChoice}>
                   {'Folder'}
                 </div>
               </div>

@@ -23,6 +23,7 @@
     width: 50px;
     padding-right: 20px;
     padding-top: 10px;
+    margin-right: 50px;
   }
 
   .closeButton {
@@ -70,7 +71,6 @@
     color: black;
   }
 
-
   .searchIcon {
     font-size: 80px;
     display: flex;
@@ -97,6 +97,7 @@
     padding: 20px 105px;
     flex-wrap: wrap;
     margin-left: 15px;
+    overflow-y: auto;
   }
 
   .userQueryResults {
@@ -137,7 +138,6 @@
     justify-content: flex-start;
   }
 }
-
 
 .searchButton {
   cursor: pointer;
