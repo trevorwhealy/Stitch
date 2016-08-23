@@ -27,7 +27,7 @@ module.exports = {
       {
         loader: 'babel',
         query: {
-          presets: ['react', 'stage-2', 'es2015', 'react-hmre'],
+          presets: ['react', 'es2015', 'react-hmre'],
         },
       },
       {

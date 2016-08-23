@@ -136,21 +136,14 @@ class RichEditor extends React.Component {
     block.findEntityRanges(
       (character) => {
         entityKey = character.getEntity();
-        return (
-          entityKey !== null &&
-          Entity.get(entityKey).getType() === 'mention');
+        return entityKey !== null && Entity.get(entityKey).getType() === 'mention';
       },
-      (block, key) => {
+      () => {
         const data = Entity.get(entityKey).getData();
-        if ( !data.notified ) {
+        if (!data.notified) {
           Entity.mergeData(entityKey, { notified: true });
-          console.log('notified');
           users.push(data.mention.get('name'));
         }
-        else {
-          console.log('already notified');
-        }
-        
       });
     return users;
   }
@@ -159,17 +152,13 @@ class RichEditor extends React.Component {
     const { editorState } = this.state;
     const contentState = editorState.getCurrentContent();
     let newState;
-    console.log(command);
 
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
     if (command === 'editor-save') {
       const blockMap = contentState.getBlockMap();
-
       const users = blockMap.reduce(this.findMentionEntities, []);
-
-      console.log('USERS TO NOTIFY ', users);
 
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
@@ -266,12 +255,10 @@ class RichEditor extends React.Component {
         <MentionSuggestions
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
-          onClose={this.onClose}
         />
         <button onClick={this.toggleEdit}>Toggle Edit</button>
         <input
           onClick={this.logState}
-          // style={styles.button}
           type="button"
           value="Log State"
         />
