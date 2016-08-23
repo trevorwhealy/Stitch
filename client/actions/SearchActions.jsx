@@ -30,6 +30,7 @@ export function globalSearch(searchType, searchInput) {
 
 export function findUser(content, userInfo) {
   const token = localStorage.getItem('jwtToken');
+  console.log(content);
 
   return fetch(`/api/users/search?q=${userInfo}`, {
     method: 'GET',
@@ -48,7 +49,7 @@ export function findUser(content, userInfo) {
 export function shareContent(content, userId) {
   const token = localStorage.getItem('jwtToken');
 
-  return fetch(`/api/${content.type}s/${content.id}/share`, {
+  return fetch(`/api/${content.type}s/${content.content.id}/share`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

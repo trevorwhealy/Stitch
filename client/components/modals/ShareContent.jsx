@@ -21,7 +21,8 @@ export default class ShareContent extends React.Component {
     const shareTarget = $('#shareContentInput').val();
 
     if (shareTarget.length) {
-      findUser(this.props.content, shareTarget);
+      console.log(this.props);
+      findUser(this.props, shareTarget);
       $('#shareContentModal').closeModal();
       $('#shareContentInput').val('');
     }

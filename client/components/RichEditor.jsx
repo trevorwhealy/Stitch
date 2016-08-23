@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
-import * as commentActionCreators from '../actions/CommentActions.jsx';
 
 import {
   EditorState,
@@ -18,9 +17,11 @@ import {
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
+import { fromJS } from 'immutable';
+
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
-import mentions from './editor/util/mentions';
+
 import { StringToTypeMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
@@ -29,7 +30,8 @@ import compiler from './compiler/compiler.js';
 import { resetBlockWithType, insertPageBreak } from './editor/model/index';
 
 const { hasCommandModifier } = KeyBindingUtil;
-const mentionPlugin = createMentionPlugin({});
+
+const mentionPlugin = createMentionPlugin();
 const linkifyPlugin = createLinkifyPlugin();
 
 const { MentionSuggestions } = mentionPlugin;
@@ -43,21 +45,16 @@ import {
 class RichEditor extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      editorState: props.note && props.note.content
-        ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
-        : EditorState.createEmpty(),
+      editorState: EditorState.createEmpty(),
       editEnabled: true,
-      suggestions: props.note.shares,
+      suggestions: fromJS([]),
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({ editorState });
-    this.onSearchChange = ({ value }) => {
-      this.setState({
-        suggestions: defaultSuggestionsFilter(value, mentions),
-      });
-    };
+    this.onChange = this.onChange.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
     this.getEditorState = () => this.state.editorState;
     this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleBeforeInput = this.handleBeforeInput.bind(this);
@@ -69,17 +66,29 @@ class RichEditor extends React.Component {
     this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()), ' entitymap');
                            console.log(this.state.editorState.toJS());
                            console.log(this.state.editorState.getSelection());
+                           console.log(this.state.suggestions);
                           }
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
     //this.updateContents = this.updateContents.bind(this);
   }
 
   componentWillReceiveProps(props) {
-    this.setState({
-      editorState: props.note && props.note.content
-        ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
-        : EditorState.createEmpty(),
+    const { editorState } = this.state
+    if (props.note.shares) {
+      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg'})));
+      this.setState({
+      editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
+      suggestions: mentions,
     })
+  } else {
+    this.setState({
+      editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
+    })
+  }
+  }
+
+  onChange(editorState){
+    this.setState({ editorState });
   }
 
   toggleBlockType(blockType) {
@@ -115,7 +124,7 @@ class RichEditor extends React.Component {
 
   keyBindingFn(e) {
     if (e.ctrlKey) {
-      if (e.keyCode === 83) {
+      if (e.keyCode ===  83 ) {
         return 'editor-save';
       }
       if (e.altKey) {
@@ -160,7 +169,7 @@ class RichEditor extends React.Component {
     if (command === 'editor-save') {
       const blockMap = contentState.getBlockMap();
       const users = blockMap.reduce(this.findMentionEntities, []);
-      this.props.commentActions.postMention(this.props.note.id, users);
+
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
       return true;
@@ -206,6 +215,13 @@ class RichEditor extends React.Component {
       return true;
     }
     return false;
+  }
+
+  onSearchChange({ value }){
+    const { suggestions } = this.state;
+    this.setState({
+      suggestions: defaultSuggestionsFilter(value, suggestions),
+    });
   }
 
   insertPageBreak() {
@@ -276,10 +292,10 @@ const styleMap = {
 
 const mapDispatchToProps = (dispatch) => ({
   noteActions: bindActionCreators(noteActionCreators, dispatch),
-  commentActions: bindActionCreators(commentActionCreators, dispatch),
 });
 
 export default connect(
   null,
   mapDispatchToProps
 )(RichEditor);
+
