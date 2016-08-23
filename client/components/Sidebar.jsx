@@ -53,7 +53,7 @@ class Sidebar extends React.Component {
               className="circle"
               alt="profile"
               src={this.props.user.photo}
-              width="50" height="50"
+              width="65" height="65"
             />
             <div className="name">{this.props.user.fullName}</div>
           </div>
