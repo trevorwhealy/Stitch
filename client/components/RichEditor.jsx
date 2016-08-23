@@ -12,6 +12,8 @@ import {
   KeyBindingUtil,
   convertToRaw,
   convertFromRaw,
+  SelectionState,
+  Entity,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
@@ -26,7 +28,7 @@ import compiler from './compiler/compiler.js';
 import { resetBlockWithType, insertPageBreak } from './editor/model/index';
 
 const { hasCommandModifier } = KeyBindingUtil;
-const mentionPlugin = createMentionPlugin();
+const mentionPlugin = createMentionPlugin({});
 const linkifyPlugin = createLinkifyPlugin();
 
 const { MentionSuggestions } = mentionPlugin;
@@ -45,7 +47,7 @@ class RichEditor extends React.Component {
         ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
         : EditorState.createEmpty(),
       editEnabled: true,
-      suggestions: mentions,
+      suggestions: mentions,  //props.note.shares
     };
 
     this.focus = () => this.refs.editor.focus();
@@ -63,8 +65,9 @@ class RichEditor extends React.Component {
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
-    this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()));
+    this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()), ' entitymap');
                            console.log(this.state.editorState.toJS());
+                           console.log(this.state.editorState.getSelection());
                           }
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
     //this.updateContents = this.updateContents.bind(this);
@@ -128,16 +131,38 @@ class RichEditor extends React.Component {
     return beforeInput(editorState, str, this.onChange, StringToTypeMap);
   }
 
+  findMentionEntities(users, block) {
+    let entityKey;
+    block.findEntityRanges(
+      (character) => {
+        entityKey = character.getEntity();
+        return entityKey !== null && Entity.get(entityKey).getType() === 'mention';
+      },
+      () => {
+        const data = Entity.get(entityKey).getData();
+        if (!data.notified) {
+          Entity.mergeData(entityKey, { notified: true });
+          users.push(data.mention.get('name'));
+        }
+      });
+    return users;
+  }
+
   handleKeyCommand(command) {
     const { editorState } = this.state;
+    const contentState = editorState.getCurrentContent();
     let newState;
 
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
     }
     if (command === 'editor-save') {
+      const blockMap = contentState.getBlockMap();
+      const users = blockMap.reduce(this.findMentionEntities, []);
+
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
+      return true;
     }
 
     if (command === 'compile') {
@@ -234,7 +259,6 @@ class RichEditor extends React.Component {
         <button onClick={this.toggleEdit}>Toggle Edit</button>
         <input
           onClick={this.logState}
-          // style={styles.button}
           type="button"
           value="Log State"
         />
