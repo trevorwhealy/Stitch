@@ -28,6 +28,12 @@ a {
 
 /***** Scss Imports *****/
 
+// Reusable Components
+@import './styles/avatar.scss';
+@import './styles/dropdown.scss';
+@import './styles/modals.scss';
+
+// Page Components
 @import './styles/sidebar.scss';
 @import './styles/auth.scss';
 @import './styles/home.scss';
@@ -37,6 +43,4 @@ a {
 @import './styles/draft.scss';
 @import './styles/navbar.scss';
 @import './styles/notifications.scss';
-@import './styles/dropdown.scss';
-@import './styles/modals.scss';
-@import './styles/overlay.scss';
+@import './styles/search-overlay.scss';
