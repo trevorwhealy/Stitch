@@ -176,12 +176,16 @@ class RichEditor extends React.Component {
     const { editorState } = this.state;
 
     if (CodeUtils.hasSelectionInBlock(editorState)) {
-      return;
+      this.onChange(
+        CodeUtils.handleTab(e, editorState)
+      );
+      return true;
     }
-
-    this.onChange(
-      CodeUtils.handleTab(e, editorState)
-    );
+    const newEditorState = RichUtils.onTab(e, editorState, 2);
+    if (newEditorState !== editorState) {
+      this.onChange(newEditorState);
+    }
+    return;
   }
 
   findMentionEntities(users, block) {
