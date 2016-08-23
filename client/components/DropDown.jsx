@@ -12,7 +12,7 @@ class DropDown extends React.Component {
     this.state = {
       notificationType: 'unread',
     };
-
+    const { notifications } = this.props;
     this.markAsRead = this.markAsRead.bind(this);
   }
 
@@ -73,6 +73,7 @@ class DropDown extends React.Component {
           <Notifications
             notificationType={this.state.notificationType}
             markAsRead={this.markAsRead}
+            notifications
           />
         </ul>
         <a className="dropdown-button" data-activates="dropdown">
