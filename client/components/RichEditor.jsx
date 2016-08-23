@@ -204,12 +204,6 @@ class RichEditor extends React.Component {
     let newState;
 
     if (CodeUtils.hasSelectionInBlock(editorState)) {
-      if ( command === 'code-split-block') {
-        const newContentState = Modifier.splitBlock(contentState, selection);
-        const newEditorState = EditorState.push(editorState, newContentState, 'code-split-block');
-        this.onChange(newEditorState);
-        return;
-      }
       newState = CodeUtils.handleKeyCommand(editorState, command);
     }
 
