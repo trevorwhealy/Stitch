@@ -25,6 +25,18 @@ export function postCommentFailure() {
   };
 }
 
+export function postMentionSuccess() {
+  return {
+    type: 'POST_MENTION_SUCCESS',
+  };
+}
+
+export function postMentionFailure() {
+  return {
+    type: 'POST_MENTION_FAILURE',
+  };
+}
+
 export function getComments(id) {
   const token = localStorage.getItem('jwtToken');
 
@@ -39,6 +51,25 @@ export function getComments(id) {
     .then(res => res.json())
     .then(comments => dispatch(getCommentSuccess(comments)))
     .catch(err => dispatch(getCommentFailure(err)));
+  };
+}
+
+export function postMention(noteId, users) {
+  const token = localStorage.getItem('jwtToken');
+
+  return (dispatch) => {
+    return fetch(`/api/notes/${noteId}/mentions`, {
+      method: 'POST',
+      body: JSON.stringify({
+        users,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `JWT ${token}`,
+      },
+    })
+    .then(() => dispatch(postMentionSuccess()))
+    .catch(() => dispatch(postMentionFailure()));
   };
 }
 

@@ -8,7 +8,7 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
     alerts = notifications
     .filter(alert => {
       if (notificationType === 'all') { return true; }
-      return (alert.isRead !== false);
+      return (alert.isRead !== true);
     })
     .map(alert => {
       const message = alert.type === 'COMMENT' ? ` said, "${alert.text}"` : ' mentioned you';
