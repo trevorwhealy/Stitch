@@ -43,6 +43,7 @@ export function getNotifications() {
 
 export function markAsRead(id) {
   const token = localStorage.getItem('jwtToken');
+
   return (dispatch) => {
     return fetch(`/api/notifications/${id}/markasread`, {
       method: 'POST',
@@ -52,7 +53,7 @@ export function markAsRead(id) {
       },
     })
     .then(res => res.json())
-    .then((notifications) => {
+    .then(notifications => {
       dispatch(notificationSuccess(notifications));
     })
     .catch((err) => dispatch(markAsReadFailure(err)));
