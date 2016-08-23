@@ -75,37 +75,17 @@
   }
 
   .RichEditor-editor .public-DraftStyleDefault-pre {
-    background-color: rgba(0, 0, 0, 0.05);
     font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
     font-size: 16px;
-    padding: 20px;
-    counter-reset: section;
+    margin: 0px;
   }
 
   .RichEditor-editor .public-DraftStyleDefault-pre > pre {
-
-    &:before {
-      counter-increment: section;
-      content: counter(section);
-      display: inline-block;
-      border-right: 1px solid #ddd;
-      padding: 0.5em;
-      pointer-events: none;
-    }
-
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 5px;
   }
 
-  .RichEditor-editor .public-DraftStyleDefault-pre > pre > div {
-    padding: 0.5em;
-    display: inline-block;
 
-  }
-
-  .RichEditor-editor .public-DraftStyleDefault-pre > pre > div > span {
-    padding: 1px;
-    display: block;
-
-  }
 
   .block-todo {
 

@@ -20,15 +20,17 @@ import {
 import Editor from 'draft-js-plugins-editor';
 import { fromJS } from 'immutable';
 
+import CodeUtils from 'draft-js-code';
+
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 
-import { StringToTypeMap } from './editor/util/constants';
+import { StringToTypeMap, BREAKOUT } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
 import blockRendererFn from './editor/model/blockRendererFn';
 import compiler from './compiler/compiler.js';
-import { resetBlockWithType, insertPageBreak } from './editor/model/index';
+import { resetBlockWithType, insertPageBreak, addBlock } from './editor/model/index';
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -55,12 +57,14 @@ class RichEditor extends React.Component {
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = this.onChange.bind(this);
+    this.onEscape = this.onEscape.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.getEditorState = () => this.state.editorState;
     this.keyBindingFn = this.keyBindingFn.bind(this);
     this.handleBeforeInput = this.handleBeforeInput.bind(this);
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    // this.handleReturn = this.handleReturn.bind(this);
+    this.handleReturn = this.handleReturn.bind(this);
+    this.handleTab = this.handleTab.bind(this);
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
@@ -129,6 +133,9 @@ class RichEditor extends React.Component {
   }
 
   keyBindingFn(e) {
+    const { editorState } = this.state;
+    let command;
+
     if (e.ctrlKey) {
       if (e.keyCode ===  83 ) {
         return 'editor-save';
@@ -145,6 +152,40 @@ class RichEditor extends React.Component {
   handleBeforeInput(str) {
     const { editorState } = this.state;
     return beforeInput(editorState, str, this.onChange, StringToTypeMap);
+  }
+
+  handleReturn(e) {
+    const { editorState } = this.state;
+
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      this.onChange(
+        CodeUtils.handleReturn(e, editorState)
+      );
+      return true;
+    }
+
+    const currentBlockType = RichUtils.getCurrentBlockType(editorState);
+    if (BREAKOUT.indexOf(currentBlockType) !== -1) {
+      this.onChange(addBlock(editorState));
+      return true;
+    }
+    return;
+  }
+
+  handleTab(e) {
+    const { editorState } = this.state;
+
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      this.onChange(
+        CodeUtils.handleTab(e, editorState)
+      );
+      return true;
+    }
+    const newEditorState = RichUtils.onTab(e, editorState, 2);
+    if (newEditorState !== editorState) {
+      this.onChange(newEditorState);
+    }
+    return;
   }
 
   findMentionEntities(users, block) {
@@ -167,7 +208,12 @@ class RichEditor extends React.Component {
   handleKeyCommand(command) {
     const { editorState } = this.state;
     const contentState = editorState.getCurrentContent();
+    const selection = editorState.getSelection();
     let newState;
+
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      newState = CodeUtils.handleKeyCommand(editorState, command);
+    }
 
     if (!newState) {
       newState = RichUtils.handleKeyCommand(editorState, command);
@@ -175,7 +221,7 @@ class RichEditor extends React.Component {
     if (command === 'editor-save') {
       const blockMap = contentState.getBlockMap();
       const users = blockMap.reduce(this.findMentionEntities, []);
-      console.log('the users inside', users);
+
       this.props.commentActions.postMention(this.props.note.id, users);
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
@@ -231,6 +277,15 @@ class RichEditor extends React.Component {
     });
   }
 
+  onEscape(){
+    const { editorState } = this.state;
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      this.onChange(addBlock(editorState));
+      return;
+    }
+    return;
+  }
+
   insertPageBreak() {
     const { editorState } = this.state;
     this.setState({
@@ -267,8 +322,10 @@ class RichEditor extends React.Component {
             keyBindingFn={this.keyBindingFn}
             handleBeforeInput={this.handleBeforeInput}
             handleKeyCommand={this.handleKeyCommand}
-            // handleReturn={this.handleReturn}
+            handleReturn={this.handleReturn}
             onChange={this.onChange}
+            onEscape={this.onEscape}
+            onTab={this.handleTab}
             placeholder="Start your adventure..."
             plugins={plugins}
             readOnly={!this.state.editEnabled}
