@@ -2,10 +2,20 @@ const logger = require('../config/logger');
 const User = require('./user.model');
 
 module.exports = {
+  getCurrentUser,
   search,
 };
 
 /***** PUBLIC *****/
+
+function getCurrentUser(req, res) {
+  res.send({
+    id: req.user.id,
+    fullName: req.user.fullName,
+    photo: req.user.photo,
+    email: req.user.email,
+  });
+}
 
 function search(req, res) {
   const { q, limit = 5 } = req.query;
