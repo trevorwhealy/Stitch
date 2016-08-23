@@ -17,10 +17,11 @@ import {
   Entity,
 } from 'draft-js';
 
+import { fromJS } from 'immutable';
+
 import Editor from 'draft-js-plugins-editor';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
-import mentions from './editor/util/mentions';
 import { StringToTypeMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
@@ -48,7 +49,6 @@ class RichEditor extends React.Component {
         ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
         : EditorState.createEmpty(),
       editEnabled: true,
-      suggestions: props.note.shares,
     };
 
     this.focus = () => this.refs.editor.focus();
@@ -69,17 +69,20 @@ class RichEditor extends React.Component {
     this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()), ' entitymap');
                            console.log(this.state.editorState.toJS());
                            console.log(this.state.editorState.getSelection());
+                           console.log(this.state.suggestions);
                           }
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
     //this.updateContents = this.updateContents.bind(this);
   }
 
   componentWillReceiveProps(props) {
+    const mentions = fromJS(props.note.shares.map((share) => share.user.fullName));
     this.setState({
       editorState: props.note && props.note.content
         ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
         : EditorState.createEmpty(),
-    })
+      suggestions: mentions,
+    });
   }
 
   toggleBlockType(blockType) {
@@ -150,7 +153,7 @@ class RichEditor extends React.Component {
   }
 
   handleKeyCommand(command) {
-    const { editorState } = this.state;
+    const { editorState, suggestions } = this.state;
     const contentState = editorState.getCurrentContent();
     let newState;
 
@@ -161,6 +164,7 @@ class RichEditor extends React.Component {
       const blockMap = contentState.getBlockMap();
 
       const users = blockMap.reduce(this.findMentionEntities, []);
+      console.log(suggestions);
       this.props.commentActions.postMention(this.props.note.id, users);
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
