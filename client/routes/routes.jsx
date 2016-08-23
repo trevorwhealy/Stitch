@@ -9,6 +9,7 @@ import Note from '../components/Note.jsx';
 import FolderNotes from '../components/FolderNotes.jsx';
 import NewNote from '../components/NewNote.jsx';
 import OAuthSuccess from '../components/OAuthSuccess.jsx';
+import AllNotes from '../components/AllNotes.jsx';
 
 const requireAuth = (nextState, replace) => {
   const token = localStorage.getItem('jwtToken');
@@ -26,6 +27,7 @@ module.exports = (
       <Route path="/folders/:id" component={FolderNotes} />
       <Route path="/notes/new" component={NewNote} />
       <Route path="/notes/:id" component={Note} />
+      <Route path="/allNotes" component={AllNotes} />
       <Route path="/compiler" component={Compiler} />
     </Route>
     <Route path="/oauthsuccess" component={OAuthSuccess} />
