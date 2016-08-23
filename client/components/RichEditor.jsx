@@ -75,7 +75,7 @@ class RichEditor extends React.Component {
   componentWillReceiveProps(props) {
     const { editorState } = this.state
     if (props.note.shares) {
-      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: 'https://scontent-sjc2-1.xx.fbcdn.net/v/t1.0-1/c17.79.218.218/s160x160/521938_10151860735607845_816431469_n.jpg?oh=a5267c69b23d393bc02148ade9d41237&oe=5854E0ED'})));
+      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg'})));
       this.setState({
       editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
       suggestions: mentions,
