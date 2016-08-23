@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import 'draft-js-mention-plugin/lib/plugin.css';
 import 'draft-js-linkify-plugin/lib/plugin.css';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
+import * as commentActionCreators from '../actions/CommentActions.jsx';
 
 import {
   EditorState,
@@ -47,7 +48,7 @@ class RichEditor extends React.Component {
         ? EditorState.push(EditorState.createEmpty(), convertFromRaw(props.note.content))
         : EditorState.createEmpty(),
       editEnabled: true,
-      suggestions: mentions,  //props.note.shares
+      suggestions: props.note.shares,
     };
 
     this.focus = () => this.refs.editor.focus();
@@ -114,7 +115,7 @@ class RichEditor extends React.Component {
 
   keyBindingFn(e) {
     if (e.ctrlKey) {
-      if (e.keyCode ===  83 ) {
+      if (e.keyCode === 83) {
         return 'editor-save';
       }
       if (e.altKey) {
@@ -159,7 +160,7 @@ class RichEditor extends React.Component {
     if (command === 'editor-save') {
       const blockMap = contentState.getBlockMap();
       const users = blockMap.reduce(this.findMentionEntities, []);
-
+      this.props.commentActions.postMention(this.props.note.id, users);
       const content = convertToRaw(this.state.editorState.getCurrentContent());
       this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
       return true;
@@ -275,6 +276,7 @@ const styleMap = {
 
 const mapDispatchToProps = (dispatch) => ({
   noteActions: bindActionCreators(noteActionCreators, dispatch),
+  commentActions: bindActionCreators(commentActionCreators, dispatch),
 });
 
 export default connect(
