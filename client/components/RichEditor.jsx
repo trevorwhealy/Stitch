@@ -15,6 +15,7 @@ import {
   convertFromRaw,
   SelectionState,
   Entity,
+  Modifier,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
@@ -134,6 +135,7 @@ class RichEditor extends React.Component {
   keyBindingFn(e) {
     const { editorState } = this.state;
     let command;
+
     if (e.ctrlKey) {
       if (e.keyCode ===  83 ) {
         return 'editor-save';
@@ -144,13 +146,7 @@ class RichEditor extends React.Component {
         }
       }
     }
-    if (CodeUtils.hasSelectionInBlock(editorState)) {
-      command = CodeUtils.getKeyBinding(e);
-      if (command) {
-        return command;
-      }
-      // return getDefaultKeyBinding(e);
-    }
+
 
 
     return getDefaultKeyBinding(e);
@@ -171,6 +167,7 @@ class RichEditor extends React.Component {
     this.onChange(
       CodeUtils.handleReturn(e, editorState)
     );
+
     return true;
   }
 
@@ -206,9 +203,16 @@ class RichEditor extends React.Component {
   handleKeyCommand(command) {
     const { editorState } = this.state;
     const contentState = editorState.getCurrentContent();
+    const selection = editorState.getSelection();
     let newState;
 
     if (CodeUtils.hasSelectionInBlock(editorState)) {
+      if ( command === 'code-split-block') {
+        const newContentState = Modifier.splitBlock(contentState, selection);
+        const newEditorState = EditorState.push(editorState, newContentState, 'code-split-block');
+        this.onChange(newEditorState);
+        return;
+      }
       newState = CodeUtils.handleKeyCommand(editorState, command);
     }
 
