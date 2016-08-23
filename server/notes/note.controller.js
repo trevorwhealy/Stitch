@@ -91,6 +91,7 @@ function getOne(req, res) {
     .then(() => Note.findOne({ where: { id }, include }))
     .then(note => {
       if (!note) { throw new Error('Note does not exist'); }
+      note.dataValues.type = 'note';
       res.send(note);
     })
     .catch(err => {

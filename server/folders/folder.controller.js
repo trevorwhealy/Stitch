@@ -83,6 +83,7 @@ function getOne(req, res) {
   })
     .then(folder => {
       if (!folder) { throw new Error('Folder does not exist'); }
+      folder.dataValues.type = 'folder';
       res.send(folder);
     })
     .catch(err => {
