@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const Notifications = ({ notificationType, markAsRead, notifications }) => {
   let alerts;
-  if (notifications.length > 0) {
+  if (notifications && notifications.length > 0) {
     alerts = notifications
     .filter(alert => {
       if (notificationType === 'all') { return true; }
