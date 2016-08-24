@@ -27,7 +27,7 @@ const logout = (nextState, replace) => {
 };
 
 module.exports = (
-  <Router history={browserHistory}>
+  <Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
     <Route path="/" component={App} onEnter={requireAuth} >
       <IndexRoute component={Home} />
       <Route path="/folders/:id" component={FolderNotes} />

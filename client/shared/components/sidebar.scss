@@ -35,9 +35,8 @@
     }
 
     /* Overrides */
-    &:hover:not(:focus) .dropdown-menu { display: none; }
     .dropdown-menu {
-      top: 32px;
+      top: 24px;
 
       li {
         display: flex;
