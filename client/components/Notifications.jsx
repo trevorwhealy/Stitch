@@ -14,6 +14,7 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
       const message = alert.type === 'COMMENT' ? ` said, "${alert.text}"` : ' mentioned you';
       let alertOutput = (
         <Link
+          key={alert.id}
           className="message"
           onClick={() => markAsRead(alert.id)}
           to={{ pathname: `/notes/${alert.noteId}` }}
@@ -23,7 +24,7 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
         );
 
       return (
-        <div className="notifications">
+        <div key={alert.id} className="notifications">
           <div className="notifications-userbody">
             <div className="user">
               <img
