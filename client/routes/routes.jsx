@@ -27,7 +27,7 @@ module.exports = (
       <Route path="/folders/:id" component={FolderNotes} />
       <Route path="/notes/new" component={NewNote} />
       <Route path="/notes/:id" component={Note} />
-      <Route path="/allnotes" component={AllNotes} />
+      <Route path="/notes" component={AllNotes} />
       <Route path="/compiler" component={Compiler} />
     </Route>
     <Route path="/oauthsuccess" component={OAuthSuccess} />

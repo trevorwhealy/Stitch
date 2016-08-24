@@ -127,7 +127,7 @@ class Home extends React.Component {
         <div className="recent">
           <div className="title">
             {'RECENT NOTES'}
-            <Link className="goToAllNotes" to={{ pathname: '/allnotes' }} >
+            <Link className="goToAllNotes" to={{ pathname: '/notes' }} >
              {'All notes'}
               <i className="material-icons">keyboard_arrow_right</i>
             </Link>

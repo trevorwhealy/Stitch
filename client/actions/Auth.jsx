@@ -20,11 +20,6 @@ export function authFailure(message) {
   };
 }
 
-export function logout() {
-  localStorage.removeItem('jwtToken');
-  browserHistory.replace('/login');
-}
-
 export function login(userCredentials) {
   return (dispatch) => {
     dispatch(authInit());
