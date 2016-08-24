@@ -61,7 +61,7 @@ class Home extends React.Component {
 
 
   render() {
-    const notes = this.props.notes.note || [];
+    const notes = this.props.notes || [];
     const folders = this.props.folders.folder;
     let recentNotes;
     let allFolders;
@@ -171,7 +171,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => {
   return {
     folders: state.folders,
-    notes: state.notes,
+    notes: state.notes.notes,
   };
 };
 

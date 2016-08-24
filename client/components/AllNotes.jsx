@@ -9,7 +9,7 @@ import RenameContent from './modals/RenameContent.jsx';
 import DeleteContent from './modals/DeleteContent.jsx';
 import ShareContent from './modals/ShareContent.jsx';
 
-class FolderNotes extends React.Component {
+class AllNotes extends React.Component {
 
   constructor() {
     super();
@@ -115,16 +115,16 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => {
   return {
-    notes: state.notes.note,
+    notes: state.notes.notes,
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FolderNotes);
+)(AllNotes);
 
-FolderNotes.propTypes = {
+AllNotes.propTypes = {
   routeParams: React.PropTypes.object,
   noteActions: React.PropTypes.object,
   notes: React.PropTypes.array,

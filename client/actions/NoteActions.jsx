@@ -161,7 +161,8 @@ export function renameNote(noteId, title) {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
       },
-    });
+    })
+    .then(() => dispatch(getAllNotes()));
   };
 }
 

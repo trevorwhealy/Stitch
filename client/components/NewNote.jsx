@@ -30,7 +30,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => {
   return {
-    notes: state.notes,
+    notes: state.notes.notes,
     note: state.singleNote.note,
   };
 };
