@@ -31,8 +31,12 @@ export const StringToTypeMap = {
   '---': 'atomic',
 };
 
+export const CODE_REGEX = /`\w+`/;
+
 export default {
   BLOCK_TYPES,
   INLINE_STYLES,
   StringToTypeMap,
+  BREAKOUT,
+  CODE_REGEX
 };

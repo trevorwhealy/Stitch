@@ -15,17 +15,18 @@ import {
   convertFromRaw,
   SelectionState,
   Entity,
+  CompositeDecorator,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
 import { fromJS } from 'immutable';
 
-import CodeUtils from 'draft-js-code';
+import CodeUtils from 'draft-js-code'; 
 
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 
-import { StringToTypeMap, BREAKOUT } from './editor/util/constants';
+import { StringToTypeMap, BREAKOUT, CODE_REGEX } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
 import blockRendererFn from './editor/model/blockRendererFn';
@@ -45,6 +46,78 @@ import {
   InlineStyleControls,
 } from './editor/toolbox/StyleControls.jsx';
 
+
+const styleMap = {
+  STRIKETHROUGH: {
+    textDecoration: 'line-through',
+  },
+  INLINE_CODE: {
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+    fontSize: 16,
+    padding: 2,
+  },
+};
+
+const HASHTAG_REGEX = /\`(.*?)\`/g;
+
+const styles = {
+  root: {
+    fontFamily: '\'Helvetica\', sans-serif',
+    padding: 20,
+    width: 600,
+  },
+  editor: {
+    border: '1px solid #ddd',
+    cursor: 'text',
+    fontSize: 16,
+    minHeight: 40,
+    padding: 10,
+  },
+  button: {
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  handle: {
+    color: 'rgba(98, 177, 254, 1.0)',
+    direction: 'ltr',
+    unicodeBidi: 'bidi-override',
+  },
+  hashtag: {
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+    fontSize: 16,
+    padding: 2,
+  },
+};
+
+function hashtagStrategy(contentBlock, callback) {
+  findWithRegex(HASHTAG_REGEX, contentBlock, callback);
+}
+
+function findWithRegex(regex, contentBlock, callback) {
+  const text = contentBlock.getText();
+  console.log(text);
+  let matchArr, start;
+  while ((matchArr = regex.exec(text)) !== null) {
+    start = matchArr.index;
+    console.log(start, 'start');
+    console.log(matchArr);
+    callback(start, start + matchArr[0].length);
+  }
+}
+
+const HashtagSpan = (props) => {
+  return <span {...props} style={styles.hashtag}>{props.children}</span>;
+};
+
+const customDecorator = [
+  {
+    strategy: hashtagStrategy,
+    component: HashtagSpan,
+  },
+];
+
 class RichEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -55,6 +128,7 @@ class RichEditor extends React.Component {
       suggestions: fromJS([]),
     };
 
+    console.log(this.state);
     this.focus = () => this.refs.editor.focus();
     this.onChange = this.onChange.bind(this);
     this.onEscape = this.onEscape.bind(this);
@@ -78,13 +152,13 @@ class RichEditor extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    const { editorState } = this.state
+    const { editorState } = this.state;
     if (props.note.shares && props.note.content) {
       const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg', id: share.userId})));
       this.setState({
-      editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
-      suggestions: mentions,
-    })
+        editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
+        suggestions: mentions,
+      })
   } else if (!props.note.shares && props.note.content) {
     this.setState({
       editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
@@ -329,6 +403,7 @@ class RichEditor extends React.Component {
             blockRenderMap={blockRenderMap}
             blockStyleFn={this.getBlockStyle}
             customStyleMap={styleMap}
+            decorators={customDecorator}
             editorState={editorState}
             keyBindingFn={this.keyBindingFn}
             handleBeforeInput={this.handleBeforeInput}
@@ -359,12 +434,7 @@ class RichEditor extends React.Component {
   }
 }
 
-const styleMap = {
-  'STRIKETHROUGH': {
-    textDecoration: 'line-through',
-  },
-};
-
+  
 const mapDispatchToProps = (dispatch) => ({
   noteActions: bindActionCreators(noteActionCreators, dispatch),
   commentActions: bindActionCreators(commentActionCreators, dispatch),
