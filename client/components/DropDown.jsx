@@ -36,6 +36,8 @@ class DropDown extends React.Component {
 
   render() {
     const { notifications } = this.props;
+    const length = (notifications) ? notifications.filter(alert => !alert.isRead).length : '0';
+
     return (
       <div>
         <ul id="dropdown" className="dropdown-content">
@@ -57,7 +59,7 @@ class DropDown extends React.Component {
                   this.displayTypeNotifications('unread');
                 }}
               >
-                {'Unread'}
+                {`Unread ( ${length} )`}
               </div>
             </div>
             <div

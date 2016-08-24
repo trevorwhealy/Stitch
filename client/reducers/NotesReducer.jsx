@@ -11,7 +11,7 @@ export default (state = noteState, action) => {
   switch (action.type) {
     case GET_NOTES_SUCCESS:
       return Object.assign({}, state, {
-        note: action.notes,
+        notes: action.notes,
         notesReceived: true,
         statusMessage: 'Notes received',
       });

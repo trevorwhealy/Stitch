@@ -1,7 +1,7 @@
 .alerts {
   .dropdown-content {
     margin-top: 33px;
-    width: 450px !important;
+    width: 490px !important;
     right: 30px;
     left: unset !important;
     cursor: auto;
@@ -39,6 +39,9 @@
   .dropdown-content .notifications {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #e6e6e6;
   }
 
@@ -50,17 +53,15 @@
 
   .dropdown-content .notifications .notifications-userbody .message {
     padding-left: 12px;
-    padding-top: 3px;
+    padding-top: 5px;
     width: 315px;
   }
 
   .dropdown-content .notifications .notifications-userbody .user {
-    margin-bottom: 0px;
     padding-left: 10px;
   }
 
   .dropdown-content .notifications .message-date {
-    padding-top: 5px;
     padding-left: 3px;
   }
 

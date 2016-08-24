@@ -51,7 +51,7 @@ function markAsRead(req, res) {
 function markAllAsRead(req, res) {
   const targetId = req.user.id;
 
-  Notification.update({ isRead: true }, { where: { targetId } })
+  Notification.update({ isRead: true }, { where: { targetId, isRead: false } })
     .then(verify.transactionSuccess)
     .then(() => res.sendStatus(200))
     .catch(err => {

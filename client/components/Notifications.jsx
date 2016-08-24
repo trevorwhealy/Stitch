@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import moment from 'moment';
+import Avatar from './Avatar.jsx';
 
 const Notifications = ({ notificationType, markAsRead, notifications }) => {
   let alerts;
@@ -13,32 +14,31 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
     .map(alert => {
       const message = alert.type === 'COMMENT' ? ` said, "${alert.text}"` : ' mentioned you';
       let alertOutput = (
-        <Link
+        <div
           key={alert.id}
           className="message"
-          onClick={() => markAsRead(alert.id)}
-          to={{ pathname: `/notes/${alert.noteId}` }}
         >
-          <li><b>{alert.source.fullName}</b>{message}</li>
-        </Link>
+          <b>{alert.source.fullName}</b>{message}
+        </div>
         );
 
       return (
-        <div key={alert.id} className="notifications">
+        <Link
+          key={alert.id}
+          className="notifications"
+          to={{ pathname: `/notes/${alert.noteId}` }}
+          onClick={() => markAsRead(alert.id)}
+        >
           <div className="notifications-userbody">
             <div className="user">
-              <img
-                className="circle"
-                alt="profile"
-                src="/assets/images/sunnyv.jpg"
-              />
+              <Avatar fullName={alert.source.fullName} size="sm" />
             </div>
             {alertOutput}
           </div>
           <div className="message-date">
             {`${moment(alert.updatedAt).fromNow()}`}
           </div>
-        </div>
+        </Link>
       );
     });
   }

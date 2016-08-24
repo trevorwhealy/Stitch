@@ -18,7 +18,8 @@ export function markAsReadSuccess() {
   };
 }
 
-export function markAsReadFailure() {
+export function markAsReadFailure(err) {
+  console.log(err);
   return {
     type: 'MARK_AS_READ_FAILURE',
   };
@@ -43,6 +44,7 @@ export function getNotifications() {
 
 export function markAsRead(id) {
   const token = localStorage.getItem('jwtToken');
+  console.log('the id is', id);
   return (dispatch) => {
     return fetch(`/api/notifications/${id}/markasread`, {
       method: 'POST',
@@ -51,7 +53,9 @@ export function markAsRead(id) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(notifications => dispatch(notificationSuccess(notifications)))
+    .then(() => {
+      dispatch(getNotifications());
+    })
     .catch((err) => dispatch(markAsReadFailure(err)));
   };
 }

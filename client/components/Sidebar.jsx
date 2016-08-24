@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
+import * as authActionCreators from '../actions/Auth.jsx';
 import Avatar from './Avatar.jsx';
 
 class Sidebar extends React.Component {
@@ -19,6 +20,7 @@ class Sidebar extends React.Component {
 
   componentWillMount() {
     this.props.folderActions.getAllFolders();
+    this.props.authActions.currentUser();
   }
 
   createFolder() {
@@ -116,6 +118,7 @@ class Sidebar extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   folderActions: bindActionCreators(folderActionCreators, dispatch),
+  authActions: bindActionCreators(authActionCreators, dispatch),
 });
 
 const mapStateToProps = (state) => {
@@ -134,4 +137,5 @@ Sidebar.propTypes = {
   folderActions: React.PropTypes.object,
   folders: React.PropTypes.object,
   user: React.PropTypes.object,
+  authActions: React.PropTypes.object,
 };
