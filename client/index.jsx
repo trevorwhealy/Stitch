@@ -9,8 +9,8 @@ import promiseMiddleware from 'redux-promise';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import routes from './routes/routes.jsx';
-import appReducer from './reducers/index.js';
+import routes from './app.routes.jsx';
+import appReducer from './app.reducer.js';
 
 import './app.scss';
 
