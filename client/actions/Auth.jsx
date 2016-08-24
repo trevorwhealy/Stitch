@@ -22,9 +22,7 @@ export function authFailure(message) {
 
 export function logout() {
   localStorage.removeItem('jwtToken');
-  return {
-    type: 'LOGOUT_USER',
-  };
+  browserHistory.replace('/login');
 }
 
 export function login(userCredentials) {

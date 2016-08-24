@@ -11,32 +11,28 @@
 .recent .notes {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
-
+  justify-content: flex-start;
 }
 
 .recent .notes .note {
-  box-shadow: 0px 2px 4px #000000;
+  box-shadow: 1px 2px 2px #000000;
   margin: 14px;
-  height: 250px;
+  height: 80px;
   flex-basis: 250px;
   max-width: 250px;
   display: flex;
   flex: 1 0 250px;
-  flex-direction: column;
 }
 
-.recent .notes .note .top {
-  background-color: #F4F4F4;
-  height: 64%;
-}
+// .recent .notes .note .top {
+//   background-color: #F4F4F4;
+//   height: 64%;
+// }
 
 .recent .notes .note .bottom {
-  height: 36%;
   padding: 15px 24px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .recent .notes .note .bottom .noteTitle {
@@ -53,6 +49,14 @@
   color: #4A4A4A;
   font-size: 24px;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.recent .title .goToAllNotes {
+  display: flex;
+  margin-right: 14px;
+  align-items: center;
 }
 
 /** Folder block **/

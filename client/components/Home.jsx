@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import moment from 'moment';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
-import * as authActionCreators from '../actions/Auth.jsx';
+import * as notificationActionCreators from '../actions/NotificationActions.jsx';
 
 import AddFolder from './modals/AddFolder.jsx';
 import RenameContent from './modals/RenameContent.jsx';
@@ -26,7 +26,7 @@ class Home extends React.Component {
   componentWillMount() {
     this.props.noteActions.getAllNotes();
     this.props.folderActions.getAllFolders();
-    this.props.authActions.currentUser();
+    this.props.notificationActions.getNotifications();
     sessionStorage.active = window.location.href;
   }
 
@@ -67,7 +67,7 @@ class Home extends React.Component {
     let allFolders;
     if (notes) {
       recentNotes =
-        notes.slice(0, 3).map(note => {
+        notes.slice(0, 11).map(note => {
           return (
             <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }} >
               <div className="top">{''}</div>
@@ -125,7 +125,13 @@ class Home extends React.Component {
     return (
       <div className="HomeContainer">
         <div className="recent">
-          <div className="title"> {'RECENT NOTES'} </div>
+          <div className="title">
+            {'RECENT NOTES'}
+            <Link className="goToAllNotes" to={{ pathname: '/allnotes' }} >
+             {'All notes'}
+              <i className="material-icons">keyboard_arrow_right</i>
+            </Link>
+          </div>
           <div className="notes">
             <Link className="note" to={{ pathname: '/notes/new' }} >
               <div className="top">{''}</div>
@@ -165,7 +171,7 @@ class Home extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   folderActions: bindActionCreators(folderActionCreators, dispatch),
   noteActions: bindActionCreators(noteActionCreators, dispatch),
-  authActions: bindActionCreators(authActionCreators, dispatch),
+  notificationActions: bindActionCreators(notificationActionCreators, dispatch),
 });
 
 const mapStateToProps = (state) => {
@@ -185,5 +191,5 @@ Home.propTypes = {
   noteActions: React.PropTypes.object,
   folders: React.PropTypes.object,
   notes: React.PropTypes.object,
-  authActions: React.PropTypes.object,
+  notificationActions: React.PropTypes.object,
 };
