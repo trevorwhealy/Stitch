@@ -79,7 +79,7 @@ class Compiler extends React.Component {
           <option value="none" disabled>Choose your language</option>
           {this.state.languages.map(language => {
             return (
-              <option value={`${language}`}>{language}</option>
+              <option key={language} value={`${language}`}>{language}</option>
             );
           })}
         </select>

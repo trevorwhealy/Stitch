@@ -20,6 +20,12 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
+const logout = (nextState, replace) => {
+  localStorage.removeItem('jwtToken');
+  localStorage.removeItem('user');
+  replace({ pathname: '/login' });
+};
+
 module.exports = (
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={requireAuth} >
@@ -32,6 +38,7 @@ module.exports = (
     </Route>
     <Route path="/oauthsuccess" component={OAuthSuccess} />
     <Route path="/login" component={Login} />
+    <Route path="/logout" onEnter={logout} />
     <Route path="/signup" component={SignUp} />
   </Router>
 );
