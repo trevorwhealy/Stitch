@@ -237,6 +237,12 @@ class RichEditor extends React.Component {
       compiler(answer, lang)
       .then(res => res.json())
       .then(data => {
+        const $compilesRemaining = $('.compilesRemaining').first();
+        $compilesRemaining.text(`${data.compiles} Compiles Remaining`);
+
+        if (data.message === 'Compile limit exceeded') {
+          return Promise.reject('Compile limit exceeded');
+        }
         const $p = $(`<p> ${data.stdout} </p>`);
         const $answer = $('.compileAnswer');
 
@@ -245,15 +251,20 @@ class RichEditor extends React.Component {
         $answer.animate({ scrollTop: $p.position().top + $p.height() }, 250);
       })
       .catch(err => {
-        switch(err) {
+        switch (err) {
           case 'no code typed':
             break;
           case 'no lang selected':
             const languageDropdown = $('.compilerContainer').find('.select-dropdown');
 
-            console.log(languageDropdown);
-
             languageDropdown.addClass("pickLanguage").delay(1000).queue(function(){
+              $(this).removeClass("pickLanguage").dequeue();
+            });
+            break;
+          case 'Compile limit exceeded':
+            const $compilesRemaining = $('.compilesRemaining').first();
+            $compilesRemaining.text('Compile Limit Reached');
+            $compilesRemaining.addClass("pickLanguage").delay(1000).queue(function(){
               $(this).removeClass("pickLanguage").dequeue();
             });
             break;
