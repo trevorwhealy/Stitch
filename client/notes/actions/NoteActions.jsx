@@ -1,5 +1,7 @@
 import { browserHistory } from 'react-router';
 
+import { getOneFolder } from '../../folders/actions/FolderActions.jsx';
+
 export function notesSuccess(notes) {
   return {
     type: 'GET_NOTES_SUCCESS',
@@ -61,7 +63,10 @@ export function getOneNote(noteId) {
       },
     })
     .then(res => res.json())
-    .then(data => dispatch(receiveSingleNote(data)))
+    .then((data) => {
+      dispatch(receiveSingleNote(data));
+      dispatch(getOneFolder(data.folder || {}));
+    })
     .catch(err => dispatch(notesFailure(err)));
   };
 }
