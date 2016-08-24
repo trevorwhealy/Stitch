@@ -14,20 +14,46 @@
     margin-bottom: 30px;
   }
 
-  /* TODO: Ensure that long names will shrink/restrict to within space provided */
-  .user .name {
+  .user__name {
     font-size: 1.5em;
     margin-left: 30px;
     flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .user .alert {
-    cursor: pointer;
-    transition: all .4s ease;
-  }
+  .user__dropdown {
+    display: flex;
 
-  .user .alert:hover {
-    color: red;
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      background: none;
+      border: none;
+    }
+
+    /* Overrides */
+    &:hover:not(:focus) .dropdown-menu { display: none; }
+    .dropdown-menu {
+      top: 32px;
+
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+      }
+      a { flex: 1; }
+
+      a,
+      li {
+        font-weight: normal;
+        line-height: 42px !important;
+        height: 42px !important;
+      }
+    }
   }
 
   .createFolder {
@@ -79,41 +105,37 @@
     color: black;
   }
 
-  .search {
-    margin-bottom: 10px;
-  }
-
-  .search .query {
-    background-color: #D8D8D8;
-    height: 30px;
-    border-radius: 15px;
-    padding: 10px 15px 10px 35px;
-    box-sizing: border-box !important;
-  }
-
-  .search .query:focus {
-    border-bottom: 1px solid gray !important;
-    box-shadow: 0 1px 0 0 gray !important;
-  }
-
-  ::placeholder {
-    color: #ABABAB;
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .left-inner-addon {
+  .searchbox {
     position: relative;
-  }
+    margin-bottom: 10px;
 
-  .left-inner-addon input {
-    padding-left: 30px;
-  }
+    input {
+      background-color: $color-grey-lightest;
+      height: 30px;
+      border-radius: 15px;
+      padding: 10px 20px 10px 40px;
+      box-sizing: border-box !important;
+      border: none;
+    }
 
-  .left-inner-addon i {
-    position: absolute;
-    padding: 5px 0px 0px 5px;
-    pointer-events: none;
+    input:focus {
+      // border-bottom: 1px solid $color-grey !important;
+      box-shadow: 0 4px 6px $color-grey-lighter !important;
+    }
+
+    ::placeholder {
+      color: #ABABAB;
+      font-size: 14px;
+    }
+
+    i {
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      color: $color-grey;
+      font-size: 20px;
+      pointer-events: none;
+    }
   }
 
   .buttonSidebar {

@@ -51,20 +51,24 @@ class Sidebar extends React.Component {
           {/* User chip: userPhoto, userName, and userLogout */}
           <div className="user">
             <Avatar photo={this.props.user.photo} fullName={this.props.user.fullName} />
-            <div className="name">{this.props.user.fullName}</div>
+            <div className="user__name">{this.props.user.fullName}</div>
+            <button className="dropdown-btn user__dropdown">
+              <i className="material-icons">keyboard_arrow_down</i>
+              <ul className="dropdown-menu dropdown-menu--right">
+                <li><Link className="text-danger" to="/logout">Logout</Link></li>
+              </ul>
+            </button>
           </div>
 
           {/* Searchbar */}
-          <div className="search">
-            <div className="left-inner-addon ">
-              <i className="material-icons">search</i>
-              <input
-                className="query"
-                type="text"
-                placeholder="Search folders by name"
-                onChange={this.searchInput}
-              />
-            </div>
+          <div className="searchbox">
+            <i className="material-icons">search</i>
+            <input
+              className="query"
+              type="text"
+              placeholder="Search folders by name"
+              onChange={this.searchInput}
+            />
           </div>
 
           {/*  Create Folder: title and create button */}
