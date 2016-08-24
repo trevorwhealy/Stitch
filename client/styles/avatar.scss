@@ -1,0 +1,26 @@
+.userAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: grey;
+}
+
+.userAvatar--initials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: lightgrey;
+}
+
+.userAvatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+.userAvatar--lg {
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+}

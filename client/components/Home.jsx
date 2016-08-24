@@ -17,9 +17,9 @@ class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      folderToDelete: '',
-      folderToRename: '',
-      contentToShare: '',
+      folderToDelete: {},
+      folderToRename: {},
+      contentToShare: {},
     };
   }
 
@@ -69,7 +69,7 @@ class Home extends React.Component {
       recentNotes =
         notes.slice(0, 3).map(note => {
           return (
-            <Link className="note" to={{ pathname: `/notes/${note.id}` }} >
+            <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }} >
               <div className="top">{''}</div>
               <div className="bottom">
                 <div className="noteTitle">
@@ -88,7 +88,7 @@ class Home extends React.Component {
       allFolders =
         folders.slice(0, 7).map(folder => {
           return (
-            <Link to={{ pathname: `/folders/${folder.id}` }} className="eachFolder">
+            <Link key={folder.id} to={{ pathname: `/folders/${folder.id}` }} className="eachFolder">
               <div className="folderContents">
                 <i className="material-icons">folder</i>
                 <div className="content">

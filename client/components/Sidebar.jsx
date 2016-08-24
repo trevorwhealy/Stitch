@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
+import Avatar from './Avatar.jsx';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -49,26 +50,25 @@ class Sidebar extends React.Component {
         <ul id="slide-out" className="side-nav">
           {/* User chip: userPhoto, userName, and userLogout */}
           <div className="user">
-            <img
-              className="circle"
-              alt="profile"
-              src={this.props.user.photo}
-              width="65" height="65"
-            />
-            <div className="name">{this.props.user.fullName}</div>
+            <Avatar photo={this.props.user.photo} fullName={this.props.user.fullName} />
+            <div className="user__name">{this.props.user.fullName}</div>
+            <button className="dropdown-btn user__dropdown">
+              <i className="material-icons">keyboard_arrow_down</i>
+              <ul className="dropdown-menu dropdown-menu--right">
+                <li><Link className="text-danger" to="/logout">Logout</Link></li>
+              </ul>
+            </button>
           </div>
 
           {/* Searchbar */}
-          <div className="search">
-            <div className="left-inner-addon ">
-              <i className="material-icons">search</i>
-              <input
-                className="query"
-                type="text"
-                placeholder="Search folders by name"
-                onChange={this.searchInput}
-              />
-            </div>
+          <div className="searchbox">
+            <i className="material-icons">search</i>
+            <input
+              className="query"
+              type="text"
+              placeholder="Search folders by name"
+              onChange={this.searchInput}
+            />
           </div>
 
           {/*  Create Folder: title and create button */}
@@ -96,7 +96,7 @@ class Sidebar extends React.Component {
                 .map(folder => {
                 // TODO: decide how many folders we want to display - most recent 5? all of them?
                   return (
-                    <Link className="folder" to={{ pathname: `/folders/${folder.id}` }}>
+                    <Link key={folder.id} className="folder" to={{ pathname: `/folders/${folder.id}` }}>
                       {folder.name}
                     </Link>
                   );
@@ -133,4 +133,5 @@ export default connect(
 Sidebar.propTypes = {
   folderActions: React.PropTypes.object,
   folders: React.PropTypes.object,
+  user: React.PropTypes.object,
 };
