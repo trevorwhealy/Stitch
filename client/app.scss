@@ -1,6 +1,7 @@
 /***** Library & partials import *****/
 
-@import './styles/variables.import.scss';
+@import './lib/variables.import.scss';
+@import './lib/draft.scss';
 
 /***** App-wide styling *****/
 
@@ -32,18 +33,17 @@ a {
 /***** Scss Imports *****/
 
 // Reusable Components
-@import './styles/avatar.scss';
-@import './styles/dropdown.scss';
-@import './styles/modals.scss';
+@import './shared/components/avatar.scss';
+@import './shared/components/dropdown.scss';
+@import './shared/modals/modals.scss';
 
 // Page Components
-@import './styles/sidebar.scss';
-@import './styles/auth.scss';
-@import './styles/home.scss';
-@import './styles/editor.scss';
-@import './styles/search.scss';
-@import './styles/compiler.scss';
-@import './styles/draft.scss';
-@import './styles/navbar.scss';
-@import './styles/notifications.scss';
-@import './styles/search-overlay.scss';
+@import './shared/components/sidebar.scss';
+@import './shared/components/navbar.scss';
+@import './shared/components/search-overlay.scss';
+@import './auth/components/auth.scss';
+@import './editor/editor.scss';
+@import './editor/compiler/compiler.scss';
+@import './folders/components/search.scss';
+@import './home/components/home.scss';
+@import './notifications/components/notifications.scss';
