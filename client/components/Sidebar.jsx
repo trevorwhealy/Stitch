@@ -9,11 +9,9 @@ import Avatar from './Avatar.jsx';
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props: ', props);
     this.state = {
       searchInput: '',
       addFolder: false,
-      folderName: '',
     };
     this.searchInput = this.searchInput.bind(this);
     this.addFolder = this.addFolder.bind(this);
@@ -37,7 +35,6 @@ class Sidebar extends React.Component {
     this.props.folderActions.createFolder(this.folderInput.value);
     this.setState({
       addFolder: false,
-      folderName: '',
     });
     this.folderInput.value = '';
   }

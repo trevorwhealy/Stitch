@@ -62,7 +62,7 @@ class Home extends React.Component {
 
   render() {
     const notes = this.props.notes || [];
-    const folders = this.props.folders.folder;
+    const folders = this.props.folders;
     let recentNotes;
     let allFolders;
     if (notes) {
@@ -176,7 +176,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => {
   return {
-    folders: state.folders,
+    folders: state.folders.folder,
     notes: state.notes.notes,
   };
 };
@@ -189,7 +189,7 @@ export default connect(
 Home.propTypes = {
   folderActions: React.PropTypes.object,
   noteActions: React.PropTypes.object,
-  folders: React.PropTypes.object,
-  notes: React.PropTypes.object,
+  folders: React.PropTypes.array,
+  notes: React.PropTypes.array,
   notificationActions: React.PropTypes.object,
 };

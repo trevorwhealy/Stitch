@@ -8,7 +8,8 @@ const NewNote = ({ createNoteInFolder, folderId }) => (
 );
 
 NewNote.propTypes = {
-  createNoteInFolder: React.PropTypes.function,
-  folderId: React.PropTypes.integer,
+  createNoteInFolder: React.PropTypes.func,
+  folderId: React.PropTypes.number,
 };
+
 export default NewNote;

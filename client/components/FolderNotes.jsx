@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import * as noteActionCreators from '../actions/NoteActions.jsx';
 import * as folderActionCreators from '../actions/FolderActions.jsx';
-import NewNote from './CreateNewNote.jsx';
+import CreateNewNote from './CreateNewNote.jsx';
 
 import RenameContent from './modals/RenameContent.jsx';
 import DeleteContent from './modals/DeleteContent.jsx';
@@ -17,16 +17,16 @@ class FolderNotes extends React.Component {
     super();
 
     this.state = {
-      noteToRename: '',
-      noteToDelete: '',
-      contentToShare: '',
+      noteToRename: {},
+      noteToDelete: {},
+      contentToShare: {},
     };
   }
 
   componentWillMount() {
     const folderId = this.props.routeParams.id;
-    this.props.noteActions.getNotesInFolder(folderId);
     this.props.folderActions.getFolder(folderId);
+    this.props.noteActions.getNotesInFolder(folderId);
   }
 
   componentDidUpdate(prevProps) {
@@ -34,6 +34,7 @@ class FolderNotes extends React.Component {
     const newId = this.props.params.id;
     const folderId = this.props.routeParams.id;
     if (oldId !== newId) {
+      this.props.folderActions.getFolder(folderId);
       this.props.noteActions.getNotesInFolder(folderId);
     }
   }
@@ -73,10 +74,7 @@ class FolderNotes extends React.Component {
       <div className="folderFiles">
         <div className="title">{folderTitle}</div>
         <div className="number">{`${notes.length} notes found`}</div>
-        <NewNote
-          createNoteInFolder={createNoteInFolder}
-          folderId={folderId}
-        />
+        <CreateNewNote createNoteInFolder={createNoteInFolder} folderId={folderId} />
         <div className="notes"> {notes.map(note => {
           return (
             <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }}>
