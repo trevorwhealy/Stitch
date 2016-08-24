@@ -9,13 +9,16 @@ import Avatar from './Avatar.jsx';
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props: ', props);
     this.state = {
       searchInput: '',
       addFolder: false,
+      folderName: '',
     };
     this.searchInput = this.searchInput.bind(this);
     this.addFolder = this.addFolder.bind(this);
-    this.createFolder = this.createFolder.bind(this);
+    this.toggleCreateFolder = this.toggleCreateFolder.bind(this);
+    this.onAddFolderInputRender = this.onAddFolderInputRender.bind(this);
   }
 
   componentWillMount() {
@@ -23,9 +26,25 @@ class Sidebar extends React.Component {
     this.props.authActions.currentUser();
   }
 
-  createFolder() {
+  onAddFolderInputRender(component) {
+    if (!component) { return; }
+    component.focus();
+    this.folderInput = component;
+  }
+
+  addFolder(e) {
+    e.preventDefault();
+    this.props.folderActions.createFolder(this.folderInput.value);
     this.setState({
-      addFolder: true,
+      addFolder: false,
+      folderName: '',
+    });
+    this.folderInput.value = '';
+  }
+
+  toggleCreateFolder() {
+    this.setState({
+      addFolder: !this.state.addFolder,
     });
   }
 
@@ -33,26 +52,24 @@ class Sidebar extends React.Component {
     this.setState({ searchInput: e.target.value });
   }
 
-  addFolder(e) {
-    if (e.keyCode === 13) {
-      if (e.target.value.length > 0) {
-        this.props.folderActions.createFolder(e.target.value);
-        this.setState({
-          addFolder: false,
-        });
-        e.target.value = '';
-      }
-    }
-  }
-
   render() {
     const folders = this.props.folders.folder;
+    const addFolderBox = this.state.addFolder ? (
+      <form onSubmit={this.addFolder}>
+        <input
+          type="text"
+          required
+          ref={this.onAddFolderInputRender}
+        />
+      </form>
+    ) : '';
+
     return (
       <div>
         <ul id="slide-out" className="side-nav">
           {/* User chip: userPhoto, userName, and userLogout */}
           <div className="user">
-            <Avatar photo={this.props.user.photo} fullName={this.props.user.fullName} />
+            <Avatar photo={this.props.user.photo} fullName={this.props.user.fullName} size="sm" />
             <div className="user__name">{this.props.user.fullName}</div>
             <button className="dropdown-btn user__dropdown">
               <i className="material-icons">keyboard_arrow_down</i>
@@ -65,29 +82,21 @@ class Sidebar extends React.Component {
           {/* Searchbar */}
           <div className="searchbox">
             <i className="material-icons">search</i>
-            <input
-              className="query"
-              type="text"
-              placeholder="Search folders by name"
-              onChange={this.searchInput}
-            />
+            <input type="text" placeholder="Search folders by name" onChange={this.searchInput} />
           </div>
 
           {/*  Create Folder: title and create button */}
           <div className="createFolder">
-            <div className="title"> FOLDERS </div>
-            <div
-              onClick={this.createFolder}
-              className="add"
-            >NEW<i className="tiny material-icons alert">add</i>
+            <div className="title">FOLDERS</div>
+            <div onClick={this.toggleCreateFolder} className="add" >
+              NEW <i className="tiny material-icons alert">add</i>
             </div>
           </div>
 
-          { this.state.addFolder
-            ? <input type="text" name="folderName" onKeyDown={this.addFolder} /> : '' }
+          { addFolderBox }
 
           {/* Folder Names: names of folders */}
-          <div className="folderNames">
+          <div className="folderList">
             {
               folders
                 .filter(folder => {
@@ -95,14 +104,14 @@ class Sidebar extends React.Component {
                   if (!searchInput) { return true; }
                   return folder.name.match(new RegExp(searchInput, 'i'));
                 })
-                .map(folder => {
-                // TODO: decide how many folders we want to display - most recent 5? all of them?
-                  return (
-                    <Link key={folder.id} className="folder" to={{ pathname: `/folders/${folder.id}` }}>
-                      {folder.name}
-                    </Link>
-                  );
-                })
+                .map(folder => (
+                  <Link key={folder.id} className="folder" to={`/folders/${folder.id}`}>
+                    <span className="folderName">{folder.name}</span>
+                    <div className="noteCount">
+                      {folder.notes.length ? <span>{folder.notes.length}</span> : ''}
+                    </div>
+                  </Link>
+                ))
           }
           </div>
         </ul>
