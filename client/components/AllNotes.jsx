@@ -15,9 +15,9 @@ class AllNotes extends React.Component {
     super();
 
     this.state = {
-      noteToRename: '',
-      noteToDelete: '',
-      contentToShare: '',
+      noteToRename: {},
+      noteToDelete: {},
+      contentToShare: {},
     };
   }
 
