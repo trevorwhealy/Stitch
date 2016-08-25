@@ -57,6 +57,8 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
         </Link>
       );
     });
+  } else {
+    alerts = '';
   }
 
   return (<div>{alerts}</div>);
