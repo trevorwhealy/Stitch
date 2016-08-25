@@ -20,6 +20,12 @@ export function getOneFolder(folder) {
   };
 }
 
+export function resetOneFolderState() {
+  return {
+    type: 'RESET_ONE_FOLDER_STATE',
+  };
+}
+
 export function getAllFolders() {
   const token = localStorage.getItem('jwtToken');
 
@@ -101,5 +107,12 @@ export function renameFolder(folderId, title) {
       },
     })
     .then(() => dispatch(getAllFolders()));
+  };
+}
+
+export function resetFolderState() {
+  console.log('i here')
+  return (dispatch) => {
+    dispatch(resetOneFolderState());
   };
 }
