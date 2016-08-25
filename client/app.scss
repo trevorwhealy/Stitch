@@ -27,6 +27,8 @@ a { color: black; }
 
 .text-danger { color: $color-red !important; }
 
+/***** Page Wrapper for Responsive Padding *****/
+
 .pageWrapper {
   overflow-y: auto;
   transition: padding .25s ease;
@@ -41,6 +43,58 @@ a { color: black; }
   .pageWrapper { padding: 90px 200px 50px 200px; }
 }
 
+/***** Cards Styling *****/
+
+.noteCard {
+  margin: 12px 1%;
+  padding: 8px 16px;
+  height: 80px;
+  max-width: 23%;
+  min-width: 230px;
+  border: 1px solid $color-grey-lighter;
+  border-radius: 8px;
+  display: flex;
+  flex: 1 0 230px;
+  align-items: center;
+
+  &:hover {
+    box-shadow: 0 2px 6px $color-grey-lighter;
+  }
+
+  .cardImage {
+    margin-right: 16px;
+  }
+  .cardInfo {
+    overflow: hidden;
+    flex: 1;
+  }
+  .cardInfo > .title {
+    font-size: 18px;
+    color: $primary-color;
+    @include overflow-ellipsis();
+  }
+  .cardInfo > .details {
+    font-size: 12px;
+    color: $color-grey;
+  }
+  .cardActions {}
+}
+.folderCard {
+  @extend .noteCard;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 8px 24px;
+
+  .cardImage > i {
+    color: $color-grey-lighter;
+    font-size: 32px;
+  }
+  .cardActions > .icon-btn {
+    display: flex;
+  }
+  .cardActions > .icon-btn i { color: $color-grey-darkest; }
+}
 
 /***** Scss Imports *****/
 
