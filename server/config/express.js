@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const passport = require('passport');
+const compression = require('compression');
 
 module.exports = (app, config) => {
   // logging for request on the console
@@ -10,6 +11,7 @@ module.exports = (app, config) => {
   // middleware for parsing
   app.use(bodyParser.json());
   app.use(passport.initialize());
+  app.use(compression())
 
   // serving static files to client
   app.use(express.static(`${config.rootPath}/public`));
