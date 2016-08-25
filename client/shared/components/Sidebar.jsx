@@ -87,7 +87,7 @@ class Sidebar extends React.Component {
           <div className="createFolder">
             <div className="title">FOLDERS</div>
             <div onClick={this.toggleCreateFolder} className="add" >
-              NEW <i className="tiny material-icons alert">add</i>
+              <i className="tiny material-icons alert">add</i> NEW
             </div>
           </div>
 

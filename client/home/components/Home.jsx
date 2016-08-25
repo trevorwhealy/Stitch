@@ -70,11 +70,11 @@ class Home extends React.Component {
       recentNotes =
         notes.slice(0, 11).map(note => {
           return (
-            <Link key={note.id} className="noteCard" to={{ pathname: `/notes/${note.id}` }} >
-              <div className="noteCard__image">
+            <Link className="noteCard" key={note.id} to={{ pathname: `/notes/${note.id}` }} >
+              <div className="cardImage">
                 <Avatar photo={note.user.photo} fullName={note.user.fullName} size="sm" />
               </div>
-              <div className="noteCard__info">
+              <div className="cardInfo">
                 <div className="title">
                   {note.name}
                 </div>
@@ -91,30 +91,30 @@ class Home extends React.Component {
       allFolders =
         folders.slice(0, 7).map(folder => {
           return (
-            <Link key={folder.id} to={{ pathname: `/folders/${folder.id}` }} className="eachFolder">
-              <div className="folderContents">
+            <Link className="folderCard" key={folder.id} to={{ pathname: `/folders/${folder.id}` }}>
+              <div className="cardImage">
                 <i className="material-icons">folder</i>
-                <div className="content">
-                  <div className="top">
-                    {folder.name}
-                    {folder.shared ? 'shared' : ''}
-                  </div>
-                  <div className="bottom">
-                    {`${folder.notes.length} notes`}
-                    &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-                    {`Created by ${folder.user.fullName}`}
-                  </div>
+              </div>
+              <div className="cardInfo">
+                <div className="title">
+                  {folder.name}
+                </div>
+                <div className="details">
+                  {`${folder.notes.length} notes`}
+                  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                  {`Created by ${folder.user.fullName}`}
                 </div>
               </div>
-              <div onClick={this.preventDropdownLink} className="elipses">
-                <div className="icon-btn list__more-actions dropdown-btn">
+              <span style={{ flex: 1 }} />
+              <div className="cardActions" onClick={this.preventDropdownLink}>
+                <div className="icon-btn dropdown-btn">
                   <i className="material-icons">more_vert</i>
                   <ul className="dropdown-menu dropdown-menu--right">
                     <li onClick={() => this.renameFolderModal(folder)}>
                       Rename
                     </li>
                     <li onClick={() => this.shareContentModal(folder)}>Share</li>
-                    <li onClick={() => this.deleteContentModal(folder)}>
+                    <li className="text-danger" onClick={() => this.deleteContentModal(folder)}>
                       Delete
                     </li>
                   </ul>
@@ -137,7 +137,7 @@ class Home extends React.Component {
             <span style={{ flex: 1 }} />
             <Link className="newBtn" to={{ pathname: '/notes/new' }} >
               <i className="material-icons">add</i>
-              <span>New Note</span>
+              <span>New note</span>
             </Link>
           </div>
           <div className="noteList">
@@ -145,15 +145,20 @@ class Home extends React.Component {
           </div>
         </section>
 
-        <section className="folderContainer">
-          <div className="folderHeader">
-            <div>{'Folders'}</div>
-            <div onClick={this.addFolderModal} className="add">
+        <section className="folders">
+          <div className="folders__header">
+            <span className="sectionLabel">Folders</span>
+            <Link className="allBtn" to={{ pathname: '/folders' }} >
+              <span>All folders</span>
+              <i className="material-icons">keyboard_arrow_right</i>
+            </Link>
+            <span style={{ flex: 1 }} />
+            <div className="newBtn" onClick={this.addFolderModal}>
               <i className="material-icons">add</i>
-              <span className="addFolder">NEW FOLDER</span>
+              <span className="addFolder">New folder</span>
             </div>
           </div>
-          <div className="folders">
+          <div className="folderList">
             {allFolders}
           </div>
         </section>

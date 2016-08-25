@@ -7,7 +7,7 @@ import OverlaySearch from './OverlaySearch.jsx';
 const Navbar = () => (
   <div className="NavContainer">
     <Link className="logo" to={{ pathname: '/' }}>
-      <img className="appLogo" alt="logo" src="/assets/images/stitch-logo.svg" />
+      <img className="appLogo" width="24" alt="logo" src="/assets/images/stitch-logo.svg" />
     </Link>
     <div className="sidebar">
       <Sidebar />

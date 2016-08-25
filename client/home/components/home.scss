@@ -5,151 +5,108 @@
   transition: padding .25s ease;
 }
 
+/***** Recent Notes Styling *****/
+
 .recentNotes {
   .noteList {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
   }
-  .noteCard {
-    margin: 12px 1%;
-    padding: 8px 16px;
-    height: 80px;
-    max-width: 23%;
-    min-width: 230px;
-    border: 1px solid $color-grey-lighter;
-    border-radius: 8px;
-    display: flex;
-    flex: 1 0 230px;
-    align-items: center;
-
-    &:hover {
-      box-shadow: 0 2px 6px $color-grey-lighter;
-    }
-  }
-  .noteCard__image {
-    margin-right: 16px;
-  }
-  .noteCard__info {
-    overflow: hidden;
-  }
-  .noteCard__info > .title {
-    font-size: 18px;
-    color: $primary-color;
-    @include overflow-ellipsis();
-  }
-  .noteCard__info > .details {
-    font-size: 12px;
-    color: $color-grey;
-  }
-  .noteCard__action {
-
-  }
 }
 .recentNotes__header {
   display: flex;
   align-items: center;
+  margin-bottom: 16px;
 }
-.recentNotes .sectionLabel {
+.recentNotes__header .sectionLabel {
   margin-right: 24px;
   text-transform: uppercase;
+  font-size: 1.5rem;
 }
-.recentNotes .allBtn,
-.recentNotes .newBtn {
+.recentNotes__header .allBtn,
+.recentNotes__header .newBtn {
   display: flex;
   align-items: center;
-}
-
-.recentNotes .note .bottom {
-  padding: 15px 24px;
-  display: flex;
-  flex-direction: column;
-}
-
-.recentNotes .note .bottom .noteTitle {
-  font-size: 18px;
-  overflow: hidden;
-}
-
-.recent .notes .note .bottom .noteDetails {
-  font-size: 12px;
-  color: #9B9B9B;
-}
-
-.recent .title {
-  color: #4A4A4A;
-  font-size: 24px;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-}
-
-.recent .title .goToAllNotes {
-  display: flex;
-  margin-right: 14px;
-  align-items: center;
-}
-
-/** Folder block **/
-
-.folderContainer {
-  padding: 30px 50px;
-}
-
-.folderContainer .folderHeader {
-  color: #4A4A4A;
-  font-size: 24px;
-
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.folderContainer .folderHeader .add {
-  display: flex;
-  flex-direction: row;
-}
-
-.folderContainer .folderHeader .addFolder {
-  font-size: 16px;
-  color: #4A4A4A;
+  transition: all .25s ease;
   cursor: pointer;
+  > i { font-size: 16px; }
+}
+.recentNotes__header .allBtn {
+  > * {
+    color: $color-grey;
+    transition: color .25s ease;
+  }
+  &:hover > * { color: darken($color-grey, 25%); }
+}
+.recentNotes__header .newBtn {
+  padding: 4px 8px;
+  background: $primary-color-3;
+  border-radius: 4px;
+  text-transform: uppercase;
+  > * { color: white; }
+  &:hover { background: lighten($primary-color-3, 5%); }
 }
 
-.folderContainer .folders {
-  display: flex;
-  flex-direction: column;
-}
+/***** Folders Styling *****/
 
-.folderContainer .folders .eachFolder {
-  height: 100px;
+.folders {
+  margin-top: 32px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+}
+.folders__header { @extend .recentNotes__header; }
+
+/***** Cards Styling *****/
+
+.noteCard {
+  margin: 12px 1%;
+  padding: 8px 16px;
+  height: 80px;
+  max-width: 23%;
+  min-width: 230px;
+  border: 1px solid $color-grey-lighter;
+  border-radius: 8px;
+  display: flex;
+  flex: 1 0 230px;
   align-items: center;
-  box-shadow: 0px 2px 4px #000000;
-  margin-bottom: 30px;
-}
 
-.folderContainer .folders .eachFolder .content .top {
-  margin-bottom: 10px;
-  font-size: 20px;
-}
+  &:hover {
+    box-shadow: 0 2px 6px $color-grey-lighter;
+  }
 
-.folderContainer .folders .eachFolder .content .bottom {
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #ABABAB;
+  .cardImage {
+    margin-right: 16px;
+  }
+  .cardInfo {
+    overflow: hidden;
+  }
+  .cardInfo > .title {
+    font-size: 18px;
+    color: $primary-color;
+    @include overflow-ellipsis();
+  }
+  .cardInfo > .details {
+    font-size: 12px;
+    color: $color-grey;
+  }
+  .cardActions {}
 }
+.folderCard {
+  @extend .noteCard;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 8px 24px;
 
-.folderContainer .folders .eachFolder .folderContents {
-  display: flex;
-  flex-direction: row;
-}
-
-.folderContainer .folders .eachFolder .folderContents .material-icons {
-  margin: 15px;
+  .cardImage > i {
+    color: $color-grey-lighter;
+    font-size: 32px;
+  }
+  .cardActions > .icon-btn {
+    display: flex;
+  }
+  .cardActions > .icon-btn i { color: $color-grey-darkest; }
 }
 
 /***** Responsive Adjustments *****/
@@ -163,7 +120,13 @@
 }
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
   .HomeContainer { padding: 90px 50px 50px 50px; }
+  .recentNotes .noteCard {
+    &:nth-child(n+7) { display: none; }
+  }
 }
 @media (min-width: $screen-lg-min) {
   .HomeContainer { padding: 90px 200px 50px 200px; }
+  .recentNotes .noteCard {
+    &:nth-child(n+9) { display: none; }
+  }
 }
