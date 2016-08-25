@@ -156,8 +156,9 @@
 
 @media (max-width: $screen-sm-max) {
   .HomeContainer { padding: 90px 20px 50px 20px; }
-  .recentNotes .note {
+  .recentNotes .noteCard {
     max-width: 100%;
+    &:nth-child(n+5) { display: none; }
   }
 }
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
