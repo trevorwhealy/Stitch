@@ -18,18 +18,29 @@ body {
   height: 100%;
 }
 
-a {
-  color: black;
-}
+a { color: black; }
 
 #sidenav-overlay {
   z-index: 0;
   background: none;
 }
 
-.text-danger {
-  color: $color-red !important;
+.text-danger { color: $color-red !important; }
+
+.pageWrapper {
+  overflow-y: auto;
+  transition: padding .25s ease;
 }
+@media (max-width: $screen-sm-max) {
+  .pageWrapper { padding: 90px 20px 50px 20px; }
+}
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .pageWrapper { padding: 90px 50px 50px 50px; }
+}
+@media (min-width: $screen-lg-min) {
+  .pageWrapper { padding: 90px 200px 50px 200px; }
+}
+
 
 /***** Scss Imports *****/
 
