@@ -9,6 +9,9 @@
   display: flex;
   background: rgba(255,255,255,.98);
   flex-direction: column;
+  cursor: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: all .3s ease;
 
   .overlay-navbar {
@@ -97,7 +100,6 @@
     padding: 20px 105px;
     flex-wrap: wrap;
     margin-left: 15px;
-    overflow-y: auto;
   }
 
   .userQueryResults {
