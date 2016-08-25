@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Sidebar from './Sidebar.jsx';
-import DropDown from './DropDown.jsx';
+import NotificationDropdown from '../../notifications/components/NotificationDropdown.jsx';
 import OverlaySearch from './OverlaySearch.jsx';
 
 const Navbar = () => (
@@ -18,7 +18,7 @@ const Navbar = () => (
         <OverlaySearch />
       </div>
       <div className="alerts">
-        <DropDown />
+        <NotificationDropdown />
       </div>
     </div>
   </div>
