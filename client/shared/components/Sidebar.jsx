@@ -87,7 +87,7 @@ class Sidebar extends React.Component {
           <div className="createFolder">
             <div className="title">FOLDERS</div>
             <div onClick={this.toggleCreateFolder} className="add" >
-              NEW <i className="tiny material-icons alert">add</i>
+              <i className="tiny material-icons alert">add</i> NEW
             </div>
           </div>
 
@@ -119,9 +119,9 @@ class Sidebar extends React.Component {
         </ul>
 
         {/* Actual button that will be clicked to open the sideNav */}
-        <button data-activates="slide-out" className="button-collapse buttonSidebar">
+        <a data-activates="slide-out" className="button-collapse buttonSidebar icon-btn">
           <i className="material-icons">menu</i>
-        </button>
+        </a>
       </div>
     );
   }

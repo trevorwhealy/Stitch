@@ -11,6 +11,7 @@ import AddFolder from '../../shared/modals/AddFolder.jsx';
 import RenameContent from '../../shared/modals/RenameContent.jsx';
 import ShareContent from '../../shared/modals/ShareContent.jsx';
 import DeleteContent from '../../shared/modals/DeleteContent.jsx';
+import Avatar from '../../shared/components/Avatar.jsx';
 
 class Home extends React.Component {
 
@@ -69,13 +70,15 @@ class Home extends React.Component {
       recentNotes =
         notes.slice(0, 11).map(note => {
           return (
-            <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }} >
-              <div className="top">{''}</div>
-              <div className="bottom">
-                <div className="noteTitle">
+            <Link className="noteCard" key={note.id} to={{ pathname: `/notes/${note.id}` }} >
+              <div className="cardImage">
+                <Avatar photo={note.user.photo} fullName={note.user.fullName} size="sm" />
+              </div>
+              <div className="cardInfo">
+                <div className="title">
                   {note.name}
                 </div>
-                <div className="noteDetails">
+                <div className="details">
                   {`Updated ${moment(note.updatedAt).fromNow()}`}
                 </div>
               </div>
@@ -88,30 +91,30 @@ class Home extends React.Component {
       allFolders =
         folders.slice(0, 7).map(folder => {
           return (
-            <Link key={folder.id} to={{ pathname: `/folders/${folder.id}` }} className="eachFolder">
-              <div className="folderContents">
+            <Link className="folderCard" key={folder.id} to={{ pathname: `/folders/${folder.id}` }}>
+              <div className="cardImage">
                 <i className="material-icons">folder</i>
-                <div className="content">
-                  <div className="top">
-                    {folder.name}
-                    {folder.shared ? 'shared' : ''}
-                  </div>
-                  <div className="bottom">
-                    {`${folder.notes.length} notes`}
-                    &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-                    {`Created by ${folder.user.fullName}`}
-                  </div>
+              </div>
+              <div className="cardInfo">
+                <div className="title">
+                  {folder.name}
+                </div>
+                <div className="details">
+                  {`${folder.notes.length} notes`}
+                  &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+                  {`Created by ${folder.user.fullName}`}
                 </div>
               </div>
-              <div onClick={this.preventDropdownLink} className="elipses">
-                <div className="icon-btn list__more-actions dropdown-btn">
+              <span style={{ flex: 1 }} />
+              <div className="cardActions" onClick={this.preventDropdownLink}>
+                <div className="icon-btn dropdown-btn">
                   <i className="material-icons">more_vert</i>
                   <ul className="dropdown-menu dropdown-menu--right">
                     <li onClick={() => this.renameFolderModal(folder)}>
                       Rename
                     </li>
                     <li onClick={() => this.shareContentModal(folder)}>Share</li>
-                    <li onClick={() => this.deleteContentModal(folder)}>
+                    <li className="text-danger" onClick={() => this.deleteContentModal(folder)}>
                       Delete
                     </li>
                   </ul>
@@ -124,39 +127,41 @@ class Home extends React.Component {
 
     return (
       <div className="HomeContainer">
-        <div className="recent">
-          <div className="title">
-            {'RECENT NOTES'}
-            <Link className="goToAllNotes" to={{ pathname: '/notes' }} >
-             {'All notes'}
+        <section className="recentNotes">
+          <div className="recentNotes__header">
+            <span className="sectionLabel">Recent Notes</span>
+            <Link className="allBtn" to={{ pathname: '/notes' }} >
+              <span>All notes</span>
               <i className="material-icons">keyboard_arrow_right</i>
             </Link>
-          </div>
-          <div className="notes">
-            <Link className="note" to={{ pathname: '/notes/new' }} >
-              <div className="top">{''}</div>
-              <div className="bottom">
-                <div className="noteTitle">
-                  {'Create a new note'}
-                </div>
-              </div>
+            <span style={{ flex: 1 }} />
+            <Link className="newBtn" to={{ pathname: '/notes/new' }} >
+              <i className="material-icons">add</i>
+              <span>New note</span>
             </Link>
+          </div>
+          <div className="noteList">
             {recentNotes}
           </div>
-        </div>
+        </section>
 
-        <div className="folderContainer">
-          <div className="folderHeader">
-            <div>{'Folders'}</div>
-            <div onClick={this.addFolderModal} className="add">
+        <section className="folders">
+          <div className="folders__header">
+            <span className="sectionLabel">Folders</span>
+            <Link className="allBtn" to={{ pathname: '/folders' }} >
+              <span>All folders</span>
+              <i className="material-icons">keyboard_arrow_right</i>
+            </Link>
+            <span style={{ flex: 1 }} />
+            <div className="newBtn" onClick={this.addFolderModal}>
               <i className="material-icons">add</i>
-              <div className="addFolder">{'NEW FOLDER'}</div>
+              <span className="addFolder">New folder</span>
             </div>
           </div>
-          <div className="folders">
+          <div className="folderList">
             {allFolders}
           </div>
-        </div>
+        </section>
 
         {/* Modals */}
         <AddFolder />
