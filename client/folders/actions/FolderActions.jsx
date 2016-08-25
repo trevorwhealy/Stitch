@@ -111,7 +111,6 @@ export function renameFolder(folderId, title) {
 }
 
 export function resetFolderState() {
-  console.log('i here')
   return (dispatch) => {
     dispatch(resetOneFolderState());
   };

@@ -12,7 +12,6 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
       return (alert.isRead !== true);
     })
     .map(alert => {
-      // const message = alert.type === 'COMMENT' ? ` said, "${alert.text}"` : ' mentioned you';
       let message;
       const type = (!alert.folderId) ? 'note' : 'folder';
       switch (alert.type) {
