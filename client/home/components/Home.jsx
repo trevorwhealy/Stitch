@@ -28,6 +28,7 @@ class Home extends React.Component {
     this.props.noteActions.getAllNotes();
     this.props.folderActions.getAllFolders();
     this.props.notificationActions.getNotifications();
+    this.props.folderActions.resetFolderState();
     sessionStorage.active = window.location.href;
   }
 
