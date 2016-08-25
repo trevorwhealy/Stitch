@@ -16,5 +16,5 @@ const Share = require('../shares/share.model');
 const Note = require('../notes/note.model');
 
 Folder.belongsTo(User);
-Folder.hasMany(Share);
-Folder.hasMany(Note);
+Folder.hasMany(Share, { onDelete: 'CASCADE' });
+Folder.hasMany(Note, { onDelete: 'CASCADE' });
