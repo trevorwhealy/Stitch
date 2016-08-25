@@ -39,7 +39,7 @@ export const resetBlockWithType = (editorState, newType = 'unstyled') => {
 export const addBlock = (editorState) => {
   const contentState = editorState.getCurrentContent();
   const targetSelection = editorState.getSelection();
-  console.log(targetSelection);
+
   const insertionTargetBlock = Modifier.splitBlock(contentState, targetSelection);
   const insertionTargetSelection = insertionTargetBlock.getSelectionAfter();
   const newContentStateAfterSplit = Modifier.setBlockType(insertionTargetBlock, insertionTargetSelection, 'unstyled');
