@@ -105,7 +105,6 @@ class Home extends React.Component {
                   {`Created by ${folder.user.fullName}`}
                 </div>
               </div>
-              <span style={{ flex: 1 }} />
               <div className="cardActions" onClick={this.preventDropdownLink}>
                 <div className="icon-btn dropdown-btn">
                   <i className="material-icons">more_vert</i>
