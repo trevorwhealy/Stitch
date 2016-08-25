@@ -106,7 +106,6 @@ class Home extends React.Component {
                   {`Created by ${folder.user.fullName}`}
                 </div>
               </div>
-              <span style={{ flex: 1 }} />
               <div className="cardActions" onClick={this.preventDropdownLink}>
                 <div className="icon-btn dropdown-btn">
                   <i className="material-icons">more_vert</i>
@@ -127,7 +126,7 @@ class Home extends React.Component {
     }
 
     return (
-      <div className="HomeContainer">
+      <div className="pageWrapper HomeContainer">
         <section className="recentNotes">
           <div className="recentNotes__header">
             <span className="sectionLabel">Recent Notes</span>

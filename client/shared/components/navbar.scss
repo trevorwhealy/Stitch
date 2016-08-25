@@ -7,6 +7,12 @@
   width: 100vw;
   position: fixed;
 }
+@media (max-width: $screen-md-max) {
+  .NavContainer {
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 2px 8px rgba(255,255,255,.9);
+  }
+}
 
 .NavContainer .logo {
   margin-right: 32px;
