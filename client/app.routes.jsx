@@ -1,15 +1,16 @@
 import React from 'react';
 import { Route, Router, browserHistory, IndexRoute } from 'react-router';
 import App from './App.jsx';
+import OAuthSuccess from './auth/components/OAuthSuccess.jsx';
 import Login from './auth/containers/Login.jsx';
 import SignUp from './auth/containers/SignUp.jsx';
-import Home from './home/components/Home.jsx';
 import Compiler from './editor/compiler/Compiler.jsx';
+import Home from './home/components/Home.jsx';
 import Note from './notes/components/Note.jsx';
-import FolderNotes from './folders/components/FolderNotes.jsx';
 import NewNote from './notes/components/NewNote.jsx';
-import OAuthSuccess from './auth/components/OAuthSuccess.jsx';
 import AllNotes from './notes/components/AllNotes.jsx';
+import FolderNotes from './folders/components/FolderNotes.jsx';
+import AllFolders from './folders/components/AllFolders.jsx';
 
 const requireAuth = (nextState, replace) => {
   const token = localStorage.getItem('jwtToken');
@@ -34,6 +35,7 @@ module.exports = (
       <Route path="/notes/new" component={NewNote} />
       <Route path="/notes/:id" component={Note} />
       <Route path="/notes" component={AllNotes} />
+      <Route path="/folders" component={AllFolders} />
       <Route path="/compiler" component={Compiler} />
     </Route>
     <Route path="/oauthsuccess" component={OAuthSuccess} />

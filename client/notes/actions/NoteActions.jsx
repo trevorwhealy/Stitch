@@ -1,5 +1,4 @@
 import { browserHistory } from 'react-router';
-
 import { getOneFolder } from '../../folders/actions/FolderActions.jsx';
 
 export function notesSuccess(notes) {

@@ -12,7 +12,23 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
       return (alert.isRead !== true);
     })
     .map(alert => {
-      const message = alert.type === 'COMMENT' ? ` said, "${alert.text}"` : ' mentioned you';
+      // const message = alert.type === 'COMMENT' ? ` said, "${alert.text}"` : ' mentioned you';
+      let message;
+      const type = (!alert.folderId) ? 'note' : 'folder';
+      switch (alert.type) {
+        case 'COMMENT':
+          message = ` said, "${alert.text}"`;
+          break;
+        case 'MENTION':
+          message = ' mentioned you';
+          break;
+        case 'SHARE':
+          message = ` shared a ${type}`;
+          break;
+        default:
+          message = 'error';
+      }
+
       let alertOutput = (
         <div
           key={alert.id}
