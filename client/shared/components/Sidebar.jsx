@@ -119,9 +119,9 @@ class Sidebar extends React.Component {
         </ul>
 
         {/* Actual button that will be clicked to open the sideNav */}
-        <button data-activates="slide-out" className="button-collapse buttonSidebar">
+        <a data-activates="slide-out" className="button-collapse buttonSidebar icon-btn">
           <i className="material-icons">menu</i>
-        </button>
+        </a>
       </div>
     );
   }

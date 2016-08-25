@@ -78,7 +78,7 @@ class DropDown extends React.Component {
             notifications={notifications}
           />
         </ul>
-        <a className="dropdown-button" data-activates="dropdown">
+        <a className="dropdown-button icon-btn" data-activates="dropdown">
           <i className="material-icons">notifications</i>
         </a>
       </div>

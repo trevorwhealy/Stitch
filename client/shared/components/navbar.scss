@@ -26,3 +26,13 @@
     cursor: pointer;
   }
 }
+
+.NavContainer .icon-btn {
+  color: $color-grey;
+  transition: color .25s ease;
+
+  &:hover {
+    cursor: pointer;
+    color: $color-grey-darkest;
+  }
+}

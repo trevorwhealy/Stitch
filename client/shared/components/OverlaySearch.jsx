@@ -85,10 +85,10 @@ class OverlaySearch extends React.Component {
     }
 
     return (
-      <div>
+      <a className="icon-btn">
         <i className="material-icons searchButton" onClick={this.displayOverlay}>search</i>
         { display }
-      </div>
+      </a>
     );
   }
 }
