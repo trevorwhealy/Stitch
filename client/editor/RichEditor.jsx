@@ -86,7 +86,6 @@ const styles = {
     textAlign: 'center',
   },
   sideControl: {
-    height: 24, // Required to figure out positioning
     //width: 48, // Needed to figure out how much to offset the sideControl left
     left: -48,
     display: 'none',
@@ -182,11 +181,13 @@ class RichEditor extends React.Component {
         suggestions: mentions,
       })
     }
+    setTimeout(this.updateSelection, 100);
   }
 
   focus() {
     const { editorBounds } = this.state;
     if ( !editorBounds ) {
+      console.log(this.refs.editor);
       const editorNode = ReactDOM.findDOMNode(this.refs.editor);
 
       const editorBounds = editorNode.getBoundingClientRect();
@@ -196,12 +197,20 @@ class RichEditor extends React.Component {
     }
 
     this.refs.editor.focus();
-    // setTimeout(this.updateSelection, 5);
+    setTimeout(this.updateSelection, 100);
   }
 
   onChange(editorState){
     this.setState({ editorState });
-    setTimeout(this.updateSelection, 5)
+    const contentState = editorState.getCurrentContent();
+    const blockMap = contentState.getBlockMap();
+    const users = blockMap.reduce(this.findMentionEntities, []);
+
+    this.props.commentActions.postMention(this.props.note.id, users);
+    const content = convertToRaw(this.state.editorState.getCurrentContent());
+    this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
+
+    setTimeout(this.updateSelection, 5);
   }
 
   toggleBlockType(blockType) {
@@ -424,11 +433,12 @@ class RichEditor extends React.Component {
   }
 
   updateSelection() {
-    const { editorBounds } = this.state;
-    console.log(editorBounds);
+    const { editorBounds, editorState } = this.state;
+    console.log(editorBounds, ' editorBounds');
     // let selectionRangeIsCollapsed = null;
     let sideControlVisible = false;
     let sideControlTop = null;
+    let topAdj = 0;
     const sideControlLeft = styles.sideControl.left;
     // let popoverControlVisible = false,
     // let popoverControlTop = null,
@@ -448,11 +458,17 @@ class RichEditor extends React.Component {
         //sideControlTop = this.state.selectedBlock.offsetTop
         if (!editorBounds) { return; }
 
+        const contentState = editorState.getCurrentContent();
+        const firstBlockType = contentState.getFirstBlock().getType();
+
+        if (firstBlockType === 'header-one' || firstBlockType === 'header-two' || firstBlockType === 'header-three') {
+          topAdj = 0;
+        }
+
         sideControlTop = (blockBounds.top - editorBounds.top + window.pageYOffset) 
-          + ((blockBounds.bottom - blockBounds.top) / 2 
-          - (styles.sideControl.height / 2));
-                  console.log(editorBounds.top, 'top');
-                  console.log('second if ', sideControlTop);
+          + ((blockBounds.bottom - blockBounds.top) / 2) - 15 + topAdj;
+                  console.log(editorBounds.top, 'editorBoundsTop');
+                  console.log('sideControlTop ', sideControlTop);
                   console.log('blockBounds', blockBounds);
 
         // if (!selectionRange.collapsed){

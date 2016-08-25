@@ -87,19 +87,20 @@
   }
 
   .public-DraftEditor-content > div > h1 {
-    margin-bottom: 0.2em !important;
+    margin: 0 !important;
   }
 
   .public-DraftEditor-content > div > h2 {
-    margin-bottom: 0.2em !important;
+    margin: 0 !important;
   }
 
   .public-DraftEditor-content > div > h3 {
-    margin-bottom: 0.2em !important;
+    margin: 0 !important;
   }
 
   .public-DraftStyleDefault-ol, .public-DraftStyleDefault-ul {
-    margin-bottom: 5px !important;
+    padding: 5px !important;
+    margin: 0 !important;
   }
 
   .public-DraftEditorPlaceholder-root {
