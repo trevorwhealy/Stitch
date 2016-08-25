@@ -11,8 +11,8 @@ const compile = (input, lang) => {
   }
 
   // Convert JS to node
-  if (lang === 'javascript') {
-    lang = 'node';
+  if (lang === 'Javascript') {
+    lang = 'Node';
   }
 
   const jwtToken = localStorage.getItem('jwtToken');
