@@ -8,7 +8,21 @@ export const BLOCK_TYPES = [
   {label: 'CODE', style: 'code-block'},
   {label: 'TODO', style: 'todo'},
   {label: 'PAGEBREAK', style: 'atomic'},
+  {label: 'unstyled', style: 'unstyled'},
 ];
+
+export const BLOCK_ICON = {
+  'header-one': 'H1',
+  'header-two': 'H2',
+  'header-three': 'H3',
+  blockquote: 'fa fa-quote-left fa-2x',
+  'unordered-list-item': 'fa fa-list-ul fa-2x',
+  'ordered-list-item': 'fa fa-list-ol fa-2x',
+  'code-block': 'fa fa-code fa-2x',
+  todo: 'fa fa-check-square-o fa-2x',
+  atomic: 'fa fa-minus fa-2x',
+  unstyled: 'fa fa-align-justify fa-2x',
+};
 
 export const BREAKOUT = ['header-one', 'header-two', 'header-three'];
 
@@ -38,5 +52,6 @@ export default {
   INLINE_STYLES,
   StringToTypeMap,
   BREAKOUT,
-  CODE_REGEX
+  CODE_REGEX,
+  BLOCK_ICON,
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import 'draft-js-mention-plugin/lib/plugin.css';
@@ -16,10 +17,13 @@ import {
   SelectionState,
   Entity,
   CompositeDecorator,
+  getVisibleSelectionRect,
 } from 'draft-js';
 
 import Editor from 'draft-js-plugins-editor';
+import SideControl from './editor/toolbox/SideControl.jsx';
 import { fromJS } from 'immutable';
+import { getSelectedBlockElement, getSelectionRange } from './editor/util/selection.js';
 
 import CodeUtils from 'draft-js-code'; 
 
@@ -57,6 +61,9 @@ const styleMap = {
     fontSize: 16,
     padding: 2,
   },
+  HIGHLIGHT: {
+    backgroundColor: '#7fffd4',
+  }
 };
 
 const HASHTAG_REGEX = /\`(.*?)\`/g;
@@ -78,10 +85,11 @@ const styles = {
     marginTop: 10,
     textAlign: 'center',
   },
-  handle: {
-    color: 'rgba(98, 177, 254, 1.0)',
-    direction: 'ltr',
-    unicodeBidi: 'bidi-override',
+  sideControl: {
+    height: 24, // Required to figure out positioning
+    //width: 48, // Needed to figure out how much to offset the sideControl left
+    left: -48,
+    display: 'none',
   },
   hashtag: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
@@ -91,18 +99,18 @@ const styles = {
   },
 };
 
+const iconSelectedColor = '#2000FF';
+const iconColor = '#000000';
+
 function hashtagStrategy(contentBlock, callback) {
   findWithRegex(HASHTAG_REGEX, contentBlock, callback);
 }
 
 function findWithRegex(regex, contentBlock, callback) {
   const text = contentBlock.getText();
-  console.log(text);
   let matchArr, start;
   while ((matchArr = regex.exec(text)) !== null) {
     start = matchArr.index;
-    console.log(start, 'start');
-    console.log(matchArr);
     callback(start, start + matchArr[0].length);
   }
 }
@@ -126,10 +134,14 @@ class RichEditor extends React.Component {
       editorState: EditorState.createEmpty(),
       editEnabled: true,
       suggestions: fromJS([]),
+      editorBounds: null,
+      sideControlVisible: false,
+      sideControlTop: 50,
+      sideControlLeft: 50,
     };
 
     console.log(this.state);
-    this.focus = () => this.refs.editor.focus();
+    this.focus = this.focus.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onEscape = this.onEscape.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -147,6 +159,7 @@ class RichEditor extends React.Component {
                            console.log(this.state.editorState.getSelection());
                            console.log(this.state.suggestions);
                           }
+    this.updateSelection = this.updateSelection.bind(this);
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
     //this.updateContents = this.updateContents.bind(this);
   }
@@ -159,20 +172,36 @@ class RichEditor extends React.Component {
         editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
         suggestions: mentions,
       })
-  } else if (!props.note.shares && props.note.content) {
-    this.setState({
-      editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
-    })
-  } else if (props.note.shares && !props.note.content) {
-    const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg', id: share.userId})));
-    this.setState({
-      suggestions: mentions,
-    })
+    } else if (!props.note.shares && props.note.content) {
+      this.setState({
+        editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
+      })
+    } else if (props.note.shares && !props.note.content) {
+      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg', id: share.userId})));
+      this.setState({
+        suggestions: mentions,
+      })
+    }
   }
+
+  focus() {
+    const { editorBounds } = this.state;
+    if ( !editorBounds ) {
+      const editorNode = ReactDOM.findDOMNode(this.refs.editor);
+
+      const editorBounds = editorNode.getBoundingClientRect();
+      this.setState({
+        editorBounds: editorBounds,
+      });
+    }
+
+    this.refs.editor.focus();
+    // setTimeout(this.updateSelection, 5);
   }
 
   onChange(editorState){
     this.setState({ editorState });
+    setTimeout(this.updateSelection, 5)
   }
 
   toggleBlockType(blockType) {
@@ -218,6 +247,14 @@ class RichEditor extends React.Component {
         if (e.keyCode === 67) {
           return 'compile';
         }
+      }
+      if (e.keyCode === 53) {
+        console.log('strike');
+        return 'toggleinline:STRIKETHROUGH';
+      }
+      if (e.keyCode === 72) {
+        console.log('sts');
+        return 'toggleinline:HIGHLIGHT';
       }
     }
     return getDefaultKeyBinding(e);
@@ -348,6 +385,14 @@ class RichEditor extends React.Component {
       });
       return true;
     }
+
+    if (command.indexOf('toggleinline:') === 0) {
+      const inline = command.split(':')[1];
+      this.toggleInlineStyle(inline);
+      console.log('toggle');
+      return true;
+    }
+
     if (newState) {
       this.onChange(newState);
       return true;
@@ -355,14 +400,14 @@ class RichEditor extends React.Component {
     return false;
   }
 
-  onSearchChange({ value }){
+  onSearchChange({ value }) {
     const { suggestions } = this.state;
     this.setState({
       suggestions: defaultSuggestionsFilter(value, suggestions),
     });
   }
 
-  onEscape(){
+  onEscape() {
     const { editorState } = this.state;
     if (CodeUtils.hasSelectionInBlock(editorState)) {
       this.onChange(addBlock(editorState));
@@ -378,8 +423,72 @@ class RichEditor extends React.Component {
     });
   }
 
+  updateSelection() {
+    const { editorBounds } = this.state;
+    console.log(editorBounds);
+    // let selectionRangeIsCollapsed = null;
+    let sideControlVisible = false;
+    let sideControlTop = null;
+    const sideControlLeft = styles.sideControl.left;
+    // let popoverControlVisible = false,
+    // let popoverControlTop = null,
+    // let popoverControlLeft = null
+
+    const selectionRange = getSelectionRange();
+    if (selectionRange) {
+      console.log('first if ', selectionRange);
+      // const rangeBounds = selectionRange.getBoundingClientRect();
+      const selectedBlock = getSelectedBlockElement(selectionRange);
+      console.log('selected ', selectedBlock);
+
+      if (selectedBlock) {
+        const blockBounds = selectedBlock.getBoundingClientRect();
+
+        sideControlVisible = true;
+        //sideControlTop = this.state.selectedBlock.offsetTop
+        if (!editorBounds) { return; }
+
+        sideControlTop = (blockBounds.top - editorBounds.top + window.pageYOffset) 
+          + ((blockBounds.bottom - blockBounds.top) / 2 
+          - (styles.sideControl.height / 2));
+                  console.log(editorBounds.top, 'top');
+                  console.log('second if ', sideControlTop);
+                  console.log('blockBounds', blockBounds);
+
+        // if (!selectionRange.collapsed){
+
+        //   var popoverControlElement = ReactDOM.findDOMNode(this.refs["popoverControl"])
+        //   // The control needs to be visible so that we can get it's width
+        //   popoverControlElement.style.display = 'block'
+        //   var popoverWidth = popoverControlElement.clientWidth
+
+        //   popoverControlVisible = true
+        //   var rangeWidth = rangeBounds.right - rangeBounds.left,
+        //     rangeHeight = rangeBounds.bottom - rangeBounds.top
+        //   popoverControlTop = (rangeBounds.top - editorBounds.top)
+        //     - styles.popOverControl.height
+        //     - popoverSpacing
+        //   popoverControlLeft = 0
+        //     + (rangeBounds.left - editorBounds.left)
+        //     + (rangeWidth / 2)
+        //     - (/*styles.popOverControl.width*/ popoverWidth / 2)
+          
+        // }
+      }
+    }
+    this.setState({
+      sideControlVisible,
+      sideControlTop,
+      sideControlLeft,
+      // popoverControlVisible,
+      // popoverControlTop,
+      // popoverControlLeft,
+    });
+  }
+
   render() {
-    const { editorState } = this.state;
+    const { editorState, sideControlVisible, editEnabled, sideControlTop, sideControlLeft } = this.state;
+
     let className = 'RichEditor-editor';
     const contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
@@ -387,17 +496,31 @@ class RichEditor extends React.Component {
         className += ' RichEditor-hidePlaceholder';
       }
     }
+
+    const selection = editorState.getSelection();
+    const selectedBlockType = editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey())
+      .getType();
+    console.log(selectedBlockType);
+
+    let sideControlStyles = Object.assign({}, styles.sideControl);
+    if ( sideControlVisible && editEnabled ) {
+      sideControlStyles.display = 'block';
+      sideControlStyles.top = sideControlTop;
+      sideControlStyles.left = sideControlLeft;
+    }
+
     return (
-      <div className="RichEditor-root">
-        <BlockStyleControls
-          editorState={editorState}
-          onToggle={this.toggleBlockType}
+      <div className="RichEditor-root" onClick={this.focus}>
+        <SideControl
+          style={sideControlStyles}
+          toggleBlockType={type => this.toggleBlockType(type)}
+          selectedBlockType={selectedBlockType}
+          iconSelectedColor={iconSelectedColor}
+          iconColor={iconColor}
         />
-        <InlineStyleControls
-          editorState={editorState}
-          onToggle={this.toggleInlineStyle}
-        />
-        <div className={className} onClick={this.focus}>
+        <div className={className} >
           <Editor
             blockRendererFn={this.blockRendererFn}
             blockRenderMap={blockRenderMap}
