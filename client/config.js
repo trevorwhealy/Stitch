@@ -1,3 +1,3 @@
 module.exports = {
-  endPoint: 'http://10.8.26.230:3030/run',
+  endPoint: 'http://159.203.247.184:3030/run',
 };
