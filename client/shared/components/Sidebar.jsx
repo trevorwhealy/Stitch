@@ -50,6 +50,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const currentFolderId = this.props.currentFolderId;
     const folders = this.props.folders.folder;
     const addFolderBox = this.state.addFolder ? (
       <form onSubmit={this.addFolder}>
@@ -86,7 +87,7 @@ class Sidebar extends React.Component {
           <div className="createFolder">
             <div className="title">FOLDERS</div>
             <div onClick={this.toggleCreateFolder} className="add" >
-              NEW <i className="tiny material-icons alert">add</i>
+              <i className="tiny material-icons alert">add</i> NEW
             </div>
           </div>
 
@@ -102,7 +103,11 @@ class Sidebar extends React.Component {
                   return folder.name.match(new RegExp(searchInput, 'i'));
                 })
                 .map(folder => (
-                  <Link key={folder.id} className="folder" to={`/folders/${folder.id}`}>
+                  <Link
+                    key={folder.id}
+                    className={`folder ${folder.id === currentFolderId ? 'isActive' : ''}`}
+                    to={`/folders/${folder.id}`}
+                  >
                     <span className="folderName">{folder.name}</span>
                     <div className="noteCount">
                       {folder.notes.length ? <span>{folder.notes.length}</span> : ''}
@@ -114,9 +119,9 @@ class Sidebar extends React.Component {
         </ul>
 
         {/* Actual button that will be clicked to open the sideNav */}
-        <button data-activates="slide-out" className="button-collapse buttonSidebar">
+        <a data-activates="slide-out" className="button-collapse buttonSidebar icon-btn">
           <i className="material-icons">menu</i>
-        </button>
+        </a>
       </div>
     );
   }
@@ -131,6 +136,7 @@ const mapStateToProps = (state) => {
   return {
     folders: state.folders,
     user: state.user,
+    currentFolderId: state.singleFolder.folder.id,
   };
 };
 

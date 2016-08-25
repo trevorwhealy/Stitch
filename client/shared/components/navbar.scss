@@ -2,19 +2,23 @@
   height: 60px;
   padding: 0 32px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   z-index: $zindex-top-higher;
   width: 100vw;
   position: fixed;
-  background: rgba(255,255,255,.95);
-  box-shadow: 0 0 10px rgba(255,255,255,.95);;
+}
+@media (max-width: $screen-md-max) {
+  .NavContainer {
+    background: rgba(255,255,255,.9);
+    box-shadow: 0 2px 8px rgba(255,255,255,.9);
+  }
 }
 
 .NavContainer .logo {
-  display: flex;
-  align-items: center;
-  font-size: 25px;
+  margin-right: 32px;
+}
+.NavContainer .appLogo {
+  width: 32px;
 }
 
 .NavContainer .widgets {
@@ -24,5 +28,15 @@
   > * {
     margin-left: 32px;
     cursor: pointer;
+  }
+}
+
+.NavContainer .icon-btn {
+  color: $color-grey;
+  transition: color .25s ease;
+
+  &:hover {
+    cursor: pointer;
+    color: $color-grey-darkest;
   }
 }

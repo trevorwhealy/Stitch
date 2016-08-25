@@ -23,5 +23,5 @@ module.exports = Notification;
 
 Notification.belongsTo(User, { as: 'source', foreignKey: 'sourceId' });
 Notification.belongsTo(User, { as: 'target', foreignKey: 'targetId' });
-Notification.belongsTo(Note);
-Notification.belongsTo(Folder);
+Notification.belongsTo(Note, { onDelete: 'CASCADE' });
+Notification.belongsTo(Folder, { onDelete: 'CASCADE' });

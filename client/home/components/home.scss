@@ -1,117 +1,75 @@
 .HomeContainer {
   display: flex;
-  padding: 90px 220px 50px 220px;
-  flex-direction: column;
-  overflow-y: auto;
-}
-
-
-/** Recent block **/
-
-.recent .notes {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-}
-
-.recent .notes .note {
-  box-shadow: 1px 2px 2px #000000;
-  margin: 14px;
-  height: 80px;
-  flex-basis: 250px;
-  max-width: 250px;
-  display: flex;
-  flex: 1 0 250px;
-}
-
-.recent .notes .note .bottom {
-  padding: 15px 24px;
-  display: flex;
   flex-direction: column;
 }
 
-.recent .notes .note .bottom .noteTitle {
-  font-size: 18px;
-  overflow: hidden;
-}
+/***** Recent Notes Styling *****/
 
-.recent .notes .note .bottom .noteDetails {
-  font-size: 12px;
-  color: #9B9B9B;
+.recentNotes {
+  .noteList {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
 }
-
-.recent .title {
-  color: #4A4A4A;
-  font-size: 24px;
-  font-weight: bold;
+.recentNotes__header {
   display: flex;
-  justify-content: space-between;
-}
-
-.recent .title .goToAllNotes {
-  display: flex;
-  margin-right: 14px;
   align-items: center;
+  margin-bottom: 16px;
 }
-
-/** Folder block **/
-
-.folderContainer {
-  padding: 30px 50px;
+.recentNotes__header .sectionLabel {
+  margin-right: 24px;
+  text-transform: uppercase;
+  font-size: 1.5rem;
 }
-
-.folderContainer .folderHeader {
-  color: #4A4A4A;
-  font-size: 24px;
-
-  margin-bottom: 20px;
+.recentNotes__header .allBtn,
+.recentNotes__header .newBtn {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.folderContainer .folderHeader .add {
-  display: flex;
-  flex-direction: row;
-}
-
-.folderContainer .folderHeader .addFolder {
-  font-size: 16px;
-  color: #4A4A4A;
+  transition: all .25s ease;
   cursor: pointer;
+  > i { font-size: 16px; }
+}
+.recentNotes__header .allBtn {
+  > * {
+    color: $color-grey;
+    transition: color .25s ease;
+  }
+  &:hover > * { color: darken($color-grey, 25%); }
+}
+.recentNotes__header .newBtn {
+  padding: 4px 12px 4px 8px;
+  background: $primary-color-3;
+  border-radius: 4px;
+  text-transform: uppercase;
+  > * { color: white; }
+  &:hover { background: lighten($primary-color-3, 5%); }
 }
 
-.folderContainer .folders {
+/***** Folders Styling *****/
+
+.folders {
+  margin-top: 32px;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
 }
+.folders__header { @extend .recentNotes__header; }
 
-.folderContainer .folders .eachFolder {
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0px 2px 4px #000000;
-  margin-bottom: 30px;
+/***** Responsive Adjustments *****/
+
+@media (max-width: $screen-sm-max) {
+  .recentNotes .noteCard {
+    max-width: 100%;
+    &:nth-child(n+5) { display: none; }
+  }
 }
-
-.folderContainer .folders .eachFolder .content .top {
-  margin-bottom: 10px;
-  font-size: 20px;
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .recentNotes .noteCard {
+    &:nth-child(n+7) { display: none; }
+  }
 }
-
-.folderContainer .folders .eachFolder .content .bottom {
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #ABABAB;
-}
-
-.folderContainer .folders .eachFolder .folderContents {
-  display: flex;
-  flex-direction: row;
-}
-
-.folderContainer .folders .eachFolder .folderContents .material-icons {
-  margin: 15px;
+@media (min-width: $screen-lg-min) {
+  .recentNotes .noteCard {
+    &:nth-child(n+9) { display: none; }
+  }
 }

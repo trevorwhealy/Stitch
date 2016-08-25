@@ -11,9 +11,23 @@ $color-bluegrey:         #4D606E;
 $color-bluegrey-darker:  #455662;
 $color-bluegrey-darkest: #35424b;
 
-$color-cyan:  #3FBAC2; // hsl(184, 52%, 50%);
+$color-cyan:          #77c9d4;
+$color-cyan-lighter:  #a4dbe2;
+$color-cyan-lightest: #dff2f5;
+$color-cyan-darker:   #3db0c0;
+$color-cyan-darkest:  #2a7a84;
 
-$color-grey:           #9E9E9E;
+$color-marine-green:          #57bc90;
+$color-marine-green-lighter:  #8fd2b5;
+$color-marine-green-lightest: #d5eee3;
+$color-marine-green-darker:   #43a97c;
+$color-marine-green-darkest:  #327e5d;
+
+$color-forest-green:          #015249;
+$color-forest-green-lighter:  #028c7d;
+$color-forest-green-darker:   #013f38;
+
+$color-grey:           #A5A5AF;
 $color-grey-lighter:   #EEEEEE;
 $color-grey-lightest:  #F5F5F5;
 $color-grey-darker:    #616161;
@@ -27,16 +41,14 @@ $color-red:            #F44336;
 $color-red-darker:     #D32F2F;
 $color-red-darkest:    #B71C1C;
 
-$main-background:    $color-grey-lighter;
-$sidebar-background: $color-bluegrey;
-$primary-color:      $color-blue;
-$primary-color-1:    $color-blue-lightest; //hue 1
-$primary-color-2:    $color-blue-darker;   //hue 2
-$primary-color-3:    $color-blue-lighter;  //hue 3
-$accent-color:       $color-grey;
-$accent-color-1:     $color-grey-lightest;
-$accent-color-2:     $color-grey-darker;
-$accent-color-3:     $color-grey-darkest;
+$primary-color:      $color-marine-green;
+$primary-color-1:    $color-marine-green-lightest; //hue 1
+$primary-color-2:    $color-marine-green-darkest;   //hue 2
+$primary-color-3:    $color-marine-green-lighter;  //hue 3
+$accent-color:       $color-cyan;
+$accent-color-1:     $color-cyan-lightest;
+$accent-color-2:     $color-cyan-darker;
+$accent-color-3:     $color-cyan-darkest;
 
 /* ----- RESPONSIVE Variables ----- */
 /* Consistent with Angular Material breakpoints */

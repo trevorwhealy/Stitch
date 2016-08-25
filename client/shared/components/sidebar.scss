@@ -60,7 +60,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
   }
 
   .createFolder .title {
@@ -73,14 +73,15 @@
     padding: 5px;
     display: flex;
     align-items: center;
-    background-color: $color-grey-darker;
+    background-color: $primary-color;
     color: white;
     border-radius: 4px;
     font-size: 12px;
+    transition: all .25s ease;
   }
 
   .createFolder .add:hover {
-    background-color: $color-grey-darkest;
+    background-color: lighten($primary-color, 15%);
     color: $color-grey-lightest;
   }
 
@@ -104,12 +105,12 @@
     color: $color-grey;
 
     &:hover {
-      border-left: 3px solid gray;
-      color: $color-grey-darker;
+      background-color: $primary-color-1;
     }
     &.isActive {
       border-left-color: $primary-color;
       color: $color-grey-darkest;
+      font-weight: bold;
     }
   }
   .folderName { flex: 1; }
@@ -122,8 +123,7 @@
       background: $color-grey-lighter;
     }
   }
-  .folder:hover .noteCount > span,
-  .folder.isActive .noteCount > span {
+  .folder:hover .noteCount > span {
     background-color: white;
   }
 
