@@ -1,0 +1,65 @@
+.NotesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .pageHeader {
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .pageHeader .noteIcon {
+    margin-right: 16px;
+    color: $color-grey-lighter;
+    font-size: 32px;
+  }
+  .pageTitle {
+    font-size: 2rem;
+    color: $color-grey-darkest;
+  }
+  .noteActions {
+    @include unstyle-btn();
+    display: flex;
+    margin-left: 8px;
+    color: $color-grey;
+
+    .dropdown-menu { color: $color-grey-darkest; }
+  }
+
+  .newNoteBtn {
+    padding: 4px 12px 4px 8px;
+    background: $primary-color-3;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    > * { color: white; }
+    &:hover { background: lighten($primary-color-3, 5%); }
+  }
+
+  .number {
+    align-self: flex-start;
+    margin-bottom: 15px;
+    color: #9B9B9B;
+  }
+
+  .noteList {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+  }
+
+  .prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: $screen-sm-max) {
+    .noteCard { max-width: 100%; }
+  }
+}
