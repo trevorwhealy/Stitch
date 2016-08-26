@@ -1,127 +1,125 @@
-
 .overlay {
   position: fixed;
   top: 0px;
   left: 0px;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: $zindex-top-highest;
   display: flex;
   background: rgba(255,255,255,.98);
   flex-direction: column;
-  cursor: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  transition: all .3s ease;
+  cursor: auto;
+  transition: none;
 
   .overlay-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
-    justify-content: flex-end;
-    height: 60px;
+    width: 100%;
   }
 
   .overlay-close {
-    display: flex;
-    height: 50px;
-    width: 50px;
     position: absolute;
     top: 12px;
     right: 69px;
-    color: #A5A5AF;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+
+    > span {
+      margin-top: 2px;
+      font-size: 10px;
+      color: $color-grey;
+      text-transform: uppercase;
+    }
   }
 
   .closeButton {
     font-size: 40px;
     cursor: pointer;
+    color: $color-grey;
+    transition: color .25s ease;
+    &:hover { color: $color-grey-darker; }
   }
 
   .overlay-responsive {
-    height: 200px;
+    margin-top: 32px;
     display: flex;
     justify-content: center;
-  }
-
-  .searchFileOrFolder {
-    display: flex;
-    flex-direction: row;
-    width: 600px;
-    align-self:center;
-  }
-
-  .contentType {
-    @include unstyle-btn();
-  }
-
-  .fileOrFolderChoice {
-    display: flex;
-    flex-direction: row;
     align-items: center;
-    font-size: 25px;
-    padding-top: 26px;
-    color: #a5a5af;
+    animation: .2s ease SEARCH_OVERLAY_INPUT_IN;
   }
 
-  .userSearchFile {
+  .searchbox {
     display: flex;
-    padding-right: 14px;
-    padding-left: 5px;
-    cursor: pointer;
+    flex-direction: row;
+    max-width: 650px;
+    align-items:center;
   }
 
-  .userSearchFolder {
-    padding-left: 8px;
-    cursor: pointer;
-  }
-
-  .userSearchFolder,
-  .userSearchFile {
-    color: lightgrey;
-  }
-
-  .fileOrFolderChoice .isActive {
-    color: black;
+  .searchDropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #26a69a;
+    font-size: 18px;
+    min-width: 160px;
+    max-width: 160px;
   }
 
   .searchIcon {
-    font-size: 80px;
+    font-size: 64px;
     display: flex;
     align-items: center;
-    color: #A5A5AF;
-  }
-
-  .searchAllInput {
-    display: flex;
-    align-self: center;
-    font-size: 50px;
-    max-width: 600px;
-    padding-top: 23px;
+    color: $color-grey-lighter;
   }
 
   .userQuery {
-    font-size: 40px;
+    box-sizing: border-box;
+    margin: 0 12px;
+    padding: 4px 14px;
+    height: auto;
+    font-size: 32px;
     display: flex;
   }
 
   .overlaySearchContainer {
-    width: 100vw;
+    margin-top: 32px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  .resultCount {
+    align-self: flex-start;
+    font-size: 16px;
+    color: $color-grey-darker;
+  }
+
+  .resultList {
+    width: 100%;
     display: flex;
     justify-content: flex-start;
-    padding: 20px 105px;
     flex-wrap: wrap;
-    margin-left: 15px;
   }
 
-  .overlaySearchContainer .noteCard {
-    max-width: 15
+  .folderCard {
+    max-width: 31%;
+    margin: 0 1%;
   }
-
-  .folderIcon {
-    color: #A5A5AF
-  }
-
 
 }
 
-.searchButton {
-  cursor: pointer;
+@keyframes SEARCH_OVERLAY_INPUT_IN {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
