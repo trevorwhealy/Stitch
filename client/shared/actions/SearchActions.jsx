@@ -12,9 +12,16 @@ export function searchFailure() {
   };
 }
 
+export function searchPending() {
+  return {
+    type: 'SEARCHING',
+  };
+}
+
 export function globalSearch(searchType, searchInput) {
   const token = localStorage.getItem('jwtToken');
   return (dispatch) => {
+    dispatch(searchPending());
     return fetch(`/api/${searchType}?q=${searchInput}`, {
       method: 'GET',
       headers: {

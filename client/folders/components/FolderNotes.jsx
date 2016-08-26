@@ -29,15 +29,15 @@ class FolderNotes extends React.Component {
     this.props.noteActions.getNotesInFolder(folderId);
   }
 
-  componentDidUpdate(prevProps) {
-    const oldId = prevProps.params.id;
-    const newId = this.props.params.id;
-    const folderId = this.props.routeParams.id;
-    if (oldId !== newId) {
-      this.props.folderActions.getFolder(folderId);
-      this.props.noteActions.getNotesInFolder(folderId);
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   const oldId = prevProps.params.id;
+  //   const newId = this.props.params.id;
+  //   const folderId = this.props.routeParams.id;
+  //   if (oldId !== newId) {
+  //     this.props.folderActions.getFolder(folderId);
+  //     this.props.noteActions.getNotesInFolder(folderId);
+  //   }
+  // }
 
   renameContentModal(content, type) {
     this.setState({
