@@ -1,29 +1,36 @@
 .NoteContainer {
-  height: 800px;
+  height: 100%;
   display: flex;
-  padding: 100px 220px 50px 220px;
+  padding: 75px 220px 50px 220px;
   flex-direction: column;
+  align-items: center;
 
   .noteTitle {
-    width: 100%;
+    width: 800px;
     color: #4A4A4A;
     font-size: 24px;
     font-weight: bold;
     min-width: 250px;
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    position: relative;
+
   }
 
   .editor {
     margin-top: 20px;
-    //border: 1px solid black;
-    min-width: 550px;
+    width: 800px;
+    position: relative;
+
   }
 
   .EditorTerminal {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    display: flex;
+    justify-content: center;
   }
 
   .terminal {
@@ -49,10 +56,6 @@
     flex: 1;
     height: 100%;
     overflow-y: auto;
-  }
-
-  .RichEditor-editor {
-    padding-left: 10px;
   }
 
   .RichEditor-controls {
@@ -82,10 +85,55 @@
 
   .RichEditor-editor .public-DraftStyleDefault-pre > pre {
     background-color: rgba(0, 0, 0, 0.05);
-    padding: 5px;
+    padding: 15px;
   }
 
+  .public-DraftEditor-content > div > * {
+    padding: 10px 0 10px 0;
+  }
 
+  .public-DraftEditor-content > div > h1 {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftEditor-content > div > h2 {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftEditor-content > div > h3 {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftStyleDefault-ol, .public-DraftStyleDefault-ul {
+    padding: 10px !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftEditor-content > div > h2 {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftEditor-content > div > h3 {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftStyleDefault-ol, .public-DraftStyleDefault-ul {
+    padding: 10px !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftStyleDefault-orderedListItem, .public-DraftStyleDefault-unorderedListItem {
+    padding: 5px !important;
+  }
+
+  .public-DraftEditorPlaceholder-root {
+    padding: 10px 0 10px 0;
+  }
 
   .block-todo {
 
@@ -113,6 +161,36 @@
   }
 
   figure {
-    margin: 0px;
+    margin: 10px 0 10px 0;
   }
 }
+
+h6 {
+  margin: 0.75em !important;
+  cursor: pointer;
+}
+
+blockquote {
+  border-left: 5px solid #4CA8DE;
+  color: #555;
+  font-family: 'Hoefler Text', 'Georgia', serif;
+  font-size: 1.2em;
+  margin: 0 0 10px 0 !important;
+  padding: 10px 0 10px 0; 
+  background-color: #E2F2FF;
+}
+
+blockquote > div {
+  margin-left: 15px;
+}
+
+.Outline {
+  left: 20px;
+  position: fixed;
+  display: inline-block;
+  top: 25%;
+  max-height: 50%;
+  width: 325px;
+  overflow: auto;
+}
+

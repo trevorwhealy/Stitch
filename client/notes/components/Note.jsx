@@ -73,13 +73,13 @@ class Note extends React.Component {
           <div className="editor">
             <RichEditor note={singleNote} />
           </div>
-          <div className="terminal">
-            <p> Fluid Notes Sandbox&#8482; </p>
-            <p> Compile within code using: [ctrl]+[alt]+[c]</p>
-            <p className="compilesRemaining" />
-            <Compiler />
-            <div className="compileAnswer" />
-          </div>
+          {/*} <div className="terminal">
+             <p> Fluid Notes Sandbox&#8482; </p>
+             <p> Compile within code using: [ctrl]+[alt]+[c]</p>
+             <p className="compilesRemaining" />
+             <Compiler />
+             <div className="compileAnswer" />
+           </div>*/}
         </div>
 
         {/* Modals*/}

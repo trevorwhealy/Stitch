@@ -1,4 +1,5 @@
 import { EditorState, AtomicBlockUtils, Entity, Modifier } from 'draft-js';
+import ReactDOM from 'react-dom';
 
 export const getDefaultBlockData = (blockType, initialData = {}) => {
   switch (blockType) {
@@ -39,11 +40,10 @@ export const resetBlockWithType = (editorState, newType = 'unstyled') => {
 export const addBlock = (editorState) => {
   const contentState = editorState.getCurrentContent();
   const targetSelection = editorState.getSelection();
-  console.log(targetSelection);
+
   const insertionTargetBlock = Modifier.splitBlock(contentState, targetSelection);
   const insertionTargetSelection = insertionTargetBlock.getSelectionAfter();
   const newContentStateAfterSplit = Modifier.setBlockType(insertionTargetBlock, insertionTargetSelection, 'unstyled');
-
 
   const newState = EditorState.push(
     editorState,
@@ -69,11 +69,10 @@ export const updateDataOfBlock = (editorState, block, newData) => {
 
 export const insertPageBreak = (editorState) => {
   const entityKey = Entity.create(
-    'TOKEN',
+    'PAGE-BREAK',
     'IMMUTABLE',
     { content: ' ' }
   );
 
   return AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
 };
-

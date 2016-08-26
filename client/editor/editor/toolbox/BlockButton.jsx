@@ -1,7 +1,7 @@
 import React from 'react';
 import { BLOCK_ICON } from '../util/constants';
 
-class StyleButton extends React.Component {
+class BlockButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
