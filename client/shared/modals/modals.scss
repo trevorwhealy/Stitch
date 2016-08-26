@@ -1,35 +1,61 @@
-.cancelDelete {
+#renameContentModal,
+#addFolderModal,
+#shareContentModal,
+#deleteContentModal {
+  padding: 12px 24px;
+  .modal-content {
+    text-align: center;
+  }
+  h5 {
+    margin-bottom: 24px;
+  }
+  .subtitle {
+    color: $color-grey;
+  }
+  input {
+    box-sizing: border-box;
+    padding: 0 24px;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+.modalActions {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.cancelDelete .delete, .cancel {
-  flex-grow: 1;
-  margin: 0px 10px 20px 10px;
-}
-
-.actions {
-  display: flex;
-  flex-drection: row;
-}
-
-.actions .chip {
-  transition: all .4s ease;
-  cursor: pointer;
-  padding: 0px 5px;
+  justify-content: flex-end;
   align-items: center;
-  background-color: #D8D8D8;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-left: 25px;
+
+  > .cancelBtn {
+    color: $color-grey-darker;
+  }
+  > .actionBtn {
+    color: $accent-color;
+  }
+  > .deleteBtn {
+    color: $color-red;
+  }
 }
 
-.actions .chip:hover {
-  background-color: #9C9999;
+#shareContentModal,
+#deleteContentModal {
+  h5 { margin-bottom: 8px; }
+  .subtitle { margin-bottom: 24px; }
 }
 
-.NoteContainer .noteTitle {
-  border: 2px solid blue;
-  width: 800px;
+#deleteContentModal .itemToDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-grey;
+  font-size: 1.4rem;
+  @include overflow-ellipsis();
+
+  > i { margin-right: 8px; }
+  > span {
+    color: $color-grey-darker;
+    font-size: 1.7rem;
+  }
+  > small {
+    margin-top: 4px;
+    margin-left: 8px;
+  }
 }

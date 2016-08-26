@@ -53,10 +53,9 @@ class Sidebar extends React.Component {
     const currentFolderId = this.props.currentFolderId;
     const folders = this.props.folders.folder;
     const addFolderBox = this.state.addFolder ? (
-      <form onSubmit={this.addFolder}>
+      <form className="newFolderInput" onSubmit={this.addFolder}>
         <input
-          type="text"
-          required
+          type="text" required placeholder="Enter folder name"
           ref={this.onAddFolderInputRender}
         />
       </form>
@@ -150,4 +149,5 @@ Sidebar.propTypes = {
   folders: React.PropTypes.object,
   user: React.PropTypes.object,
   authActions: React.PropTypes.object,
+  currentFolderId: React.PropTypes.number,
 };

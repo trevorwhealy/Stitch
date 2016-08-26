@@ -8,12 +8,17 @@ class RenameContent extends React.Component {
   constructor() {
     super();
 
+    this.onInputRender = this.onInputRender.bind(this);
     this.keyTracking = this.keyTracking.bind(this);
     this.renameContent = this.renameContent.bind(this);
   }
 
+  onInputRender(inputEl) {
+    this.inputEl = inputEl;
+  }
+
   renameContent() {
-    const newName = $('#renameContentInput').val();
+    const newName = this.inputEl.value;
     if (newName.length) {
       if (this.props.type === 'folder') {
         this.props.folderActions.renameFolder(this.props.content.id, newName);
@@ -26,7 +31,7 @@ class RenameContent extends React.Component {
       }
 
       this.closeModal();
-      $('#renameContentInput').val('');
+      this.inputEl.value = '';
     }
   }
 
@@ -41,27 +46,28 @@ class RenameContent extends React.Component {
   }
 
   render() {
+    const { content, type } = this.props;
+    if (content && content.name && this.inputEl) {
+      this.inputEl.value = content.name;
+      setTimeout(() => this.inputEl.focus(), 500);
+    }
+
     return (
       <div id="renameContentModal" className="modal">
-        <center>
-          <div className="modal-content">
-            <h5> Are you sure you want to <b>rename</b> {this.props.content.type}: </h5>
-            <h5><b>{this.props.content.name}</b></h5>
-            <input
-              id="renameContentInput"
-              style={{ textAlign: 'center', fontSize: '1.7em', padding: '5px' }}
-              type="text"
-              onKeyDown={this.keyTracking}
-            />
-          </div>
-        </center>
-        <div className="cancelDelete">
-          <button onClick={this.closeModal} className="waves-effect waves-gray btn-flat cancel">
+        <div className="modal-content">
+          <h5>Update {type} title</h5>
+          <input
+            type="text" placeholder="Enter new folder title"
+            ref={this.onInputRender} onKeyDown={this.keyTracking}
+          />
+        </div>
+        <div className="modalActions">
+          <button onClick={this.closeModal} className="waves-effect btn-flat cancelBtn">
             CANCEL
           </button>
           <button
             onClick={this.renameContent}
-            className="waves-effect waves-orange btn-flat delete"
+            className="waves-effect btn-flat actionBtn"
           >
             UPDATE
           </button>
