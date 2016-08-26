@@ -56,10 +56,6 @@ class Note extends React.Component {
     return (
       <div className="NoteContainer">
         <div className="noteTitle">
-          {/*
-            Make div contenteditable.
-
-            */}
           <div id="noteName" contentEditable>{singleNote.name}</div>
           <div className="actions">
             <div onClick={this.renameNote} className="chip">
