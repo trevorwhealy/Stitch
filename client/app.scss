@@ -107,9 +107,9 @@ a { color: black; }
 @import './shared/components/sidebar.scss';
 @import './shared/components/navbar.scss';
 @import './shared/components/search-overlay.scss';
-@import './auth/components/auth.scss';
+@import './auth/auth.scss';
 @import './editor/editor.scss';
 @import './editor/compiler/compiler.scss';
-@import './folders/components/search.scss';
-@import './home/components/home.scss';
-@import './notifications/components/notifications.scss';
+@import './folders/folders.scss';
+@import './home/home.scss';
+@import './notifications/notifications.scss';
