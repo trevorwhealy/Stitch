@@ -85,7 +85,7 @@
 
   .RichEditor-editor .public-DraftStyleDefault-pre > pre {
     background-color: rgba(0, 0, 0, 0.05);
-    padding: 5px;
+    padding: 15px;
   }
 
   .public-DraftEditor-content > div > * {
@@ -108,8 +108,12 @@
   }
 
   .public-DraftStyleDefault-ol, .public-DraftStyleDefault-ul {
-    padding: 5px !important;
+    padding: 10px !important;
     margin: 0 !important;
+  }
+
+  .public-DraftStyleDefault-orderedListItem, .public-DraftStyleDefault-unorderedListItem {
+    padding: 5px !important;
   }
 
   .public-DraftEditorPlaceholder-root {
@@ -142,11 +146,35 @@
   }
 
   figure {
-    margin: 0px;
+    margin: 10px 0 10px 0;
   }
 }
 
 h6 {
   margin: 0.75em !important;
   cursor: pointer;
+}
+
+blockquote {
+  border-left: 5px solid #4CA8DE;
+  color: #555;
+  font-family: 'Hoefler Text', 'Georgia', serif;
+  font-size: 1.2em;
+  margin: 0 0 10px 0 !important;
+  padding: 10px 0 10px 0; 
+  background-color: #E2F2FF;
+}
+
+blockquote > div {
+  margin-left: 15px;
+}
+
+.Outline {
+  left: 20px;
+  position: fixed;
+  display: inline-block;
+  top: 25%;
+  max-height: 50%;
+  width: 325px;
+  overflow: auto;
 }

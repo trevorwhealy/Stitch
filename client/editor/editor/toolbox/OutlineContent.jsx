@@ -26,20 +26,22 @@ export default class OutlineContent extends React.Component {
     const type = block.getType();
     const title = block.getText();
     let header;
+
     const styles = {
-      textIndent: 0,
+      div: {textIndent: 0},
+      head: {fontWeight: 'bold', fontFamily: 'Avenir, Helvetica'},
     }
 
     if (type === 'header-one') {
-      header = <h6 onClick={this.jumpTo}>{title}</h6>
+      header = <h6 onClick={this.jumpTo}><b>{title}</b></h6>
     } else {
       if (type === 'header-two') {
-        styles.textIndent = '1.5em';
+        styles.div.textIndent = '1.5em';
         header = <h6 onClick={this.jumpTo}>{`${title}`}</h6>;
       }
     }
     return (
-      <div style={styles}>
+      <div style={styles.div}>
         {header}
       </div>
     );

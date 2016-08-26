@@ -1,10 +1,18 @@
 import { EditorState, AtomicBlockUtils, Entity, Modifier } from 'draft-js';
+import ReactDOM from 'react-dom';
 
 export const getDefaultBlockData = (blockType, initialData = {}) => {
   switch (blockType) {
     case 'todo': return { checked: false };
     default: return initialData;
   }
+};
+
+export const getCurrentBlock = (editorState) => {
+  const selectionState = editorState.getSelection();
+  const contentState = editorState.getCurrentContent();
+  const block = contentState.getBlockForKey(selectionState.getStartKey());
+  return block;
 };
 
 export const resetBlockWithType = (editorState, newType = 'unstyled') => {
@@ -37,7 +45,6 @@ export const addBlock = (editorState) => {
   const insertionTargetSelection = insertionTargetBlock.getSelectionAfter();
   const newContentStateAfterSplit = Modifier.setBlockType(insertionTargetBlock, insertionTargetSelection, 'unstyled');
 
-
   const newState = EditorState.push(
     editorState,
     newContentStateAfterSplit,
@@ -69,4 +76,3 @@ export const insertPageBreak = (editorState) => {
 
   return AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
 };
-
