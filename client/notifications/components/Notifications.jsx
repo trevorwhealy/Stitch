@@ -28,6 +28,9 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
           message = 'error';
       }
 
+      let linkPath = (type === 'note')
+        ? { pathname: `/notes/${alert.noteId}` } : { pathname: `/folders/${alert.folderId}` };
+
       let alertOutput = (
         <div
           key={alert.id}
@@ -41,7 +44,7 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
         <Link
           key={alert.id}
           className="notificationItem"
-          to={{ pathname: `/notes/${alert.noteId}` }}
+          to={linkPath}
           onClick={() => markAsRead(alert.id)}
         >
           <div className="notifications-userbody">
