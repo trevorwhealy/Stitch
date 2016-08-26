@@ -112,6 +112,21 @@
     margin: 0 !important;
   }
 
+  .public-DraftEditor-content > div > h2 {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftEditor-content > div > h3 {
+    padding: 20px 0 20px 0 !important;
+    margin: 0 !important;
+  }
+
+  .public-DraftStyleDefault-ol, .public-DraftStyleDefault-ul {
+    padding: 10px !important;
+    margin: 0 !important;
+  }
+
   .public-DraftStyleDefault-orderedListItem, .public-DraftStyleDefault-unorderedListItem {
     padding: 5px !important;
   }
@@ -178,3 +193,4 @@ blockquote > div {
   width: 325px;
   overflow: auto;
 }
+

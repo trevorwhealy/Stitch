@@ -14,7 +14,6 @@ import {
   convertFromRaw,
   Entity,
 } from 'draft-js';
-
 import Editor from 'draft-js-plugins-editor';
 
 import {
@@ -36,11 +35,12 @@ import { getSelectedBlockElement, getSelectionRange } from './editor/util/select
 import { StringToTypeMap, Breakout, customStyleMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
-import blockRendererFn from './editor/model/blockRendererFn';
+
 import customDecorator from './editor/model/customDecorator.jsx';
 import { insertPageBreak, addBlock } from './editor/model/index';
 
 import compiler from './compiler/compiler.js';
+
 
 const styles = {
   sideControl: {
@@ -379,32 +379,76 @@ class RichEditor extends React.Component {
   updateSelection() {
     const { editorBounds, editorState } = this.state;
 
+<<<<<<< HEAD
+=======
+    // let selectionRangeIsCollapsed = null;
+>>>>>>> ef6aba18081c10e3f1c79064b803bc3ad803e0ff
     let sideControlVisible = false;
     let sideControlTop = null;
 
     const sideControlLeft = styles.sideControl.left;
+<<<<<<< HEAD
 
     const selectionRange = getSelectionRange();
     if (selectionRange) {
 
+=======
+    // let popoverControlVisible = false,
+    // let popoverControlTop = null,
+    // let popoverControlLeft = null
+
+    const selectionRange = getSelectionRange();
+    if (selectionRange) {
+      // const rangeBounds = selectionRange.getBoundingClientRect();
+>>>>>>> ef6aba18081c10e3f1c79064b803bc3ad803e0ff
       const selectedBlock = getSelectedBlockElement(selectionRange);
 
       if (selectedBlock) {
         const blockBounds = selectedBlock.getBoundingClientRect();
+<<<<<<< HEAD
         sideControlVisible = true;
 
+=======
+
+        sideControlVisible = true;
+        //sideControlTop = this.state.selectedBlock.offsetTop
+>>>>>>> ef6aba18081c10e3f1c79064b803bc3ad803e0ff
         if (!editorBounds) { return; }
 
         const contentState = editorState.getCurrentContent();
 
         sideControlTop = (blockBounds.top - editorBounds.top + window.pageYOffset) 
           + ((blockBounds.bottom - blockBounds.top) / 2) - 15;
+<<<<<<< HEAD
+=======
+
+        // if (!selectionRange.collapsed){
+
+        //   var popoverControlElement = ReactDOM.findDOMNode(this.refs["popoverControl"])
+        //   // The control needs to be visible so that we can get it's width
+        //   popoverControlElement.style.display = 'block'
+        //   var popoverWidth = popoverControlElement.clientWidth
+
+        //   popoverControlVisible = true
+        //   var rangeWidth = rangeBounds.right - rangeBounds.left,
+        //     rangeHeight = rangeBounds.bottom - rangeBounds.top
+        //   popoverControlTop = (rangeBounds.top - editorBounds.top)
+        //     - styles.popOverControl.height
+        //     - popoverSpacing
+        //   popoverControlLeft = 0
+        //     + (rangeBounds.left - editorBounds.left)
+        //     + (rangeWidth / 2)
+        //     - (/*styles.popOverControl.width*/ popoverWidth / 2)
+          
+        // }
+>>>>>>> ef6aba18081c10e3f1c79064b803bc3ad803e0ff
       }
     }
     this.setState({
       sideControlVisible,
       sideControlTop,
       sideControlLeft,
+<<<<<<< HEAD
     });
   }
 
@@ -424,6 +468,14 @@ class RichEditor extends React.Component {
   //   this.onChange(RichUtils.toggleLink(editorState, selection, entityKey), this.focus);
   // }
 
+=======
+      // popoverControlVisible,
+      // popoverControlTop,
+      // popoverControlLeft,
+    });
+  }
+
+>>>>>>> ef6aba18081c10e3f1c79064b803bc3ad803e0ff
   render() {
     const { editorState, sideControlVisible, editEnabled, sideControlTop, sideControlLeft } = this.state;
 
