@@ -41,23 +41,26 @@ class DropDown extends React.Component {
   render() {
     const { notifications } = this.props;
     const length = (notifications) ? notifications.filter(alert => !alert.isRead).length : '0';
+    const hasUnreadClass = length ? 'hasUnread' : '';
+    const isAllTabActiveClass = this.state.notificationType === 'all' ? 'isActive' : '';
+    const isUnreadTabActiveClass = this.state.notificationType === 'unread' ? 'isActive' : '';
 
     return (
-      <div>
-        <ul id="dropdown" className="dropdown-content">
+      <div className="notifications">
+        <ul id="notificationDropdown" className="dropdown-content">
           <div className="notifications-heading">
             <div className="notifications-panel-tabs">
               <div
-                className="notifications-tab"
+                className={`notifications-alltab ${isAllTabActiveClass}`}
                 onClick={(e) => {
                   this.stopPropogation(e);
                   this.displayTypeNotifications('all');
                 }}
               >
-                {'Notifications'}
+                All
               </div>
               <div
-                className="notifications-unreadtab"
+                className={`notifications-unreadtab ${isUnreadTabActiveClass}`}
                 onClick={(e) => {
                   this.stopPropogation(e);
                   this.displayTypeNotifications('unread');
@@ -66,15 +69,15 @@ class DropDown extends React.Component {
                 {`Unread ( ${length} )`}
               </div>
             </div>
-            <div
+            <button
               className="markAsRead"
               onClick={(e) => {
                 this.stopPropogation(e);
                 this.markAsRead();
               }}
             >
-              {'Mark all as read'}
-            </div>
+              Mark all as read
+            </button>
           </div>
           <Notifications
             notificationType={this.state.notificationType}
@@ -82,7 +85,10 @@ class DropDown extends React.Component {
             notifications={notifications}
           />
         </ul>
-        <a className="dropdown-button icon-btn" data-activates="dropdown">
+        <a
+          className={`dropdown-button icon-btn ${hasUnreadClass}`}
+          data-activates="notificationDropdown"
+        >
           <i className="material-icons">notifications</i>
         </a>
       </div>

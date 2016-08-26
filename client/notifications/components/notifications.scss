@@ -1,71 +1,90 @@
-.alerts {
+.notifications {
+  position: relative;
+
+  .hasUnread:before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: $accent-color;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
   .dropdown-content {
     margin-top: 33px;
     width: 490px !important;
-    right: 30px;
+    right: 0;
     left: unset !important;
     cursor: auto;
   }
 
-  .dropdown-content .notifications-heading {
+  .notifications-heading {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-right: 18px;
-    border-bottom: 1px solid gray;
+    padding: 0 24px;
+    border-bottom: 1px solid $color-grey-lightest;
     height: 43px;
     align-items: center;
   }
 
-  .dropdown-content .notifications-heading .notifications-panel-tabs {
+  .notifications-panel-tabs {
     display: flex;
-    width: 220px;
-    justify-content: space-between;
-    margin-left: 20px;
+    flex: 1;
+    > * {
+      cursor: pointer;
+      color: $color-grey;
+      transition: color .25s ease;
+    }
+    > :hover    { color: $color-grey-darker; }
+    > .isActive { color: $color-grey-darkest; }
   }
+  .notifications-alltab { margin-right: 32px; }
 
-  .dropdown-content .notifications-heading .markAsRead {
+  .markAsRead {
+    @include unstyle-btn();
+    transition: color .25s ease;
     cursor: pointer;
+    color: $accent-color;
+    &:hover { color: $accent-color-2; }
   }
 
-  .dropdown-content .notifications-heading .notifications-panel-tabs .notifications-tab {
-    cursor: pointer;
-  }
-
-  .dropdown-content .notifications-heading .notifications-panel-tabs .notifications-unreadtab {
-    cursor: pointer;
-  }
-
-  .dropdown-content .notifications {
+  .notificationItem {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #e6e6e6;
+    transition: background-color .2s ease;
+
+    &:hover { background: $accent-color-1; }
   }
 
-  .dropdown-content .notifications .notifications-userbody {
+  .notificationItem .notifications-userbody {
     display: flex;
     flex-direction: row;
     width: 355px;
+    color: $color-grey-darkest;
   }
 
-  .dropdown-content .notifications .notifications-userbody .message {
+  .notificationItem .notifications-userbody .message {
     padding-left: 12px;
     padding-top: 5px;
     width: 315px;
   }
 
-  .dropdown-content .notifications .notifications-userbody .user {
+  .notificationItem .notifications-userbody .user {
     padding-left: 10px;
   }
 
-  .dropdown-content .notifications .message-date {
+  .notificationItem .message-date {
     padding-left: 3px;
+    color: $color-grey;
   }
 
-  .dropdown-content .notifications .user .circle {
+  .notificationItem .user .circle {
     width: 35px;
     height: 35px;
   }

@@ -17,7 +17,7 @@ const Navbar = () => (
       <div className="search">
         <OverlaySearch />
       </div>
-      <div className="alerts">
+      <div>
         <NotificationDropdown />
       </div>
     </div>
