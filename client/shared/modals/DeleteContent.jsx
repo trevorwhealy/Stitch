@@ -12,7 +12,7 @@ class DeleteContent extends React.Component {
 
   deleteContent() {
     if (this.props.type === 'folder') {
-      this.props.folderActions.deleteFolder(this.props.content.id);
+      this.props.folderActions.deleteFolder(this.props.content.id, this.props.redirect);
     } else if (this.props.type === 'note') {
       if (this.props.redirect) {
         this.props.noteActions.deleteNote(this.props.content.id, true);
@@ -63,7 +63,7 @@ export default connect(
 
 DeleteContent.propTypes = {
   type: React.PropTypes.string,
-  redirect: React.PropTypes.string,
+  redirect: React.PropTypes.bool,
   content: React.PropTypes.object,
   noteActions: React.PropTypes.object,
   folderActions: React.PropTypes.object,

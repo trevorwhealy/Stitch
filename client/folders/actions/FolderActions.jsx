@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 
 export function folderSuccess(folders) {
   return {
@@ -26,7 +27,7 @@ export function resetOneFolderState() {
   };
 }
 
-export function getAllFolders() {
+export function getAllFolders(folderId) {
   const token = localStorage.getItem('jwtToken');
 
   return (dispatch) => {
@@ -38,7 +39,13 @@ export function getAllFolders() {
       },
     })
     .then(res => res.json())
-    .then(data => dispatch(folderSuccess(data)))
+    .then(data => {
+      if (folderId) {
+        const singleFolder = data.filter(folder => folder.id === folderId);
+        dispatch(getOneFolder(singleFolder[0]));
+      }
+      dispatch(folderSuccess(data));
+    })
     .catch(err => dispatch(folderFailure(err)));
   };
 }
@@ -77,7 +84,7 @@ export function getFolder(folderId) {
   };
 }
 
-export function deleteFolder(id) {
+export function deleteFolder(id, redirect) {
   const token = localStorage.getItem('jwtToken');
 
   return (dispatch) => {
@@ -88,7 +95,12 @@ export function deleteFolder(id) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(() => dispatch(getAllFolders()))
+    .then(() => {
+      dispatch(getAllFolders());
+      if (redirect) {
+        browserHistory.replace('/');
+      }
+    })
     .catch(err => console.log(err));
   };
 }
@@ -106,7 +118,7 @@ export function renameFolder(folderId, title) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(() => dispatch(getAllFolders()));
+    .then(() => dispatch(getAllFolders(folderId)));
   };
 }
 
