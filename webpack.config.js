@@ -15,11 +15,7 @@ module.exports = {
     publicPath: '/dist',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-    }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.UglifyJsPlugin([]),
   ],
   module: {
     loaders: [
