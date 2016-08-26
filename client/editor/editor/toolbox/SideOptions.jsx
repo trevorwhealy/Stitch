@@ -19,13 +19,14 @@ export default class SideOptions extends Component {
 
   render() {
     return (
-      <div style={Object.assign({}, styles.container, this.props.style)}>
+      <div className="blockTypeOption" style={Object.assign({}, styles.container, this.props.style)}>
         {BLOCK_TYPES.map(type => {
           if (type.style === this.props.activeBlock) {
             return;
           }
           return (
             <BlockButton
+              key={type.label}
               label={type.label}
               icon={type.icon}
               onToggle={this.props.toggleBlockType}

@@ -25,10 +25,6 @@ class Note extends React.Component {
     }
   }
 
-  renameNote() {
-    $('#renameContentModal').openModal();
-  }
-
   deleteNote() {
     $('#deleteContentModal').openModal();
   }
@@ -54,19 +50,19 @@ class Note extends React.Component {
     });
 
     return (
-      <div className="NoteContainer">
-        <div className="noteTitle">
-          <div id="noteName" contentEditable>{singleNote.name}</div>
-          <div className="actions">
-            <div onClick={this.renameNote} className="chip">
-              Rename
-            </div>
-            <div onClick={this.deleteNote} className="chip">
-              Delete
-            </div>
-            <div onClick={this.shareNote} className="chip">
-              Share
-            </div>
+      <div className="pageWrapper NoteEditorContainer">
+        <div className="noteHeader">
+          <div id="noteName" contentEditable>{singleNote.name || 'Untitled'}</div>
+          <div className="dropdown-btn noteActions">
+            <i className="material-icons">keyboard_arrow_down</i>
+            <ul className="dropdown-menu">
+              <li onClick={this.shareNote}>
+                Share
+              </li>
+              <li className="text-danger" onClick={this.deleteNote}>
+                Delete
+              </li>
+            </ul>
           </div>
         </div>
         <div className="EditorTerminal">
