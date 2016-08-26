@@ -1,11 +1,5 @@
 .NoteEditorContainer {
   $content-padding: 0 100px;
-  @media (max-width: $screen-sm-max) {
-    $content-padding: 0 24px;
-  }
-  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-    $content-padding: 0 64px;
-  }
 
   height: 100vh;
   min-height: 650px;
@@ -41,7 +35,6 @@
     }
   }
 
-
   .EditorTerminal {
     padding: $content-padding;
     display: flex;
@@ -51,6 +44,11 @@
     justify-content: center;
     width: 100%;
     flex: 1;
+  }
+
+  &.isTerminalActive .noteHeader,
+  &.isTerminalActive .EditorTerminal {
+    padding: 0 250px 0 100px;
   }
 
   .editor {
@@ -68,23 +66,39 @@
     }
   }
 
+  .terminalBtn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: $zindex-top-higher + 10;
+  }
+
   .terminal {
     position: fixed;
     top: 100px;
-    right: 50px;
+    right: 32px;
     font-family: monospace;
     background-color: black;
-    box-shadow: 0 2 4;
     color: white;
-    min-width: 450px;
-    max-width: 450px;
-    height: 700px;
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 500px;
+    height: 70%;
+    max-height: 800px;
     text-align: center;
     border-radius: 15px;
     padding: 15px;
     overflow: hidden;
     display: flex;
     flex-flow: column nowrap;
+    z-index: $zindex-top;
+    animation: .25s ease TERMINAL_IN;
+  }
+  .terminalTitle {
+    margin: 8px;
+  }
+  .terminalSubtitle {
+    margin: 0;
   }
 
   .compileAnswer {
@@ -246,11 +260,35 @@
   @media (max-width: $screen-sm-max) {
    $content-padding: 0 24px;
    .noteHeader,
-   .EditorTerminal { padding: $content-padding; }
+   .EditorTerminal,
+   &.isTerminalActive .noteHeader,
+   &.isTerminalActive .EditorTerminal { padding: $content-padding; }
+
+   .terminal { display: none; }
   }
   @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     $content-padding: 0 64px;
     .noteHeader,
     .EditorTerminal { padding: $content-padding; }
+
+    .terminal {
+      min-width: 350px;
+      max-width: 350px;
+    }
+    &.isTerminalActive .noteHeader,
+    &.isTerminalActive .EditorTerminal {
+      padding: 0 150px 0 64px;
+    }
+  }
+
+  @keyframes TERMINAL_IN {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
