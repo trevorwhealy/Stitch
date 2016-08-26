@@ -31,6 +31,7 @@ a { color: black; }
 
 .pageWrapper {
   overflow-y: auto;
+  animation: .2s ease PAGE_IN;
   transition: padding .25s ease;
 }
 @media (max-width: $screen-sm-max) {
@@ -93,6 +94,11 @@ a { color: black; }
     color: $color-grey-lighter;
     font-size: 32px;
   }
+}
+
+@keyframes PAGE_IN {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /***** Scss Imports *****/
