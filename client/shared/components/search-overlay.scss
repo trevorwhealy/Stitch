@@ -9,6 +9,9 @@
   display: flex;
   background: rgba(255,255,255,.98);
   flex-direction: column;
+  cursor: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: all .3s ease;
 
   .overlay-navbar {
@@ -21,9 +24,10 @@
     display: flex;
     height: 50px;
     width: 50px;
-    padding-right: 20px;
-    padding-top: 10px;
-    margin-right: 70px;
+    position: absolute;
+    top: 12px;
+    right: 69px;
+    color: #A5A5AF;
   }
 
   .closeButton {
@@ -36,7 +40,6 @@
     display: flex;
     justify-content: center;
   }
-
 
   .searchFileOrFolder {
     display: flex;
@@ -75,6 +78,7 @@
     font-size: 80px;
     display: flex;
     align-items: center;
+    color: #A5A5AF;
   }
 
   .searchAllInput {
@@ -90,53 +94,24 @@
     display: flex;
   }
 
-  .overlay-searchResults {
+  .overlaySearchContainer {
     width: 100vw;
     display: flex;
     justify-content: flex-start;
     padding: 20px 105px;
     flex-wrap: wrap;
     margin-left: 15px;
-    overflow-y: auto;
   }
 
-  .userQueryResults {
-    width: 270px;
-    height: 270px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0px 2px 4px #000000;
-    margin-right: 50px;
-    background: rgba(255,255,255,1);
-    transition: all .25s ease;
-    margin-top: 30px;
+  .overlaySearchContainer .noteCard {
+    max-width: 15
   }
 
-  .resultTypeAndFileName {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  .folderIcon {
+    color: #A5A5AF
   }
 
-  .resultTypeAndFileName .folderIcon {
-    font-size: 30px;
-    padding-left: 5px;
-    padding-top: 5px;
-  }
 
-  .resultTypeAndFileName .resultFileName {
-    font-size: 30px;
-    padding-right: 10px;
-  }
-
-  .resultContentsAndUser {
-    font-size: 15px;
-    padding-left: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: flex-start;
-  }
 }
 
 .searchButton {
