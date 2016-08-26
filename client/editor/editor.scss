@@ -98,10 +98,12 @@
   }
 
   .public-DraftEditor-content > div > h2 {
+    padding: 20px 0 20px 0 !important;
     margin: 0 !important;
   }
 
   .public-DraftEditor-content > div > h3 {
+    padding: 20px 0 20px 0 !important;
     margin: 0 !important;
   }
 
@@ -142,4 +144,9 @@
   figure {
     margin: 0px;
   }
+}
+
+h6 {
+  margin: 0.75em !important;
+  cursor: pointer;
 }
