@@ -49,7 +49,7 @@ class Note extends React.Component {
     $('#noteName').blur(() => {
       const newNoteName = $('#noteName').text();
       if (this.props.note.name !== newNoteName) {
-        this.props.noteActions.renameNote(this.props.note.id, newNoteName);
+        this.props.noteActions.renameNote(this.props.note, newNoteName);
       }
     });
 
