@@ -30,7 +30,7 @@ import CodeUtils from 'draft-js-code';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import createLinkifyPlugin from 'draft-js-linkify-plugin';
 
-import { StringToTypeMap, BREAKOUT, CODE_REGEX } from './editor/util/constants';
+import { StringToTypeMap, BREAKOUT, } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
 import blockRendererFn from './editor/model/blockRendererFn';
@@ -63,10 +63,10 @@ const styleMap = {
   },
   HIGHLIGHT: {
     backgroundColor: '#7fffd4',
-  }
+  },
 };
 
-const HASHTAG_REGEX = /\`(.*?)\`/g;
+const CODE_REGEX = /\`(.*?)\`/g;
 
 const styles = {
   root: {
@@ -90,7 +90,7 @@ const styles = {
     left: -48,
     display: 'none',
   },
-  hashtag: {
+  CODE: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
     fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
     fontSize: 16,
@@ -98,11 +98,9 @@ const styles = {
   },
 };
 
-const iconSelectedColor = '#2000FF';
-const iconColor = '#000000';
 
-function hashtagStrategy(contentBlock, callback) {
-  findWithRegex(HASHTAG_REGEX, contentBlock, callback);
+function CodeStrategy(contentBlock, callback) {
+  findWithRegex(CODE_REGEX, contentBlock, callback);
 }
 
 function findWithRegex(regex, contentBlock, callback) {
@@ -114,14 +112,14 @@ function findWithRegex(regex, contentBlock, callback) {
   }
 }
 
-const HashtagSpan = (props) => {
-  return <span {...props} style={styles.hashtag}>{props.children}</span>;
+const CodeSpan = (props) => {
+  return <span {...props} style={styles.CODE}>{props.children}</span>;
 };
 
 const customDecorator = [
   {
-    strategy: hashtagStrategy,
-    component: HashtagSpan,
+    strategy: CodeStrategy,
+    component: CodeSpan,
   },
 ];
 
@@ -131,7 +129,7 @@ class RichEditor extends React.Component {
 
     this.state = {
       editorState: EditorState.createEmpty(),
-      editEnabled: true,
+      editEnabled: false,
       suggestions: fromJS([]),
       editorBounds: null,
       sideControlVisible: false,
@@ -160,13 +158,15 @@ class RichEditor extends React.Component {
                           }
     this.updateSelection = this.updateSelection.bind(this);
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
+    this.save = this.save.bind(this);
     //this.updateContents = this.updateContents.bind(this);
   }
 
   componentWillReceiveProps(props) {
     const { editorState } = this.state;
+
     if (props.note.shares && props.note.content) {
-      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: '/assets/images/sunnyv.jpg', id: share.userId})));
+      const mentions = fromJS(props.note.shares.map((share) => ({name: share.user.fullName, avatar: share.user.photo || 'http://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=87327241', id: share.userId})));
       this.setState({
         editorState: EditorState.push(editorState, convertFromRaw(props.note.content)),
         suggestions: mentions,
@@ -182,6 +182,39 @@ class RichEditor extends React.Component {
       })
     }
     setTimeout(this.updateSelection, 100);
+  }
+
+  componentDidMount() {
+    setInterval(this.save, 3000);
+  }
+
+  save() {
+    const { editorState } = this.state;
+    // const { id } = 
+    if (this.props.note) {
+      const { id, name } = this.props.note;
+      const contentState = editorState.getCurrentContent();
+      const blockMap = contentState.getBlockMap();
+      const users = blockMap.reduce(this.findMentionEntities, []);
+      this.props.commentActions.postMention(id, users);
+      const content = convertToRaw(editorState.getCurrentContent());
+      this.props.noteActions.saveNote(id, name, content);
+      window.localStorage['editor' + id] = JSON.stringify(convertToRaw(editorState.getCurrentContent()));   
+    }
+  }
+
+  loadLocalSaveData() {
+    const { editorState } = this.state;
+    const data = window.localStorage.getItem('editor');
+    if (data === null) {
+      return;
+    }
+    try {
+      const blockData = JSON.parse(data);
+      this.onChange(EditorState.push(editorState, convertFromRaw(blockData)), this.refs.editor.focus);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   focus() {
@@ -202,13 +235,7 @@ class RichEditor extends React.Component {
 
   onChange(editorState){
     this.setState({ editorState });
-    const contentState = editorState.getCurrentContent();
-    const blockMap = contentState.getBlockMap();
-    const users = blockMap.reduce(this.findMentionEntities, []);
 
-    this.props.commentActions.postMention(this.props.note.id, users);
-    const content = convertToRaw(this.state.editorState.getCurrentContent());
-    this.props.noteActions.saveNote(this.props.note.id, this.props.note.name, content);
 
     setTimeout(this.updateSelection, 5);
   }
@@ -245,11 +272,8 @@ class RichEditor extends React.Component {
   }
 
   keyBindingFn(e) {
-    const { editorState } = this.state;
-    let command;
-
     if (e.ctrlKey) {
-      if (e.keyCode ===  83 ) {
+      if (e.keyCode ===  83) {
         return 'editor-save';
       }
       if (e.altKey) {
@@ -258,11 +282,9 @@ class RichEditor extends React.Component {
         }
       }
       if (e.keyCode === 53) {
-        console.log('strike');
         return 'toggleinline:STRIKETHROUGH';
       }
       if (e.keyCode === 72) {
-        console.log('sts');
         return 'toggleinline:HIGHLIGHT';
       }
     }
@@ -434,11 +456,11 @@ class RichEditor extends React.Component {
 
   updateSelection() {
     const { editorBounds, editorState } = this.state;
-    console.log(editorBounds, ' editorBounds');
+
     // let selectionRangeIsCollapsed = null;
     let sideControlVisible = false;
     let sideControlTop = null;
-    let topAdj = 0;
+
     const sideControlLeft = styles.sideControl.left;
     // let popoverControlVisible = false,
     // let popoverControlTop = null,
@@ -446,10 +468,8 @@ class RichEditor extends React.Component {
 
     const selectionRange = getSelectionRange();
     if (selectionRange) {
-      console.log('first if ', selectionRange);
       // const rangeBounds = selectionRange.getBoundingClientRect();
       const selectedBlock = getSelectedBlockElement(selectionRange);
-      console.log('selected ', selectedBlock);
 
       if (selectedBlock) {
         const blockBounds = selectedBlock.getBoundingClientRect();
@@ -461,15 +481,8 @@ class RichEditor extends React.Component {
         const contentState = editorState.getCurrentContent();
         const firstBlockType = contentState.getFirstBlock().getType();
 
-        if (firstBlockType === 'header-one' || firstBlockType === 'header-two' || firstBlockType === 'header-three') {
-          topAdj = 0;
-        }
-
         sideControlTop = (blockBounds.top - editorBounds.top + window.pageYOffset) 
-          + ((blockBounds.bottom - blockBounds.top) / 2) - 15 + topAdj;
-                  console.log(editorBounds.top, 'editorBoundsTop');
-                  console.log('sideControlTop ', sideControlTop);
-                  console.log('blockBounds', blockBounds);
+          + ((blockBounds.bottom - blockBounds.top) / 2) - 15;
 
         // if (!selectionRange.collapsed){
 
@@ -518,7 +531,6 @@ class RichEditor extends React.Component {
       .getCurrentContent()
       .getBlockForKey(selection.getStartKey())
       .getType();
-    console.log(selectedBlockType);
 
     let sideControlStyles = Object.assign({}, styles.sideControl);
     if ( sideControlVisible && editEnabled ) {
@@ -533,8 +545,6 @@ class RichEditor extends React.Component {
           style={sideControlStyles}
           toggleBlockType={type => this.toggleBlockType(type)}
           selectedBlockType={selectedBlockType}
-          iconSelectedColor={iconSelectedColor}
-          iconColor={iconColor}
         />
         <div className={className} >
           <Editor
