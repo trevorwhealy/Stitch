@@ -48,6 +48,7 @@ export function getAllNotes() {
 
 // Get a specific note that the user requested
 export function getOneNote(noteId) {
+  console.log('i get here');
   const token = localStorage.getItem('jwtToken');
 
   return (dispatch) => {
@@ -63,6 +64,7 @@ export function getOneNote(noteId) {
     })
     .then(res => res.json())
     .then((data) => {
+      console.log('yes sir');
       dispatch(receiveSingleNote(data));
       dispatch(getOneFolder(data.folder || {}));
     })

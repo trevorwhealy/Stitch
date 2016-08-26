@@ -1,3 +1,4 @@
+import { getNotifications } from '../../notifications/actions/NotificationActions.jsx';
 
 export function getCommentSuccess(comments) {
   return {
@@ -66,7 +67,10 @@ export function postMention(noteId, users) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(() => dispatch(postMentionSuccess()))
+    .then(() => {
+      dispatch(postMentionSuccess());
+      dispatch(getNotifications());
+    })
     .catch(() => dispatch(postMentionFailure()));
   };
 }
