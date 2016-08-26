@@ -70,7 +70,7 @@ export default connect(
 
 DeleteContent.propTypes = {
   type: React.PropTypes.string,
-  redirect: React.PropTypes.bool,
+  redirect: React.PropTypes.string,
   content: React.PropTypes.object,
   noteActions: React.PropTypes.object,
   folderActions: React.PropTypes.object,

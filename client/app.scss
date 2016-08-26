@@ -34,13 +34,13 @@ a { color: black; }
   transition: padding .25s ease;
 }
 @media (max-width: $screen-sm-max) {
-  .pageWrapper { padding: 90px 20px 50px 20px; }
+  .pageWrapper { padding: 90px 20px 80px 20px; }
 }
 @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
-  .pageWrapper { padding: 90px 50px 50px 50px; }
+  .pageWrapper { padding: 90px 50px 80px 50px; }
 }
 @media (min-width: $screen-lg-min) {
-  .pageWrapper { padding: 90px 200px 50px 200px; }
+  .pageWrapper { padding: 90px 200px 80px 200px; }
 }
 
 /***** Cards Styling *****/
