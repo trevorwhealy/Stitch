@@ -6,7 +6,7 @@ const rootPath = path.join(__dirname, '../../');
 const config = {
   development: {
     rootPath,
-    db: process.env.DATABASE_URL || 'postgres://postgres:password@localhost/fluid',
+    db: process.env.DATABASE_URL || 'postgres://postgres@localhost/fluid',
     port: process.env.PORT || 3000,
     logLevel: process.env.LOG_LEVEL || 'debug',
     apiLogLevel: process.env.API_LOG_LEVEL || 'dev',
