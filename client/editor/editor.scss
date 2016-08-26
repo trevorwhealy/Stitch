@@ -35,7 +35,10 @@
     font-weight: normal;
     color: $color-grey;
     > i { font-size: 32px; }
-    li { color: $color-grey-darkest; }
+    li {
+      color: $color-grey-darkest;
+      cursor: pointer;
+    }
   }
 
 
