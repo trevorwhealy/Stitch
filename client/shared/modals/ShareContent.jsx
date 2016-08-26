@@ -8,21 +8,15 @@ export default class ShareContent extends React.Component {
     super(props);
 
     this.shareContent = this.shareContent.bind(this);
-    this.keyTracking = this.keyTracking.bind(this);
   }
 
-  keyTracking(e) {
-    if (e.keyCode === 13) {
-      this.shareContent();
-    }
-  }
-
-  shareContent() {
-    const shareTarget = $('#shareContentInput').val();
+  shareContent(e) {
+    e.preventDefault();
+    const shareTarget = this.inputEl.value;
     if (shareTarget.length) {
       findUser(this.props, shareTarget);
       $('#shareContentModal').closeModal();
-      $('#shareContentInput').val('');
+      this.inputEl.value = '';
     }
   }
 
@@ -31,35 +25,34 @@ export default class ShareContent extends React.Component {
   }
 
   render() {
+    const { name } = this.props.content;
+
+    if (name && this.inputEl) {
+      setTimeout(() => this.inputEl.focus(), 500);
+    }
+
     return (
-      <div id="shareContentModal" className="modal">
-        <center>
-          <div className="modal-content">
-            <h5> With whom would you like to share, </h5>
-            <h5><b>{this.props.content.name}</b></h5>
-            <input
-              id="shareContentInput"
-              style={{ textAlign: 'center', fontSize: '1.7em', padding: '5px' }}
-              type="text" placeholder="type email here"
-              onKeyDown={this.keyTracking}
-            />
+      <form id="shareContentModal" className="modal" onSubmit={this.shareContent}>
+        <div className="modal-content">
+          <h5>Share content</h5>
+          <div className="subtitle">
+            With whom would you like to share, <b><em>{name}</em></b>
           </div>
-        </center>
-        <div className="cancelDelete">
-          <button
-            onClick={this.closeShareModal}
-            className="waves-effect waves-gray btn-flat cancel"
-          >
-          CANCEL
+          <input
+            id="shareContentInput" className="validate"
+            type="email" placeholder="Enter email address"
+            ref={c => { this.inputEl = c; }}
+          />
+        </div>
+        <div className="modalActions">
+          <button onClick={this.closeShareModal} className="waves-effect btn-flat cancelBtn">
+            CANCEL
           </button>
-          <button
-            onClick={this.shareContent}
-            className="waves-effect waves-purple btn-flat delete"
-          >
-            Share
+          <button className="waves-effect btn-flat actionBtn" type="submit">
+            SHARE
           </button>
         </div>
-      </div>
+      </form>
     );
   }
 }

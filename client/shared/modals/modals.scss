@@ -14,13 +14,17 @@
 }
 
 #renameContentModal,
-#addFolderModal {
+#addFolderModal,
+#shareContentModal {
   padding: 12px 24px;
   .modal-content {
     text-align: center;
   }
   h5 {
     margin-bottom: 24px;
+  }
+  .subtitle {
+    color: $color-grey;
   }
   input {
     box-sizing: border-box;
@@ -40,4 +44,9 @@
   > .actionBtn {
     color: $accent-color;
   }
+}
+
+#shareContentModal {
+  h5 { margin-bottom: 8px; }
+  .subtitle { margin-bottom: 24px; }
 }
