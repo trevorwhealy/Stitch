@@ -36,7 +36,7 @@ import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
 import blockRendererFn from './editor/model/blockRendererFn';
 import compiler from './compiler/compiler.js';
-import { insertPageBreak, addBlock } from './editor/model/index';
+import { insertPageBreak, addBlock, highlightCode } from './editor/model/index';
 
 const styles = {
   sideControl: {
@@ -44,7 +44,6 @@ const styles = {
     display: 'none',
   },
 };
-
 
 class RichEditor extends React.Component {
   constructor(props) {
@@ -60,7 +59,6 @@ class RichEditor extends React.Component {
       sideControlLeft: 50,
     };
 
-    console.log(this.state);
     this.focus = this.focus.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onEscape = this.onEscape.bind(this);
@@ -74,15 +72,14 @@ class RichEditor extends React.Component {
     this.toggleBlockType = this.toggleBlockType.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
     // this.toggleEdit = this.toggleEdit.bind(this);
-    // this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()), ' entitymap');
-    //                        console.log(this.state.editorState.toJS());
-    //                        console.log(this.state.editorState.getSelection());
-    //                        console.log(this.state.suggestions);
-    //                       }
+    this.logState = () => {console.log(convertToRaw(this.state.editorState.getCurrentContent()), ' entitymap');
+                           console.log(this.state.editorState.toJS());
+                           console.log(this.state.editorState.getSelection());
+                           console.log(this.state.suggestions);
+                          }
     this.updateSelection = this.updateSelection.bind(this);
     this.blockRendererFn = blockRendererFn(this.onChange, this.getEditorState);
     this.save = this.save.bind(this);
-
   }
 
   componentWillReceiveProps(props) {
@@ -120,6 +117,7 @@ class RichEditor extends React.Component {
         suggestions: mentions,
       });
     }
+
   }
 
   componentWillUnmount() {
@@ -218,19 +216,20 @@ class RichEditor extends React.Component {
 
   handleReturn(e) {
     const { editorState } = this.state;
+    const currentBlockType = RichUtils.getCurrentBlockType(editorState);
 
-    if (CodeUtils.hasSelectionInBlock(editorState)) {
+    if (CodeUtils.hasSelectionInBlock(editorState) || currentBlockType === 'blockquote') {
       this.onChange(
         CodeUtils.handleReturn(e, editorState)
       );
       return true;
     }
 
-    const currentBlockType = RichUtils.getCurrentBlockType(editorState);
     if (Breakout.indexOf(currentBlockType) !== -1) {
       this.onChange(addBlock(editorState));
       return true;
     }
+
     return;
   }
 
@@ -359,7 +358,7 @@ class RichEditor extends React.Component {
 
   onEscape() {
     const { editorState } = this.state;
-    if (CodeUtils.hasSelectionInBlock(editorState)) {
+    if (CodeUtils.hasSelectionInBlock(editorState) || RichUtils.getCurrentBlockType(editorState) === 'blockquote') {
       this.onChange(addBlock(editorState));
       return;
     }
@@ -489,12 +488,12 @@ class RichEditor extends React.Component {
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
         />
-        {/*<button onClick={this.toggleEdit}>Toggle Edit</button>
+        <button onClick={this.toggleEdit}>Toggle Edit</button>
         <input
           onClick={this.logState}
           type="button"
           value="Log State"
-        />*/}
+        />
       </div>
     );
   }

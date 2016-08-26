@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { RichUtils } from 'draft-js';
 import { BLOCK_TYPES } from '../util/constants';
-import StyleButton from './StyleButton.jsx';
+import BlockButton from './StyleButton.jsx';
 
 const styles = {
   container: {
@@ -25,7 +25,7 @@ export default class SideOptions extends Component {
             return;
           }
           return (
-            <StyleButton
+            <BlockButton
               label={type.label}
               icon={type.icon}
               onToggle={this.props.toggleBlockType}

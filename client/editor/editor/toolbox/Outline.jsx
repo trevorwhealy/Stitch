@@ -8,16 +8,6 @@ export default class Outline extends React.Component {
   }
 
   render() {
-    const style = {
-      left: 20,
-      position: 'fixed',
-      display: 'inline-block',
-      top: '50%',
-      height: 400,
-      width: 200,
-      overflow: 'auto',
-    };
-
     const { editorState } = this.props;
     const map = editorState.getCurrentContent().getBlockMap();
 
@@ -26,7 +16,7 @@ export default class Outline extends React.Component {
       return type === 'header-one' || type === 'header-two';
     });
     return (
-      <div style={style}>
+      <div className='Outline' >
         {filterMap.map(block => {
           return (
             <OutlineContent
