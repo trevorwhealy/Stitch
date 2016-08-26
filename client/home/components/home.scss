@@ -58,6 +58,7 @@
 /***** Responsive Adjustments *****/
 
 @media (max-width: $screen-sm-max) {
+  .recentNotes__header .sectionLabel { font-size: 1.3rem; }
   .recentNotes .noteCard {
     max-width: 100%;
     &:nth-child(n+5) { display: none; }
