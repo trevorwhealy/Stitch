@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import moment from 'moment';
+import Avatar from '../../shared/components/Avatar.jsx';
 
 class OverlaySearchResults extends React.Component {
 
@@ -17,37 +19,40 @@ class OverlaySearchResults extends React.Component {
             <Link
               to={{ pathname: `/folders/${folder.id}` }}
               onClick={() => toggleOverlay()}
-              className="userQueryResults"
+              className="noteCard"
             >
-              <div className="resultTypeAndFileName">
+              <div className="cardImage">
                 <i className="material-icons folderIcon">{iconType}</i>
-                <div className="resultFileName">
+              </div>
+              <div className="cardInfo">
+                <div className="title">
                   {folder.name}
                 </div>
-              </div>
-              <div className="resultContentsAndUser">
-                {folder.notes.length} notes | created by {folder.user.fullName}
+                <div className="details">
+                  {folder.notes.length} notes | Created by {folder.user.fullName}
+                </div>
               </div>
             </Link>
             );
         });
       } else if (globalSearchResults[0].type === 'note') {
-        const iconType = 'insert_drive_file';
         queryResults = globalSearchResults.map(note => {
           return (
             <Link
+              className="noteCard"
               to={{ pathname: `/notes/${note.id}` }}
               onClick={() => toggleOverlay()}
-              className="userQueryResults"
             >
-              <div className="resultTypeAndFileName">
-                <i className="material-icons folderIcon">{iconType}</i>
-                <div className="resultFileName">
+              <div className="cardImage">
+                <Avatar photo={note.user.photo} fullName={note.user.fullName} size="sm" />
+              </div>
+              <div className="cardInfo">
+                <div className="title">
                   {note.name}
                 </div>
-              </div>
-              <div className="resultContentsAndUser">
-                created by {note.user.fullName}
+                <div className="details">
+                  {`Updated ${moment(note.updatedAt).fromNow()}`}
+                </div>
               </div>
             </Link>
             );
@@ -55,7 +60,7 @@ class OverlaySearchResults extends React.Component {
       }
     }
     return (
-      <div className="overlay-searchResults">
+      <div className="overlaySearchContainer pageWrapper">
         {queryResults}
       </div>
     );
