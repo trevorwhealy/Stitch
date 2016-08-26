@@ -17,9 +17,8 @@ class FolderNotes extends React.Component {
     super();
 
     this.state = {
-      noteToRename: {},
-      noteToDelete: {},
-      contentToShare: {},
+      content: {},
+      contentType: '',
     };
   }
 
@@ -39,23 +38,27 @@ class FolderNotes extends React.Component {
     }
   }
 
-  renameContentModal(note) {
+  renameContentModal(content, type) {
     this.setState({
-      noteToRename: note,
+      content,
+      contentType: type,
     });
     $('#renameContentModal').openModal();
   }
 
-  shareContentModal(note) {
+  shareContentModal(content, type) {
     this.setState({
-      contentToShare: note,
+      content,
+      contentType: type,
     });
     $('#shareContentModal').openModal();
   }
 
-  deleteContentModal(note) {
+  deleteContentModal(content, type, redirectOnDelete) {
     this.setState({
-      noteToDelete: note,
+      content,
+      contentType: type,
+      redirectOnDelete,
     });
     $('#deleteContentModal').openModal();
   }
@@ -65,16 +68,39 @@ class FolderNotes extends React.Component {
   }
 
   render() {
+    const folder = this.props.folder;
     const notes = this.props.notes;
     const createNoteInFolder = this.props.noteActions.createNoteInFolder;
     const folderId = this.props.routeParams.id;
     const folderTitle = this.props.folder.name;
+    const redirectOnDelete = this.state.redirectOnDelete;
 
     return (
-      <div className="folderFiles">
-        <div className="title">{folderTitle}</div>
-        <div className="number">{`${notes.length} notes found`}</div>
-        <CreateNewNote createNoteInFolder={createNoteInFolder} folderId={folderId} />
+      <div className="pageWrapper FoldersContainer">
+        <div className="pageHeader">
+          <i className="material-icons folderIcon">folder</i>
+          <div className="pageTitle">{folderTitle}</div>
+          <button className="dropdown-btn folderActions">
+            <i className="material-icons">keyboard_arrow_down</i>
+            <ul className="dropdown-menu">
+              <li onClick={() => this.renameContentModal(folder, 'folder')}>
+                Rename
+              </li>
+              <li onClick={() => this.shareContentModal(folder, 'folder')}>
+                Share
+              </li>
+              <li
+                className="text-danger"
+                onClick={() => this.deleteContentModal(folder, 'folder', true)}
+              >
+                Delete
+              </li>
+            </ul>
+          </button>
+          <span style={{ flex: 1 }} />
+          <CreateNewNote createNoteInFolder={createNoteInFolder} folderId={folderId} />
+        </div>
+        <div className="number">{`${notes.length} notes`}</div>
         <div className="notes"> {notes.map(note => {
           return (
             <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }}>
@@ -86,13 +112,16 @@ class FolderNotes extends React.Component {
                 <div className="icon-btn list__more-actions dropdown-btn">
                   <i className="material-icons">more_vert</i>
                   <ul className="dropdown-menu dropdown-menu--right">
-                    <li onClick={() => this.renameContentModal(note)}>
+                    <li onClick={() => this.renameContentModal(note, 'note')}>
                       Rename
                     </li>
-                    <li onClick={() => this.shareContentModal(note)}>
+                    <li onClick={() => this.shareContentModal(note, 'note')}>
                       Share
                     </li>
-                    <li onClick={() => this.deleteContentModal(note)}>
+                    <li
+                      className="text-danger"
+                      onClick={() => this.deleteContentModal(note, 'note', false)}
+                    >
                       Delete
                     </li>
                   </ul>
@@ -111,9 +140,13 @@ class FolderNotes extends React.Component {
           : ''
         }
         {/* Modals */}
-        <RenameContent type="note" content={this.state.noteToRename} />
-        <DeleteContent type="note" content={this.state.noteToDelete} />
-        <ShareContent type="note" content={this.state.contentToShare} />
+        <RenameContent type={this.state.contentType} content={this.state.content} />
+        <DeleteContent
+          type={this.state.contentType}
+          content={this.state.content}
+          redirect={redirectOnDelete}
+        />
+        <ShareContent type={this.state.contentType} content={this.state.content} />
       </div>
     );
   }
