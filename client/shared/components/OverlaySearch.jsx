@@ -13,10 +13,9 @@ class OverlaySearch extends React.Component {
       choice: 'folder',
     };
     this.displayOverlay = this.displayOverlay.bind(this);
-    this.fileChoice = this.fileChoice.bind(this);
-    this.folderChoice = this.folderChoice.bind(this);
     this.searchInput = this.searchInput.bind(this);
     this.displayOverlay = this.displayOverlay.bind(this);
+    this.userChoice = this.userChoice.bind(this);
   }
 
   componentDidMount() {
@@ -29,36 +28,19 @@ class OverlaySearch extends React.Component {
     });
   }
 
-  isActive() {
-    this.setState({
-      isActive: !this.state.isActive,
-    });
-  }
-
   searchInput(e) {
     if (e.keyCode === 13) {
       if (e.target.value.length > 0) {
-        this.props.searchActions.globalSearch(this.state.fileOrFolderChoice, e.target.value);
+        this.props.searchActions.globalSearch(this.state.choice, e.target.value);
         e.target.value = '';
       }
     }
   }
 
-  fileChoice() {
+  userChoice(choice) {
     this.setState({
-      fileOrFolderChoice: 'notes',
+      choice,
     });
-  }
-
-  folderChoice() {
-    this.setState({
-      fileOrFolderChoice: 'folders',
-    });
-  }
-
-  test() {
-    console.log('hello');
-    $('.dropdown-buttonTwo').dropdown('open');
   }
 
   render() {
@@ -81,15 +63,13 @@ class OverlaySearch extends React.Component {
                 <div className="fileOrFolderLabel">
                   {this.state.choice}
                 </div>
-                <a className="dropdown-buttonTwo icon-btn" data-activates="userChoiceDropDown" onClick={this.test}>
+                <button className="dropdown-btn contentType">
                   <i className="material-icons">keyboard_arrow_down</i>
-                </a>
-                <ul id="userChoiceDropDown" className="dropdown-content">
-                  <li><a href="#!">one</a></li>
-                  <li><a href="#!">two</a></li>
-                  <li className="divider"></li>
-                  <li><a href="#!">three</a></li>
-                </ul>
+                  <ul className="dropdown-menu">
+                    <li onClick={() => this.userChoice('notes')}>notes</li>
+                    <li onClick={() => this.userChoice('folders')}>folder</li>
+                  </ul>
+                </button>
               </div>
             </div>
           </div>

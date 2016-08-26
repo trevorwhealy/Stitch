@@ -48,6 +48,10 @@
     align-self:center;
   }
 
+  .contentType {
+    @include unstyle-btn(); 
+  }
+
   .fileOrFolderChoice {
     display: flex;
     flex-direction: row;
