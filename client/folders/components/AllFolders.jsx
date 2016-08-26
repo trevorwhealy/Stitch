@@ -94,23 +94,14 @@ class AllFolders extends React.Component {
           );
       });
     }
-    let foldersLength;
-    if (this.props.folders) {
-      foldersLength = (folders.length > 6) ?
-        <div>
-          <div className="number">{`${folders.length} folders found`}</div>
-          <div className="prompt">
-            <div>{'Scroll for more'}</div>
-            <div><i className="material-icons">keyboard_arrow_down</i></div>
-          </div>
-        </div>
-            : '';
-    }
+
     return (
       <div className="pageWrapper FoldersContainer">
         <div className="pageHeader">
           <i className="material-icons folderIcon">folder</i>
-          <div className="pageTitle">All Folders</div>
+          <div className="pageTitle">
+            All Folders <small>{`(${folders.length})`}</small>
+          </div>
           <span style={{ flex: 1 }} />
           <div className="newFolderBtn" onClick={this.addFolderModal}>
             <i className="material-icons">add</i>
@@ -120,7 +111,7 @@ class AllFolders extends React.Component {
         <div className="folderList">
           {allFolders}
         </div>
-        {foldersLength}
+
         {/* Modals */}
         <AddFolder />
         <RenameContent type="folder" content={this.state.folderToRename} />

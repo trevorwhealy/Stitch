@@ -11,12 +11,14 @@
   }
   .pageHeader .noteIcon {
     margin-right: 16px;
+    max-width: 32px;
     color: $color-grey-lighter;
     font-size: 32px;
   }
   .pageTitle {
     font-size: 2rem;
     color: $color-grey-darkest;
+    > small { color: $color-grey; }
   }
   .noteActions {
     @include unstyle-btn();
@@ -42,7 +44,7 @@
 
   .number {
     align-self: flex-start;
-    margin-bottom: 15px;
+    margin-left: 16px;
     color: #9B9B9B;
   }
 

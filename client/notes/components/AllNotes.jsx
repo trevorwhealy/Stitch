@@ -94,7 +94,9 @@ class AllNotes extends React.Component {
       <div className="pageWrapper NotesContainer">
         <div className="pageHeader">
           <i className="material-icons noteIcon">notes</i>
-          <div className="pageTitle">All Notes</div>
+          <div className="pageTitle">
+            All Notes <small>{`(${notes.length})`}</small>
+          </div>
           <span style={{ flex: 1 }} />
           <Link className="newNoteBtn" to="/notes/new">
             <i className="material-icons">add</i>
