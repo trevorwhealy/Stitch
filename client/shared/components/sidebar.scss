@@ -62,11 +62,9 @@
     align-items: center;
     margin-bottom: 24px;
   }
-
   .createFolder .title {
     font-size: 18px;
   }
-
   .createFolder .add {
     transition: all .4s ease;
     cursor: pointer;
@@ -79,10 +77,14 @@
     font-size: 12px;
     transition: all .25s ease;
   }
-
   .createFolder .add:hover {
     background-color: lighten($primary-color, 15%);
     color: $color-grey-lightest;
+  }
+
+  .newFolderInput input {
+    padding: 0 14px;
+    box-sizing: border-box;
   }
 
   .folderList {
