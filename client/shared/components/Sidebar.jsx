@@ -149,5 +149,5 @@ Sidebar.propTypes = {
   folders: React.PropTypes.object,
   user: React.PropTypes.object,
   authActions: React.PropTypes.object,
-  currentFolderId: React.PropTypes.string,
+  currentFolderId: React.PropTypes.number,
 };
