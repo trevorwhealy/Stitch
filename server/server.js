@@ -19,7 +19,7 @@ const listeningOnPort = `Listening on port ${config.port}`;
 
 if (process.env.NODE_ENV === 'production') {
   options.key = fs.readFileSync(__dirname + '/key.pem');
-  options.cert = fs.readFileSync(__dirname + './cert.pem');
+  options.cert = fs.readFileSync(__dirname + '/cert.pem');
   https.createServer(options, app).listen(config.port, () => {
     console.log(listeningOnPort);
   });
