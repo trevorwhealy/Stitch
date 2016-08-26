@@ -39,10 +39,28 @@ class Note extends React.Component {
 
   render() {
     const singleNote = this.props.note;
+
+    $('#noteName').keydown((e) => {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+      }
+    });
+
+    $('#noteName').blur(() => {
+      const newNoteName = $('#noteName').text();
+      if (this.props.note.name !== newNoteName) {
+        this.props.noteActions.renameNote(this.props.note.id, newNoteName);
+      }
+    });
+
     return (
       <div className="NoteContainer">
         <div className="noteTitle">
-          <div id="noteName">{singleNote.name}</div>
+          {/*
+            Make div contenteditable.
+
+            */}
+          <div id="noteName" contentEditable>{singleNote.name}</div>
           <div className="actions">
             <div onClick={this.renameNote} className="chip">
               Rename
