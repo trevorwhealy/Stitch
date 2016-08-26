@@ -264,6 +264,7 @@
    &.isTerminalActive .noteHeader,
    &.isTerminalActive .EditorTerminal { padding: $content-padding; }
 
+   .terminalBtn,
    .terminal { display: none; }
   }
   @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
