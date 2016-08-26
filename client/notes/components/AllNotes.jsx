@@ -8,6 +8,7 @@ import * as noteActionCreators from '../actions/NoteActions.jsx';
 import RenameContent from '../../shared/modals/RenameContent.jsx';
 import DeleteContent from '../../shared/modals/DeleteContent.jsx';
 import ShareContent from '../../shared/modals/ShareContent.jsx';
+import Avatar from '../../shared/components/Avatar.jsx';
 
 class AllNotes extends React.Component {
 
@@ -56,13 +57,20 @@ class AllNotes extends React.Component {
     if (this.props.notes) {
       allNotes = notes.map(note => {
         return (
-          <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }}>
-            <div className="details">
-              <div className="name">{note.name}</div>
-              <div className="date">{moment(note.createdAt).fromNow()}</div>
+          <Link className="noteCard" key={note.id} to={{ pathname: `/notes/${note.id}` }}>
+            <div className="cardImage">
+              <Avatar photo={note.user.photo} fullName={note.user.fullName} size="sm" />
             </div>
-            <div onClick={this.preventDropdownLink} className="elipses">
-              <div className="icon-btn list__more-actions dropdown-btn">
+            <div className="cardInfo">
+              <div className="title">
+                {note.name}
+              </div>
+              <div className="details">
+                {`Updated ${moment(note.updatedAt).fromNow()}`}
+              </div>
+            </div>
+            <div className="cardActions" onClick={this.preventDropdownLink} >
+              <div className="icon-btn dropdown-btn">
                 <i className="material-icons">more_vert</i>
                 <ul className="dropdown-menu dropdown-menu--right">
                   <li onClick={() => this.renameContentModal(note)}>
@@ -81,25 +89,21 @@ class AllNotes extends React.Component {
           );
       });
     }
-    let notesLength;
-    if (this.props.notes) {
-      notesLength = (notes.length > 6) ?
-        <div>
-          <div className="number">{`${notes.length} notes found`}</div>
-          <div className="prompt">
-            <div>{'Scroll for more'}</div>
-            <div><i className="material-icons">keyboard_arrow_down</i></div>
-          </div>
-        </div>
-            : '';
-    }
+
     return (
-      <div className="folderFiles">
-        <div className="title">{'All Notes'}</div>
-        <div className="notes">
+      <div className="pageWrapper NotesContainer">
+        <div className="pageHeader">
+          <i className="material-icons noteIcon">notes</i>
+          <div className="pageTitle">All Notes</div>
+          <span style={{ flex: 1 }} />
+          <Link className="newNoteBtn" to="/notes/new">
+            <i className="material-icons">add</i>
+            <span className="addFolder">New note</span>
+          </Link>
+        </div>
+        <div className="noteList">
           {allNotes}
         </div>
-        {notesLength}
         {/* Modals */}
         <RenameContent type="note" content={this.state.noteToRename} />
         <DeleteContent type="note" content={this.state.noteToDelete} />

@@ -77,7 +77,10 @@ a { color: black; }
     font-size: 12px;
     color: $color-grey;
   }
-  .cardActions {}
+  .cardActions > .icon-btn {
+    display: flex;
+  }
+  .cardActions > .icon-btn i { color: $color-grey-darkest; }
 }
 .folderCard {
   @extend .noteCard;
@@ -90,10 +93,6 @@ a { color: black; }
     color: $color-grey-lighter;
     font-size: 32px;
   }
-  .cardActions > .icon-btn {
-    display: flex;
-  }
-  .cardActions > .icon-btn i { color: $color-grey-darkest; }
 }
 
 /***** Scss Imports *****/
@@ -111,5 +110,6 @@ a { color: black; }
 @import './editor/editor.scss';
 @import './editor/compiler/compiler.scss';
 @import './folders/folders.scss';
+@import './notes/notes.scss';
 @import './home/home.scss';
 @import './notifications/notifications.scss';

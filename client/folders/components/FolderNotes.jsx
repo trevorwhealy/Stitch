@@ -10,6 +10,7 @@ import CreateNewNote from '../../notes/components/CreateNewNote.jsx';
 import RenameContent from '../../shared/modals/RenameContent.jsx';
 import DeleteContent from '../../shared/modals/DeleteContent.jsx';
 import ShareContent from '../../shared/modals/ShareContent.jsx';
+import Avatar from '../../shared/components/Avatar.jsx';
 
 class FolderNotes extends React.Component {
 
@@ -69,11 +70,27 @@ class FolderNotes extends React.Component {
 
   render() {
     const folder = this.props.folder;
+    const user = folder.user;
     const notes = this.props.notes;
     const createNoteInFolder = this.props.noteActions.createNoteInFolder;
     const folderId = this.props.routeParams.id;
     const folderTitle = this.props.folder.name;
     const redirectOnDelete = this.state.redirectOnDelete;
+
+    const userAvatar = user ? (
+      <Avatar photo={user.photo} fullName={user.fullName} size="sm" />
+    ) : '';
+    let sharedUsersAvatars;
+    if (folder.shares && folder.shares.length) {
+      sharedUsersAvatars = folder.shares.map(share => {
+        return (<Avatar
+          key={share.id}
+          photo={share.user.photo}
+          fullName={share.user.fullName}
+          size="sm"
+        />);
+      });
+    }
 
     return (
       <div className="pageWrapper FoldersContainer">
@@ -97,19 +114,31 @@ class FolderNotes extends React.Component {
               </li>
             </ul>
           </button>
-          <span style={{ flex: 1 }} />
+          <div className="folderUsers">
+            <div className="owner">
+              { userAvatar }
+            </div>
+            { sharedUsersAvatars }
+          </div>
           <CreateNewNote createNoteInFolder={createNoteInFolder} folderId={folderId} />
         </div>
-        <div className="number">{`${notes.length} notes`}</div>
-        <div className="notes"> {notes.map(note => {
+        <span className="number">{`${notes.length} notes`}</span>
+        <div className="noteList"> {notes.map(note => {
           return (
-            <Link key={note.id} className="note" to={{ pathname: `/notes/${note.id}` }}>
-              <div className="details">
-                <div className="name">{note.name}</div>
-                <div className="date">{moment(note.createdAt).fromNow()}</div>
+            <Link className="noteCard" key={note.id} to={{ pathname: `/notes/${note.id}` }}>
+              <div className="cardImage">
+                <Avatar photo={note.user.photo} fullName={note.user.fullName} size="sm" />
               </div>
-              <div onClick={this.preventDropdownLink} className="elipses">
-                <div className="icon-btn list__more-actions dropdown-btn">
+              <div className="cardInfo">
+                <div className="title">
+                  {note.name}
+                </div>
+                <div className="details">
+                  {`Updated ${moment(note.updatedAt).fromNow()}`}
+                </div>
+              </div>
+              <div className="cardActions" onClick={this.preventDropdownLink} >
+                <div className="icon-btn dropdown-btn">
                   <i className="material-icons">more_vert</i>
                   <ul className="dropdown-menu dropdown-menu--right">
                     <li onClick={() => this.renameContentModal(note, 'note')}>
