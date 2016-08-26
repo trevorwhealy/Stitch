@@ -1,30 +1,36 @@
 .NoteContainer {
-  height: 800px;
+  height: 100%;
   display: flex;
-  padding: 100px 220px 50px 220px;
+  padding: 75px 220px 50px 220px;
   flex-direction: column;
+  align-items: center;
 
   .noteTitle {
-    width: 100%;
+    width: 800px;
     color: #4A4A4A;
     font-size: 24px;
     font-weight: bold;
     min-width: 250px;
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    position: relative;
+
   }
 
   .editor {
     margin-top: 20px;
-    min-width: 550px;
-    max-width: 700px;
+    width: 800px;
     position: relative;
+
   }
 
   .EditorTerminal {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    display: flex;
+    justify-content: center;
   }
 
   .terminal {
@@ -83,10 +89,11 @@
   }
 
   .public-DraftEditor-content > div > * {
-    padding: 10px;
+    padding: 10px 0 10px 0;
   }
 
   .public-DraftEditor-content > div > h1 {
+    padding: 20px 0 20px 0 !important;
     margin: 0 !important;
   }
 
@@ -104,7 +111,7 @@
   }
 
   .public-DraftEditorPlaceholder-root {
-    padding: 10px;
+    padding: 10px 0 10px 0;
   }
 
   .block-todo {

@@ -35,11 +35,10 @@ export default class PageBreak extends React.Component {
 
   render() {
     const styles = {
-      backgroundColor: 'rgba(98, 177, 254, 1.0)',
+      backgroundColor: '#939393',
       width: '100%',
-      height: '10px',
+      height: '3px',
       textAlign: 'center',
-      color: 'white',
       zIndex: 1,
       position: 'relative',
     };
