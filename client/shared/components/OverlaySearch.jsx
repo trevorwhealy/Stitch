@@ -18,10 +18,6 @@ class OverlaySearch extends React.Component {
     this.userChoice = this.userChoice.bind(this);
   }
 
-  componentDidMount() {
-    $('.dropdown-buttonTwo').dropdown({});
-  }
-
   displayOverlay() {
     this.setState({
       isOverLayClicked: !this.state.isOverLayClicked,
