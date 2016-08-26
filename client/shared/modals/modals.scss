@@ -13,8 +13,12 @@
   background-color: #9C9999;
 }
 
-#renameContentModal {
+#renameContentModal,
+#addFolderModal {
   padding: 12px 24px;
+  .modal-content {
+    text-align: center;
+  }
   h5 {
     margin-bottom: 24px;
   }

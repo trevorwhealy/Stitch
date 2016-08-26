@@ -7,7 +7,21 @@ class AddFolder extends React.Component {
 
   constructor() {
     super();
+    this.onInputRender = this.onInputRender.bind(this);
+    this.onCreateClick = this.onCreateClick.bind(this);
     this.addFolder = this.addFolder.bind(this);
+  }
+
+  onInputRender(inputEl) {
+    this.inputEl = inputEl;
+  }
+
+  onCreateClick() {
+    if (!this.inputEl || !this.inputEl.value) { return; }
+    const folderName = this.inputEl.value;
+    this.props.folderActions.createFolder(folderName);
+    this.inputEl.value = '';
+    $('#addFolderModal').closeModal();
   }
 
   addFolder(e) {
@@ -20,19 +34,34 @@ class AddFolder extends React.Component {
     }
   }
 
+  closeModal() {
+    $('#addFolderModal').closeModal();
+  }
+
   render() {
+    if (this.inputEl) {
+      setTimeout(() => this.inputEl.focus(), 500);
+    }
+
     return (
       <div id="addFolderModal" className="modal">
         <div className="modal-content">
-          <center>
-            <h5 style={{ marginBottom: '20px' }}> Add a new folder </h5>
-            <input
-              style={{ textAlign: 'center', fontSize: '1.7em', padding: '5px' }}
-              type="text"
-              onKeyDown={this.addFolder}
-            />
-            <p style={{ fontSize: '.5em', color: 'gray' }}><i>Press Enter to Save</i></p>
-          </center>
+          <h5>Create a new folder</h5>
+          <input
+            type="text" placeholder="Enter folder name"
+            onKeyDown={this.addFolder} ref={this.onInputRender}
+          />
+        </div>
+        <div className="modalActions">
+          <button onClick={this.closeModal} className="waves-effect btn-flat cancelBtn">
+            CANCEL
+          </button>
+          <button
+            onClick={this.onCreateClick}
+            className="waves-effect btn-flat actionBtn"
+          >
+            CREATE
+          </button>
         </div>
       </div>
     );

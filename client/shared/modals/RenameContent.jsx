@@ -54,16 +54,13 @@ class RenameContent extends React.Component {
 
     return (
       <div id="renameContentModal" className="modal">
-        <center>
-          <div className="modal-content">
-            <h5>Update {type} title</h5>
-            <input
-              ref={this.onInputRender}
-              type="text"
-              onKeyDown={this.keyTracking}
-            />
-          </div>
-        </center>
+        <div className="modal-content">
+          <h5>Update {type} title</h5>
+          <input
+            type="text" placeholder="Enter new folder title"
+            ref={this.onInputRender} onKeyDown={this.keyTracking}
+          />
+        </div>
         <div className="modalActions">
           <button onClick={this.closeModal} className="waves-effect btn-flat cancelBtn">
             CANCEL
