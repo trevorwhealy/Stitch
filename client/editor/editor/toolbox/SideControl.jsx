@@ -48,7 +48,7 @@ export default class SideControl extends React.Component {
     }
 
     return (
-      <div style={Object.assign({}, styles.container, this.props.style)}
+      <div className="blockTypeBtn" style={Object.assign({}, styles.container, this.props.style)}
         onMouseOver={(e) => {
           this.setState({
             toolbarVisible: true,

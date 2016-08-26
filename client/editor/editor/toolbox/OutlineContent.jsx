@@ -6,7 +6,7 @@ import { getSelectionRange } from '../util/selection';
 export default class OutlineContent extends React.Component {
   constructor(props){
     super(props);
-  
+
     this.jumpTo = this.jumpTo.bind(this);
   }
 
@@ -16,7 +16,9 @@ export default class OutlineContent extends React.Component {
 
     const target = `[data-offset-key='${key}-0-0']`;
 
-    $('body').animate({
+    console.log('JUMP ', target, $(target).offset().top);
+
+    $('.pageWrapper').animate({
       scrollTop: $(target).offset().top },
       'fast');
   }

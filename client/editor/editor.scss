@@ -1,36 +1,68 @@
-.NoteContainer {
-  height: 100%;
+.NoteEditorContainer {
+  $content-padding: 0 100px;
+  @media (max-width: $screen-sm-max) {
+    $content-padding: 0 24px;
+  }
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    $content-padding: 0 64px;
+  }
+
+  height: 100vh;
+  min-height: 650px;
   display: flex;
-  padding: 75px 220px 50px 220px;
   flex-direction: column;
   align-items: center;
 
-  .noteTitle {
-    width: 800px;
-    color: #4A4A4A;
-    font-size: 24px;
+  .noteHeader {
+    padding: $content-padding;
+    width: 100%;
     font-weight: bold;
-    min-width: 250px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    position: relative;
-
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+  #noteName {
+    font-size: 3rem;
+    color: $primary-color;
+    &:focus,
+    &:active {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+  .noteActions {
+    margin-left: 12px;
+    font-weight: normal;
+    color: $color-grey;
+    > i { font-size: 32px; }
+    li { color: $color-grey-darkest; }
   }
 
-  .editor {
-    margin-top: 20px;
-    width: 800px;
-    position: relative;
-
-  }
 
   .EditorTerminal {
+    padding: $content-padding;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     display: flex;
     justify-content: center;
+    width: 100%;
+    flex: 1;
+  }
+
+  .editor {
+    margin-top: 20px;
+    width: 100%;
+    position: relative;
+  }
+
+  .blockTypeBtn {
+    margin-right: 12px;
+    transition: all .25s ease;
+    i,
+    h5 {
+      transition: all .25s ease;
+    }
   }
 
   .terminal {
@@ -158,39 +190,64 @@
 
   .pagebreak {
     min-width: 700px;
+    height: 1px !important;
   }
 
   figure {
-    margin: 10px 0 10px 0;
+    margin: 10px 0 !important;
+  }
+
+  h6 {
+    margin: 0.75em !important;
+    cursor: pointer;
+  }
+
+  blockquote {
+    border-left: 5px solid #4CA8DE;
+    color: #555;
+    font-family: 'Hoefler Text', 'Georgia', serif;
+    font-size: 1.2em;
+    margin: 0 0 10px 0 !important;
+    padding: 10px 0 10px 0;
+    background-color: #E2F2FF;
+  }
+
+  blockquote > div {
+    margin-left: 15px;
+  }
+
+  .Outline {
+    @include overflow-ellipsis();
+    left: 20px;
+    position: fixed;
+    display: inline-block;
+    top: 25%;
+    min-height: 500px;
+    max-height: 70%;
+    width: 250px;
+    overflow-y: auto;
+
+    > * {
+      transition: all .25s ease;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+
+    &:hover > * {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /***** Responsive *****/
+  @media (max-width: $screen-sm-max) {
+   $content-padding: 0 24px;
+   .noteHeader,
+   .EditorTerminal { padding: $content-padding; }
+  }
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    $content-padding: 0 64px;
+    .noteHeader,
+    .EditorTerminal { padding: $content-padding; }
   }
 }
-
-h6 {
-  margin: 0.75em !important;
-  cursor: pointer;
-}
-
-blockquote {
-  border-left: 5px solid #4CA8DE;
-  color: #555;
-  font-family: 'Hoefler Text', 'Georgia', serif;
-  font-size: 1.2em;
-  margin: 0 0 10px 0 !important;
-  padding: 10px 0 10px 0; 
-  background-color: #E2F2FF;
-}
-
-blockquote > div {
-  margin-left: 15px;
-}
-
-.Outline {
-  left: 20px;
-  position: fixed;
-  display: inline-block;
-  top: 25%;
-  max-height: 50%;
-  width: 325px;
-  overflow: auto;
-}
-
