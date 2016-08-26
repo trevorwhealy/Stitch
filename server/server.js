@@ -17,8 +17,6 @@ require('./config/routes')(app, config);
 
 const listeningOnPort = `Listening on port ${config.port}`;
 
-console.log(process.env.NODE_ENV);
-
 if (process.env.NODE_ENV === 'production') {
   options.key = fs.readFileSync('key.pem');
   options.cert = fs.readFileSync('cert.pem');
@@ -30,3 +28,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = app;
+git
