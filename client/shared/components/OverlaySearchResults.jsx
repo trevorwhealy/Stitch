@@ -5,10 +5,13 @@ import moment from 'moment';
 import Avatar from '../../shared/components/Avatar.jsx';
 
 class OverlaySearchResults extends React.Component {
-
   render() {
     const globalSearchResults = this.props.results;
     const toggleOverlay = this.props.toggleOverlay;
+    const resultCount = globalSearchResults.length ?
+      (<div className="resultCount">{globalSearchResults.length} items found</div>)
+      : <div />;
+
     let queryResults;
     if (globalSearchResults.length > 0) {
       if (globalSearchResults[0].type === 'folder') {
@@ -16,9 +19,10 @@ class OverlaySearchResults extends React.Component {
         queryResults = globalSearchResults.map(folder => {
           return (
             <Link
+              key={folder.id}
               to={{ pathname: `/folders/${folder.id}` }}
               onClick={() => toggleOverlay()}
-              className="noteCard"
+              className="folderCard"
             >
               <div className="cardImage">
                 <i className="material-icons folderIcon">{iconType}</i>
@@ -38,6 +42,7 @@ class OverlaySearchResults extends React.Component {
         queryResults = globalSearchResults.map(note => {
           return (
             <Link
+              key={note.id}
               className="noteCard"
               to={{ pathname: `/notes/${note.id}` }}
               onClick={() => toggleOverlay()}
@@ -59,8 +64,9 @@ class OverlaySearchResults extends React.Component {
       }
     }
     return (
-      <div className="overlaySearchContainer pageWrapper">
-        {queryResults}
+      <div className="overlaySearchContainer">
+        {resultCount}
+        <div className="resultList">{queryResults}</div>
       </div>
     );
   }
@@ -81,4 +87,5 @@ OverlaySearchResults.propTypes = {
   fileChoice: React.PropTypes.string,
   results: React.PropTypes.array,
   singleNote: React.PropTypes.object,
+  toggleOverlay: React.PropTypes.func,
 };

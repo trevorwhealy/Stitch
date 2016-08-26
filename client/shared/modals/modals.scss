@@ -49,7 +49,10 @@
   font-size: 1.4rem;
   @include overflow-ellipsis();
 
-  > i { margin-right: 8px; }
+  > i {
+    margin-right: 8px;
+    color: $color-grey-lighter
+  }
   > span {
     color: $color-grey-darker;
     font-size: 1.7rem;
