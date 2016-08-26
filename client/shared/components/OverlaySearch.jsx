@@ -10,7 +10,7 @@ class OverlaySearch extends React.Component {
     this.state = {
       isOverLayClicked: false,
       isActive: false,
-      choice: 'folder',
+      choice: 'folders',
     };
     this.displayOverlay = this.displayOverlay.bind(this);
     this.searchInput = this.searchInput.bind(this);
