@@ -18,8 +18,8 @@ require('./config/routes')(app, config);
 const listeningOnPort = `Listening on port ${config.port}`;
 
 if (process.env.NODE_ENV === 'production') {
-  options.key = fs.readFileSync('./key.pem');
-  options.cert = fs.readFileSync('./cert.pem');
+  options.key = fs.readFileSync(__dirname + '/key.pem');
+  options.cert = fs.readFileSync(__dirname + './cert.pem');
   https.createServer(options, app).listen(config.port, () => {
     console.log(listeningOnPort);
   });
