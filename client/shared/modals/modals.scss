@@ -1,21 +1,7 @@
-.actions .chip {
-  transition: all .4s ease;
-  cursor: pointer;
-  padding: 0px 5px;
-  align-items: center;
-  background-color: #D8D8D8;
-  border-radius: 4px;
-  font-size: 12px;
-  margin-left: 25px;
-}
-
-.actions .chip:hover {
-  background-color: #9C9999;
-}
-
 #renameContentModal,
 #addFolderModal,
-#shareContentModal {
+#shareContentModal,
+#deleteContentModal {
   padding: 12px 24px;
   .modal-content {
     text-align: center;
@@ -44,9 +30,32 @@
   > .actionBtn {
     color: $accent-color;
   }
+  > .deleteBtn {
+    color: $color-red;
+  }
 }
 
-#shareContentModal {
+#shareContentModal,
+#deleteContentModal {
   h5 { margin-bottom: 8px; }
   .subtitle { margin-bottom: 24px; }
+}
+
+#deleteContentModal .itemToDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-grey;
+  font-size: 1.4rem;
+  @include overflow-ellipsis();
+
+  > i { margin-right: 8px; }
+  > span {
+    color: $color-grey-darker;
+    font-size: 1.7rem;
+  }
+  > small {
+    margin-top: 4px;
+    margin-left: 8px;
+  }
 }

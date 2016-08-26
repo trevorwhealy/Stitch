@@ -30,19 +30,25 @@ class DeleteContent extends React.Component {
 
 
   render() {
+    const { content, type } = this.props;
+    const count = type === 'folder' ? <small>{`(${content.notes.length})`}</small> : '';
     return (
       <div id="deleteContentModal" className="modal">
-        <center>
-          <div className="modal-content">
-            <h5> Are you sure you want to <b>delete</b> {this.props.type}: </h5>
-            <h5 id="deleteNoteName"><b>{this.props.content.name}</b></h5>
+        <div className="modal-content">
+          <h5>Delete {type}</h5>
+          <div className="subtitle">You can <em>never</em> get this {type} back</div>
+          <div className="itemToDelete">
+            <i className="material-icons">{type}</i>
+            <span>{content.name}</span> {count}
           </div>
-        </center>
-        <div className="cancelDelete">
-          <button onClick={this.closeModal} className="waves-effect waves-gray btn-flat cancel">
+        </div>
+        <div className="modalActions">
+          <button onClick={this.closeModal} className="waves-effect btn-flat cancelBtn">
             CANCEL
           </button>
-          <button onClick={this.deleteContent} className="waves-effect waves-red btn-flat delete">
+          <button
+            onClick={this.deleteContent} className="waves-effect waves-red btn-flat deleteBtn"
+          >
             DELETE
           </button>
         </div>
