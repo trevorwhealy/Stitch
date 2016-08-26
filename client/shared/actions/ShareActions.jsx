@@ -7,6 +7,13 @@ export function folderShareSuccess() {
   };
 }
 
+export function findUserFailure(err) {
+  return {
+    type: 'FIND_USER_FAILURE',
+    err,
+  };
+}
+
 export function findUser(content, userInfo) {
   const token = localStorage.getItem('jwtToken');
 
@@ -22,7 +29,7 @@ export function findUser(content, userInfo) {
     .then(([{ id }]) => {
       shareContent(content, id, dispatch);
     })
-    .catch(err => console.log(err));
+    .catch(err => dispatch(findUserFailure(err)));
   };
 }
 
