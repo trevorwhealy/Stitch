@@ -6,6 +6,7 @@ const intialSearchState = {
 
 const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 const SEARCH_FAILURE = 'SEARCH_FAILURE';
+const SEARCHING = 'SEARCHING';
 
 export default (state = intialSearchState, action) => {
   switch (action.type) {
@@ -17,8 +18,14 @@ export default (state = intialSearchState, action) => {
       });
     case SEARCH_FAILURE: {
       return Object.assign({}, state, {
-        searchComplete: false,
+        searchComplete: true,
         statusMessage: 'Search failed',
+      });
+    }
+    case SEARCHING: {
+      return Object.assign({}, state, {
+        searchComplete: false,
+        statusMessage: 'Searching',
       });
     }
     default: {
