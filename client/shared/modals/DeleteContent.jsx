@@ -31,7 +31,8 @@ class DeleteContent extends React.Component {
 
   render() {
     const { content, type } = this.props;
-    const count = type === 'folder' ? <small>{`(${content.notes.length})`}</small> : '';
+    const count = (type === 'folder' && content.notes)
+      ? <small>{`(${content.notes.length})`}</small> : '';
     return (
       <div id="deleteContentModal" className="modal">
         <div className="modal-content">

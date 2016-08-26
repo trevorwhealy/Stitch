@@ -10,7 +10,6 @@ class OverlaySearchResults extends React.Component {
     const globalSearchResults = this.props.results;
     const toggleOverlay = this.props.toggleOverlay;
     let queryResults;
-
     if (globalSearchResults.length > 0) {
       if (globalSearchResults[0].type === 'folder') {
         const iconType = 'folder';

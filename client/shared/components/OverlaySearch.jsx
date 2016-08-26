@@ -10,12 +10,12 @@ class OverlaySearch extends React.Component {
     this.state = {
       isOverLayClicked: false,
       isActive: false,
+      choice: 'folders',
     };
     this.displayOverlay = this.displayOverlay.bind(this);
-    this.fileChoice = this.fileChoice.bind(this);
-    this.folderChoice = this.folderChoice.bind(this);
     this.searchInput = this.searchInput.bind(this);
     this.displayOverlay = this.displayOverlay.bind(this);
+    this.userChoice = this.userChoice.bind(this);
   }
 
   displayOverlay() {
@@ -24,30 +24,18 @@ class OverlaySearch extends React.Component {
     });
   }
 
-  isActive() {
-    this.setState({
-      isActive: !this.state.isActive,
-    });
-  }
-
   searchInput(e) {
     if (e.keyCode === 13) {
       if (e.target.value.length > 0) {
-        this.props.searchActions.globalSearch(this.state.fileOrFolderChoice, e.target.value);
+        this.props.searchActions.globalSearch(this.state.choice, e.target.value);
         e.target.value = '';
       }
     }
   }
 
-  fileChoice() {
+  userChoice(choice) {
     this.setState({
-      fileOrFolderChoice: 'notes',
-    });
-  }
-
-  folderChoice() {
-    this.setState({
-      fileOrFolderChoice: 'folders',
+      choice,
     });
   }
 
@@ -64,17 +52,21 @@ class OverlaySearch extends React.Component {
           <div className="overlay-responsive">
             <div className="searchFileOrFolder">
               <i className="material-icons searchIcon">search</i>
-              <div className="fileOrFolderChoice">
-                <div className="userSearchFile isActive" onClick={this.fileChoice}>
-                  {'File'}
-                </div>
-                <div className="userSearchFolder" onClick={this.folderChoice}>
-                  {'Folder'}
-                </div>
+              <div className="searchAllInput">
+                <input className="userQuery" type="text" onKeyDown={this.searchInput} />
               </div>
-            </div>
-            <div className="searchAllInput">
-              <input className="userQuery" type="text" onKeyDown={this.searchInput} />
+              <div className="fileOrFolderChoice">
+                <div className="fileOrFolderLabel">
+                  {this.state.choice}
+                </div>
+                <button className="dropdown-btn contentType">
+                  <i className="material-icons">keyboard_arrow_down</i>
+                  <ul className="dropdown-menu">
+                    <li onClick={() => this.userChoice('notes')}>notes</li>
+                    <li onClick={() => this.userChoice('folders')}>folder</li>
+                  </ul>
+                </button>
+              </div>
             </div>
           </div>
           <OverlaySearchResults toggleOverlay={this.displayOverlay} />

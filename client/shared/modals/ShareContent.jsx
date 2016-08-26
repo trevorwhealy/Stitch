@@ -1,8 +1,9 @@
 import React from 'react';
-import { findUser } from '../actions/ShareActions.jsx';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as shareActionCreators from '../actions/ShareActions.jsx';
 
-
-export default class ShareContent extends React.Component {
+class ShareContent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -14,7 +15,7 @@ export default class ShareContent extends React.Component {
     e.preventDefault();
     const shareTarget = this.inputEl.value;
     if (shareTarget.length) {
-      findUser(this.props, shareTarget);
+      this.props.shareActions.findUser(this.props, shareTarget);
       $('#shareContentModal').closeModal();
       this.inputEl.value = '';
     }
@@ -56,6 +57,15 @@ export default class ShareContent extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  shareActions: bindActionCreators(shareActionCreators, dispatch),
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ShareContent);
 
 ShareContent.propTypes = {
   content: React.PropTypes.object,
