@@ -40,7 +40,7 @@ const Notifications = ({ notificationType, markAsRead, notifications }) => {
       return (
         <Link
           key={alert.id}
-          className="notifications"
+          className="notificationItem"
           to={{ pathname: `/notes/${alert.noteId}` }}
           onClick={() => markAsRead(alert.id)}
         >
