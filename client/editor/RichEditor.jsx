@@ -100,7 +100,7 @@ class RichEditor extends React.Component {
     if (props.note.shares && props.note.content) {
       const mentions = fromJS(props.note.shares.map((share) => ({
         name: share.user.fullName,
-        avatar: share.user.photo || 'http://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=87327241',
+        avatar: share.user.photo,
         id: share.userId,
       })));
       this.setState({
@@ -114,7 +114,7 @@ class RichEditor extends React.Component {
     } else if (props.note.shares && !props.note.content) {
       const mentions = fromJS(props.note.shares.map((share) => ({
         name: share.user.fullName,
-        avatar: share.user.photo || 'http://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=87327241',
+        avatar: share.user.photo,
         id: share.userId,
       })));
       this.setState({
