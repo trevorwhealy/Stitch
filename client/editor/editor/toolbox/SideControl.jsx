@@ -24,7 +24,7 @@ export default class SideControl extends React.Component {
   componentWillReceiveProps(props) {
     this.setState({
       activeBlock: props.selectedBlockType,
-    })
+    });
   }
 
   render() {

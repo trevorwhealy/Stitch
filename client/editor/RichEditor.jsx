@@ -14,29 +14,33 @@ import {
   convertFromRaw,
   Entity,
 } from 'draft-js';
+
 import Editor from 'draft-js-plugins-editor';
+
 import {
   defaultSuggestionsFilter,
   plugins,
   MentionSuggestions,
 } from './editor/util/plugins';
+
 import CodeUtils from 'draft-js-code';
 
 import * as noteActionCreators from '../notes/actions/NoteActions.jsx';
 import * as commentActionCreators from '../comments/actions/CommentActions.jsx';
 
-import customDecorator from './editor/model/customDecorator.jsx';
+
+import Outline from './editor/toolbox/Outline.jsx';
 import SideControl from './editor/toolbox/SideControl.jsx';
 
 import { getSelectedBlockElement, getSelectionRange } from './editor/util/selection.js';
-
-import Outline from './editor/toolbox/Outline.jsx';
 import { StringToTypeMap, Breakout, customStyleMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
 import blockRendererFn from './editor/model/blockRendererFn';
+import customDecorator from './editor/model/customDecorator.jsx';
+import { insertPageBreak, addBlock } from './editor/model/index';
+
 import compiler from './compiler/compiler.js';
-import { insertPageBreak, addBlock, highlightCode } from './editor/model/index';
 
 const styles = {
   sideControl: {
@@ -375,62 +379,50 @@ class RichEditor extends React.Component {
   updateSelection() {
     const { editorBounds, editorState } = this.state;
 
-    // let selectionRangeIsCollapsed = null;
     let sideControlVisible = false;
     let sideControlTop = null;
 
     const sideControlLeft = styles.sideControl.left;
-    // let popoverControlVisible = false,
-    // let popoverControlTop = null,
-    // let popoverControlLeft = null
 
     const selectionRange = getSelectionRange();
     if (selectionRange) {
-      // const rangeBounds = selectionRange.getBoundingClientRect();
+
       const selectedBlock = getSelectedBlockElement(selectionRange);
 
       if (selectedBlock) {
         const blockBounds = selectedBlock.getBoundingClientRect();
-
         sideControlVisible = true;
-        //sideControlTop = this.state.selectedBlock.offsetTop
+
         if (!editorBounds) { return; }
 
         const contentState = editorState.getCurrentContent();
 
         sideControlTop = (blockBounds.top - editorBounds.top + window.pageYOffset) 
           + ((blockBounds.bottom - blockBounds.top) / 2) - 15;
-
-        // if (!selectionRange.collapsed){
-
-        //   var popoverControlElement = ReactDOM.findDOMNode(this.refs["popoverControl"])
-        //   // The control needs to be visible so that we can get it's width
-        //   popoverControlElement.style.display = 'block'
-        //   var popoverWidth = popoverControlElement.clientWidth
-
-        //   popoverControlVisible = true
-        //   var rangeWidth = rangeBounds.right - rangeBounds.left,
-        //     rangeHeight = rangeBounds.bottom - rangeBounds.top
-        //   popoverControlTop = (rangeBounds.top - editorBounds.top)
-        //     - styles.popOverControl.height
-        //     - popoverSpacing
-        //   popoverControlLeft = 0
-        //     + (rangeBounds.left - editorBounds.left)
-        //     + (rangeWidth / 2)
-        //     - (/*styles.popOverControl.width*/ popoverWidth / 2)
-          
-        // }
       }
     }
     this.setState({
       sideControlVisible,
       sideControlTop,
       sideControlLeft,
-      // popoverControlVisible,
-      // popoverControlTop,
-      // popoverControlLeft,
     });
   }
+
+  // setLink(url) {
+  //   const { editorState } = this.state;
+  //   const selection = editorState.getSelection();
+  //   let entityKey = null;
+  //   let newUrl = url;
+  //   if (url !== '') {
+  //     if (url.indexOf('@') >= 0) {
+  //       newUrl = 'mailto:' + newUrl;
+  //     } else if (url.indexOf('http') === -1) {
+  //       newUrl = 'http://' + newUrl;
+  //     }
+  //       entityKey = Entity.create('LINK', 'MUTABLE', { url: newUrl });
+  //     }
+  //   this.onChange(RichUtils.toggleLink(editorState, selection, entityKey), this.focus);
+  // }
 
   render() {
     const { editorState, sideControlVisible, editEnabled, sideControlTop, sideControlLeft } = this.state;
@@ -488,12 +480,12 @@ class RichEditor extends React.Component {
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
         />
-        <button onClick={this.toggleEdit}>Toggle Edit</button>
+        {/*<button onClick={this.toggleEdit}>Toggle Edit</button>
         <input
           onClick={this.logState}
           type="button"
           value="Log State"
-        />
+        />*/}
       </div>
     );
   }
