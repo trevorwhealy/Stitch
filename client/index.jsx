@@ -12,8 +12,6 @@ import thunk from 'redux-thunk';
 import routes from './app.routes.jsx';
 import appReducer from './app.reducer.js';
 
-import './app.scss';
-
 const middleware = [thunk, promiseMiddleware, logger()];
 let store = createStore(appReducer, applyMiddleware(...middleware));
 
