@@ -7,13 +7,6 @@ export const getDefaultBlockData = (blockType, initialData = {}) => {
   }
 };
 
-export const getCurrentBlock = (editorState) => {
-  const selectionState = editorState.getSelection();
-  const contentState = editorState.getCurrentContent();
-  const block = contentState.getBlockForKey(selectionState.getStartKey());
-  return block;
-};
-
 export const resetBlockWithType = (editorState, newType = 'unstyled') => {
   const contentState = editorState.getCurrentContent();
   const selectionState = editorState.getSelection();
@@ -69,7 +62,7 @@ export const updateDataOfBlock = (editorState, block, newData) => {
 
 export const insertPageBreak = (editorState) => {
   const entityKey = Entity.create(
-    'TOKEN',
+    'PAGE-BREAK',
     'IMMUTABLE',
     { content: ' ' }
   );
