@@ -23,10 +23,7 @@ class RenameContent extends React.Component {
       if (this.props.type === 'folder') {
         this.props.folderActions.renameFolder(this.props.content.id, newName);
       } else if (this.props.type === 'note') {
-        this.props.noteActions.renameNote(this.props.content.id, newName);
-        if (this.props.content.folderId) {
-          this.props.noteActions.getNotesInFolder(this.props.content.folderId);
-        }
+        this.props.noteActions.renameNote(this.props.content, newName);
         this.props.noteActions.getOneNote(this.props.content.id);
       }
 

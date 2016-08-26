@@ -153,8 +153,9 @@ export function saveNote(noteId, name, content) {
   };
 }
 
-export function renameNote(noteId, title) {
+export function renameNote(content, title) {
   const token = localStorage.getItem('jwtToken');
+  const noteId = content.id;
   return (dispatch) => {
     return fetch(`/api/notes/${noteId}`, {
       method: 'PUT',
@@ -166,7 +167,13 @@ export function renameNote(noteId, title) {
         Authorization: `JWT ${token}`,
       },
     })
-    .then(() => dispatch(getAllNotes()));
+    .then(() => {
+      dispatch(getAllNotes());
+      dispatch(getOneNote(noteId));
+      if (content.folderId) {
+        dispatch(getNotesInFolder(content.folderId));
+      }
+    });
   };
 }
 
