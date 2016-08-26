@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
-    "compile": "webpack",
+    "compile": "webpack --progress --config webpack.prod.config.js -p",
+    "compile-css": "webpack --progress --config webpack.prod.css.config.js -p",
     "test": "jest"
   },
   "repository": {

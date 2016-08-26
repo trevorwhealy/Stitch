@@ -3,33 +3,22 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  devtool: 'inline-source-map',
   context: path.join(__dirname, './client'),
   entry: [
-    'webpack-hot-middleware/client',
-    './index.jsx',
+    './app.scss',
   ],
   output: {
     path: path.resolve(__dirname, './public/dist'),
-    filename: 'bundle.js',
+    filename: 'style.js',
     publicPath: '/dist',
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"production"',
+    }),
   ],
   module: {
     loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'react-hot',
-      },
-      {
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015', 'react-hmre'],
-        },
-      },
       {
         test: /\.css$/,
         loaders: [
@@ -38,7 +27,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap'],
+        loaders: ['style', 'css', 'postcss', 'sass'],
       },
       {
         test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
