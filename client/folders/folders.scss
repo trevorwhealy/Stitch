@@ -26,6 +26,16 @@
 
     .dropdown-menu { color: $color-grey-darkest; }
   }
+  .folderUsers {
+    margin: 0 24px;
+    padding: 0 24px;
+    border-right: 1px solid $color-grey-lighter;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+    .userAvatar { margin-left: 4px; }
+  }
 
   .newNoteBtn {
     padding: 4px 12px 4px 8px;
@@ -39,61 +49,26 @@
     > * { color: white; }
     &:hover { background: lighten($primary-color-3, 5%); }
   }
-}
 
+  .number {
+    align-self: flex-start;
+    margin-bottom: 15px;
+    color: #9B9B9B;
+  }
 
-.FoldersContainer .number {
-  align-self: flex-start;
-  margin-bottom: 15px;
-  color: #9B9B9B;
-}
+  .noteList {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+  }
+  .noteCard {
+    max-width: 100%;
+  }
 
-.FoldersContainer .notes {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  flex: 1 0 auto;
-  overflow-y: auto;
-  height: 600px;
-  margin-bottom: 15px;
-  padding-right: 15px;
-}
-
-.FoldersContainer .notes .note {
-  padding: 10px 15px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 25px;
-  margin-bottom: 25px;
-  min-height: 80px;
-  box-shadow: 0px 2px 4px;
-  border: 1px solid gray;
-  padding: 0px 30px;
-}
-
-.FoldersContainer .notes .note .details .date{
-  font-size: 10px;
-  color: #9B9B9B;
-}
-
-.FoldersContainer .notes .note .open {
-  transition: all .4s ease;
-  border-left: 2px solid gray;
-  font-size: 20px;
-  align-self: center;
-  padding-left: 25px;
-}
-
-.FoldersContainer .notes .note:hover > .open {
-  border-left: 2px solid lightblue;
-  color: lightblue;
-}
-
-.FoldersContainer .prompt {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  .prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
