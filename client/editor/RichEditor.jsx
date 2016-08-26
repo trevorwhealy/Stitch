@@ -35,6 +35,7 @@ import { getSelectedBlockElement, getSelectionRange } from './editor/util/select
 import { StringToTypeMap, Breakout, customStyleMap } from './editor/util/constants';
 import beforeInput from './editor/model/beforeInput';
 import blockRenderMap from './editor/model/blockRenderMap.jsx';
+import blockRendererFn from './editor/model/blockRendererFn';
 
 import customDecorator from './editor/model/customDecorator.jsx';
 import { insertPageBreak, addBlock } from './editor/model/index';
