@@ -87,6 +87,10 @@ class RichEditor extends React.Component {
     this.save = this.save.bind(this);
   }
 
+  componentDidMount() {
+    this.pageWrapperEl = $('.pageWrapper');
+  }
+
   componentWillReceiveProps(props) {
     const { editorState } = this.state;
 
@@ -396,8 +400,7 @@ class RichEditor extends React.Component {
         if (!editorBounds) { return; }
 
         const contentState = editorState.getCurrentContent();
-
-        sideControlTop = (blockBounds.top - editorBounds.top + window.pageYOffset)
+        sideControlTop = (blockBounds.top - editorBounds.top + this.pageWrapperEl.scrollTop())
           + ((blockBounds.bottom - blockBounds.top) / 2) - 15;
       }
     }
