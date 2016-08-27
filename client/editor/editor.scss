@@ -35,6 +35,23 @@
     }
   }
 
+  .readOnlyBanner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 60px;
+    margin:auto;
+    background: rgba(0,0,0,.75);
+    color: $color-grey-lightest;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    > i { margin-right: 8px; }
+  }
+
   .EditorTerminal {
     padding: $content-padding;
     display: flex;
@@ -43,7 +60,6 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    flex: 1;
   }
 
   &.isTerminalActive .noteHeader,
@@ -59,7 +75,7 @@
 
   .blockTypeBtn {
     margin-right: 12px;
-    transition: all .25s ease;
+    // transition: all .25s ease;
     i,
     h5 {
       transition: all .25s ease;

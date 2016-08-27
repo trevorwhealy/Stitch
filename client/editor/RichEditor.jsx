@@ -87,6 +87,10 @@ class RichEditor extends React.Component {
     this.save = this.save.bind(this);
   }
 
+  componentDidMount() {
+    this.pageWrapperEl = $('.pageWrapper');
+  }
+
   componentWillReceiveProps(props) {
     const { editorState } = this.state;
 
@@ -163,7 +167,7 @@ class RichEditor extends React.Component {
       const blockMap = contentState.getBlockMap();
       const users = blockMap.reduce(this.findMentionEntities, []);
       const content = convertToRaw(editorState.getCurrentContent());
-      
+
       this.props.commentActions.postMention(id, users);
       this.props.noteActions.saveNote(id, name, content);
       window.localStorage['editor' + id] = JSON.stringify(content);
@@ -396,8 +400,7 @@ class RichEditor extends React.Component {
         if (!editorBounds) { return; }
 
         const contentState = editorState.getCurrentContent();
-
-        sideControlTop = (blockBounds.top - editorBounds.top + window.pageYOffset) 
+        sideControlTop = (blockBounds.top - editorBounds.top + this.pageWrapperEl.scrollTop())
           + ((blockBounds.bottom - blockBounds.top) / 2) - 15;
       }
     }
@@ -423,14 +426,20 @@ class RichEditor extends React.Component {
     const selectedBlockType = RichUtils.getCurrentBlockType(editorState);
 
     let sideControlStyles = Object.assign({}, styles.sideControl);
-    if ( sideControlVisible && editEnabled ) {
+    if (sideControlVisible && editEnabled) {
       sideControlStyles.display = 'block';
       sideControlStyles.top = sideControlTop;
       sideControlStyles.left = sideControlLeft;
     }
+    const readOnlyBanner = !editEnabled ?
+      (<div className="readOnlyBanner">
+        <i className="material-icons">visibility</i>
+        <span>Read-Only</span>
+      </div>) : undefined;
 
     return (
       <div className="RichEditor-root" onClick={this.focus}>
+        {readOnlyBanner}
         <Outline
           editorState={editorState}
         />
