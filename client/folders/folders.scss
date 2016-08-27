@@ -35,6 +35,7 @@
     justify-content: flex-end;
     align-items: center;
     flex: 1;
+    .owner { display: flex; }
     .userAvatar { margin-left: 4px; }
   }
 
