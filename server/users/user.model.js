@@ -3,7 +3,7 @@ const sequelize = require('../config/sequelize');
 const encryption = require('../utils/encryption');
 
 const User = sequelize.define('user', {
-  email: { type: Sequelize.STRING, required: true },
+  email: { type: Sequelize.STRING, required: true, unique: true },
   password: { type: Sequelize.STRING },
   fullName: { type: Sequelize.STRING, required: true },
   googleId: Sequelize.STRING,
