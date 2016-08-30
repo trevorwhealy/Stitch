@@ -7,6 +7,8 @@
     "start": "node server/server.js",
     "compile": "webpack --progress --config webpack.prod.config.js -p",
     "compile-css": "webpack --progress --config webpack.prod.css.config.js -p",
+    "watch": "",
+    "watch:css": "nodemon --watch client -e scss -x \"npm run compile-css\"",
     "test": "jest"
   },
   "repository": {
