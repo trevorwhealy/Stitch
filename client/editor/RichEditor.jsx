@@ -413,6 +413,7 @@ class RichEditor extends React.Component {
   }
 
   render() {
+    const { notePending } = this.props;
     const { editorState, sideControlVisible, editEnabled, sideControlTop, sideControlLeft } = this.state;
 
     let className = 'RichEditor-editor';
@@ -431,7 +432,7 @@ class RichEditor extends React.Component {
       sideControlStyles.top = sideControlTop;
       sideControlStyles.left = sideControlLeft;
     }
-    const readOnlyBanner = !editEnabled ?
+    const readOnlyBanner = !notePending && !editEnabled ?
       (<div className="readOnlyBanner">
         <i className="material-icons">visibility</i>
         <span>Read-Only</span>
