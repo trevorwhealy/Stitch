@@ -261,6 +261,7 @@
     max-height: 70%;
     width: 250px;
     overflow-y: auto;
+    color: $color-grey;
 
     > * {
       transition: all .25s ease;
@@ -272,6 +273,7 @@
       opacity: 1;
       transform: translateX(0);
     }
+    > *:hover { color: $primary-color-3; }
   }
 
   /***** Responsive *****/
@@ -284,11 +286,13 @@
 
    .terminalBtn,
    .terminal { display: none; }
+   .Outline { display: none; }
   }
   @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     $content-padding: 0 64px;
     .noteHeader,
     .EditorTerminal { padding: $content-padding; }
+    .Outline { display: none; }
 
     .terminal {
       min-width: 350px;
