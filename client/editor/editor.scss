@@ -49,6 +49,8 @@
     align-items: center;
     justify-content: center;
     font-size: 18px;
+    animation: .25s ease READONLY_BANNER_IN;
+
     > i { margin-right: 8px; }
   }
 
@@ -306,6 +308,17 @@
     to {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  @keyframes READONLY_BANNER_IN {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }

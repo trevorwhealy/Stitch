@@ -49,6 +49,7 @@ class Note extends React.Component {
 
   render() {
     const singleNote = this.props.note;
+    const notePending = this.props.notePending;
     const isTerminalActiveClass = this.state.toggleTerminal ? 'isTerminalActive' : '';
     const terminal = this.state.toggleTerminal ?
       (<div className="terminal">
@@ -90,7 +91,7 @@ class Note extends React.Component {
         </div>
         <div className="EditorTerminal">
           <div className="editor">
-            <RichEditor note={singleNote} />
+            <RichEditor note={singleNote} notePending={notePending} />
           </div>
           {terminal}
         </div>
@@ -118,6 +119,7 @@ const mapStateToProps = (state) => {
   return {
     notes: state.notes,
     note: state.singleNote.note,
+    notePending: state.singleNote.notePending,
   };
 };
 
@@ -130,5 +132,6 @@ Note.propTypes = {
   noteActions: React.PropTypes.object,
   routeParams: React.PropTypes.object,
   note: React.PropTypes.object,
+  notePending: React.PropTypes.bool,
   params: React.PropTypes.object,
 };

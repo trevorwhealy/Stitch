@@ -12,7 +12,10 @@ import thunk from 'redux-thunk';
 import routes from './app.routes.jsx';
 import appReducer from './app.reducer.js';
 
-const middleware = [thunk, promiseMiddleware, logger()];
+const middleware = [thunk, promiseMiddleware];
+if (process.env.NODE_ENV === 'development') {
+  middleware.push(logger());
+}
 let store = createStore(appReducer, applyMiddleware(...middleware));
 
 ReactDOM.render(

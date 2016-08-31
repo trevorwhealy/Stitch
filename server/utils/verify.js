@@ -29,10 +29,13 @@ function hasAccessToNote(noteId, userId) {
   if (!noteId) { return Promise.resolve(); }
   return sequelize.query(`
     SELECT exists(SELECT n.id FROM notes n
-    FULL OUTER JOIN shares s
-    ON n.id = s."noteId"
-    WHERE (n.id = ${noteId} and n."userId" = ${userId})
-    OR	  (s."noteId" = ${noteId} and s."userId" = ${userId})) as "hasAccess";
+      FULL OUTER JOIN shares s
+      ON n.id = s."noteId"
+      WHERE (n.id = ${noteId} and n."userId" = ${userId})
+      OR	  (s."noteId" = ${noteId} and s."userId" = ${userId})
+      OR    (s."folderId" IN (SELECT "folderId" FROM notes WHERE id = ${noteId})
+      		  AND s."userId" = ${userId})
+    ) as "hasAccess"
   `, { type: Sequelize.QueryTypes.SELECT })
   .then(([{ hasAccess }]) => {
     if (!hasAccess) {
