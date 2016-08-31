@@ -21,6 +21,7 @@ export default (state = singleNoteState, action) => {
       });
     case GET_SINGLE_NOTE_PENDING: {
       return Object.assign({}, state, {
+        note: {},
         notePending: true,
       });
     }
