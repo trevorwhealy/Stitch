@@ -284,6 +284,7 @@
 
    .terminalBtn,
    .terminal { display: none; }
+   .Outline { display: none; }
   }
   @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
     $content-padding: 0 64px;
