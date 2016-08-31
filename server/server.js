@@ -18,8 +18,9 @@ require('./config/routes')(app, config);
 const listeningOnPort = 'Listening on port';
 
 if (process.env.NODE_ENV === 'production') {
-  options.key = fs.readFileSync(__dirname + '/key.pem');
-  options.cert = fs.readFileSync(__dirname + '/cert.pem');
+  options.key = fs.readFileSync(__dirname + '/privkey.pem');
+  options.cert = fs.readFileSync(__dirname + '/fullchain.pem');
+  options.ca = fs.readFileSync(__dirname + '/chain.pem');
   https.createServer(options, app).listen(443, () => {
     console.log(listeningOnPort, 443);
   });
