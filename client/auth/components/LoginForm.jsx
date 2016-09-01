@@ -16,8 +16,9 @@ const LoginForm = ({ onSubmit }) => {
   return (
     <div className="auth">
       <form className="auth__form" onSubmit={login}>
-        <h2>Welcome Back</h2>
-        <h5>Sign in to continue using Stitch</h5>
+        <img className="auth__appLogo" alt="logo" src="/assets/images/stitch-logo-new.svg" />
+        <h2>Sign In</h2>
+        <h5>Continue taking notes with Stitch</h5>
         <div className="input-field">
           <label htmlFor="email">Email</label>
           <input

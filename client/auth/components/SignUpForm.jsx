@@ -18,6 +18,7 @@ const SignUpForm = ({ onSubmit }) => {
   return (
     <div className="auth">
       <form className="auth__form" onSubmit={signup}>
+        <img className="auth__appLogo" alt="logo" src="/assets/images/stitch-logo-new.svg" />
         <h2>Account Registration</h2>
         <h5>Sign up to start taking notes with Stitch</h5>
         <div className="input-field">
