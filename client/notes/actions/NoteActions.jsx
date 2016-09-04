@@ -22,9 +22,10 @@ export function receiveSingleNote(note) {
   };
 }
 
-export function failureSingleNote() {
+export function failureSingleNote(message) {
   return {
     type: 'GET_SINGLE_NOTE_FAILURE',
+    message,
   };
 }
 
@@ -66,9 +67,6 @@ export function getOneNote(noteId) {
     dispatch(pendingSingleNote());
     return fetch(`/api/notes/${noteId}`, {
       method: 'GET',
-      body: {
-        params: JSON.stringify(noteId),
-      },
       headers: {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
