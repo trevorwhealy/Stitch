@@ -87,9 +87,6 @@ export function getNotesInFolder(folderId) {
   return (dispatch) => {
     return fetch(`/api/notes?folderId=${folderId}`, {
       method: 'GET',
-      body: {
-        params: JSON.stringify(folderId),
-      },
       headers: {
         'Content-Type': 'application/json',
         Authorization: `JWT ${token}`,
