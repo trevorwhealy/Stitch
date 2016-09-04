@@ -1,5 +1,7 @@
 .userAvatar {
   width: 48px;
+  min-width: 48px;
+  max-width: 48px;
   height: 48px;
   border-radius: 50%;
   background-color: lightgrey;
@@ -16,11 +18,15 @@
 
 .userAvatar--sm {
   width: 32px;
+  min-width: 32px;
+  max-width: 32px;
   height: 32px;
   font-size: 12px;
 }
 .userAvatar--lg {
   width: 60px;
+  min-width: 60px;
+  max-width: 60px;
   height: 60px;
   font-size: 20px;
 }
