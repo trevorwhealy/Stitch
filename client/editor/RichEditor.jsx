@@ -9,6 +9,7 @@ import { fromJS } from 'immutable';
 import {
   EditorState,
   RichUtils,
+  KeyBindingUtil,
   getDefaultKeyBinding,
   convertToRaw,
   convertFromRaw,
@@ -88,6 +89,7 @@ class RichEditor extends React.Component {
   componentWillReceiveProps(props) {
     const { editorState } = this.state;
 
+    clearInterval(this.saveInterval);
     if (props.user.id === props.note.userId) {
       this.setState({
         editEnabled: true,
@@ -197,20 +199,19 @@ class RichEditor extends React.Component {
   }
 
   keyBindingFn(e) {
-    if (e.ctrlKey) {
-      if (e.keyCode === 83) {
-        return 'editor-save';
-      }
-      if (e.altKey) {
-        if (e.keyCode === 67) {
-          return 'compile';
-        }
-      }
-      if (e.keyCode === 53) {
+    if (KeyBindingUtil.hasCommandModifier(e)) {
+      if (e.keyCode === 53) { // key '5'
         return 'toggleinline:STRIKETHROUGH';
       }
-      if (e.keyCode === 72) {
+      if (e.keyCode === 72) { // key 'h'
         return 'toggleinline:HIGHLIGHT';
+      }
+      if (e.keyCode === 83) { // key 's'
+        return 'editor-save';
+      }
+    } else if (e.ctrlKey && e.altKey) {
+      if (e.keyCode === 67) { // key 'c'
+        return 'compile';
       }
     }
     return getDefaultKeyBinding(e);
