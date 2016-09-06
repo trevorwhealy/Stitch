@@ -15,6 +15,8 @@ const User = sequelize.define('user', {
   ],
 });
 
+module.exports = User;
+
 User.beforeCreate((user) => {
   if (!user.password) { return Promise.resolve(user); }
   return encryption.hashPassword(user.password)
@@ -23,4 +25,10 @@ User.beforeCreate((user) => {
     });
 });
 
-module.exports = User;
+// Create welcome folder after new user is created
+const onboard = require('../onboard/onboard.service');
+
+User.afterCreate((user) => {
+  if (!user || !user.id) { return; }
+  onboard.createWelcomeFolder(user.id);
+});
