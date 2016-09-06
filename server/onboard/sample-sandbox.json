@@ -1,0 +1,14 @@
+{
+  "entityMap":{},
+  "blocks":[
+    {"key":"12odj","text":"Homework","type":"header-three","depth":0,"inlineStyleRanges":[{"offset":0,"length":8,"style":"UNDERLINE"}],"entityRanges":[],"data":{}},
+    {"key":"bcsis","text":"Click \"Code Sandbox\" button on the bottom right of the page","type":"todo","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},
+    {"key":"33i5k","text":"In the terminal, select the language you wish to run","type":"todo","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},
+    {"key":"898c5","text":"Highlight the code sample below, and press CTRL + ALT + c ","type":"todo","depth":0,"inlineStyleRanges":[{"offset":43,"length":14,"style":"ITALIC"},{"offset":58,"length":0,"style":"UNDERLINE"}],"entityRanges":[],"data":{}},
+    {"key":"eqi66","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},
+    {"key":"56h6t","text":"C","type":"header-three","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},
+    {"key":"arv6c","text":"#include <stdio.h>  \nint sum(int, int);  \nint main(void) { \n    int total;  \n    total = sum(5,5);  \n    printf(\"Total is %d\\n\", total);  \n    \n    return 0;  \n}\n\nint sum(int a, int b) {\n    return a + b;\n}","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},
+    {"key":"4ubh5","text":"Python","type":"header-three","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},
+    {"key":"bit7c","text":"def sum(a, b):\n    return a + b;\n\nprint('Total is', sum(10,10));","type":"code-block","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}
+  ]
+}
