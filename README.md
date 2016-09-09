@@ -1,5 +1,5 @@
 ### Stitch
-*A note taking platform for **programmers***
+*A note taking platform for programmers*
 <hr>
 #### Team
 
