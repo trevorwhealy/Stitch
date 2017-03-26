@@ -303,12 +303,6 @@ class RichEditor extends React.Component {
       compiler(answer, lang)
       .then(res => res.json())
       .then(data => {
-        const $compilesRemaining = $('.compilesRemaining').first();
-        $compilesRemaining.text(`${data.compiles} Compiles Remaining`);
-
-        if (data.message === 'Compile limit exceeded') {
-          return Promise.reject('Compile limit exceeded');
-        }
         const $p = $(`<p> ${data.stdout} </p>`);
         const $answer = $('.compileAnswer');
 
