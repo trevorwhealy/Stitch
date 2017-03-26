@@ -7,7 +7,6 @@
     "start": "node server/server.js",
     "compile": "webpack --progress --config webpack.prod.config.js -p",
     "compile-css": "webpack --progress --config webpack.prod.css.config.js -p",
-    "watch": "",
     "watch:css": "nodemon --watch client -e scss -x \"npm run compile-css\"",
     "test": "jest"
   },
@@ -50,6 +49,7 @@
     "jwt-simple": "^0.5.0",
     "lodash": "^4.14.2",
     "materialize-css": "^0.97.7",
+    "md5": "^2.2.1",
     "moment": "^2.14.1",
     "morgan": "^1.7.0",
     "nodemon": "^1.10.0",

@@ -5,6 +5,7 @@ const NoteRouter = require('../notes/note.routes');
 const CommentRouter = require('../comments/comment.routes');
 const NotificationRouter = require('../notifications/notification.routes');
 const UserRouter = require('../users/user.routes');
+const CompilerRouter = require('../compiler/compiler.routes')
 
 module.exports = (app, config) => {
   app.use('/auth', AuthRouter);
@@ -15,6 +16,7 @@ module.exports = (app, config) => {
   app.use('/api/comments', CommentRouter);
   app.use('/api/notifications', NotificationRouter);
   app.use('/api/users', UserRouter);
+  app.use('/api/compile', CompilerRouter);
 
   app.get('/*', (req, res) => {
     res.sendFile(`${config.rootPath}/public/index.html`);
