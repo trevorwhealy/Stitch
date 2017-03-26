@@ -1,5 +1,3 @@
-import compilerAPI from '../../config';
-
 const compile = (input, lang) => {
   // If no code typed, or no language selected, do not compile
   if (!input) {
@@ -17,7 +15,7 @@ const compile = (input, lang) => {
 
   const jwtToken = localStorage.getItem('jwtToken');
 
-  return fetch(compilerAPI.endPoint, {
+  return fetch('/api/compile', {
     method: 'POST',
     body: JSON.stringify({
       language: lang,
