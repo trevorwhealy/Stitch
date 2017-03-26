@@ -8,7 +8,7 @@ const path = require('path')
 /** Helper Variables **/
 const dockerVolumeDir = '/usr/src/app';
 const dockerRunCmd = 'docker run --rm -t --name';
-const dockerVolume = `-v ${__dirname + '/../temp'}:${dockerVolumeDir}`;
+const dockerVolume = `-v ${__dirname + '/../../temp'}:${dockerVolumeDir}`;
 
 /** Helper Functions **/
 /**
@@ -88,7 +88,7 @@ module.exports = (language, content) => {
         });
 
         if (language === 'C') {
-          fs.unlink(filepath.slice(-2));
+          fs.unlink(filepath.slice(0, -2));
         }
       });
     });
