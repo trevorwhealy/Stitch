@@ -30,3 +30,4 @@ bower_components/
 
 env.sh
 .profile
+package-lock.json

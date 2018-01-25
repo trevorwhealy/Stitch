@@ -8,7 +8,8 @@
     "compile": "webpack --progress --config webpack.prod.config.js -p",
     "compile-css": "webpack --progress --config webpack.prod.css.config.js -p",
     "watch:css": "nodemon --watch client -e scss -x \"npm run compile-css\"",
-    "test": "jest"
+    "test": "jest",
+    "build": "npm run compile-css && npm run compile"
   },
   "repository": {
     "type": "git",
